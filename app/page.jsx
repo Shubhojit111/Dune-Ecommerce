@@ -11,6 +11,7 @@ import BigScreen from "@/components/BigScreen";
 import BottomGridSection from "@/components/BottomGridSection";
 import ShopTheLook from "@/components/ShopTheLook";
 import FloatingCardSection from "@/components/FloatingCardSection";
+import BrandSection from "@/components/BrandSection";
 
 export default function HomePage() {
   return (
@@ -27,16 +28,17 @@ export default function HomePage() {
       />
       <BigScreen />
 
-
       <FullBleedSplit />
 
       <CategorySection />
 
       <FeaturedMultiSection />
-      
+
+      <BrandSection />
+
       <ShopTheLook />
       <FloatingCardSection />
-      
+
       <ProductGridSection
         heading="Shop Categories"
         products={toquesProducts}
@@ -47,7 +49,6 @@ export default function HomePage() {
       />
       <PanelSection />
 
-      
       <ProductGridSection
         heading="Shop Sweatshirts"
         products={toquesProducts}
@@ -58,12 +59,9 @@ export default function HomePage() {
         viewAllHref="/product"
         hasViewAllBtn="true"
       />
-      
 
       <TimeBanner />
       <BottomGridSection />
     </>
   );
 }
-
-
