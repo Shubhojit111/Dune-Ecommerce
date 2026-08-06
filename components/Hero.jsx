@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import ExploreBtn from "./buttons/ExploreBtn";
+import Assets from "@/assets/images/Assets";
 
 export default function Hero() {
   return (
     <section className="relative ">
       <div className="relative h-screen min-h-[680px] w-full overflow-hidden bg-[#5C4A3A]">
         <Image
-          src="/images/hero.png"
+          src={Assets.HeroImage1}
           alt="Premium essentials - where quality meets comfort"
           fill
           priority

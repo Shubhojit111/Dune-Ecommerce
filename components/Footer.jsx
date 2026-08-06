@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Mail, ChevronDown } from "lucide-react";
 import Countdown from "react-countdown";
 import HeadTagBtn from "./buttons/HeadTagBtn";
-import Assets from "@/public/images/Assets";
+import Assets from "@/assets/images/Assets";
 
 import Image from "next/image";
 
@@ -127,7 +127,7 @@ export default function Footer() {
                 return (
                   <div
                     key={index}
-                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.5px] flex flex-col mb-3"
+                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.7px] flex flex-col mb-3"
                   >
                     {item}
                   </div>
@@ -143,7 +143,7 @@ export default function Footer() {
                 return (
                   <div
                     key={index}
-                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.5px] flex flex-col mb-3.5"
+                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.7px] flex flex-col mb-3.5"
                   >
                     {item}
                   </div>
@@ -159,7 +159,7 @@ export default function Footer() {
                 return (
                   <div
                     key={index}
-                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.5px] flex flex-col mb-3"
+                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.7px] flex flex-col mb-3"
                   >
                     {item}
                   </div>

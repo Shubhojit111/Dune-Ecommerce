@@ -2,6 +2,8 @@
 // (impulse-theme-fashion.myshopify.com) — swap in your own
 // Storefront API query later if you want this live.
 
+import Assets from "@/assets/images/Assets";
+
 export const featuredSlides = [
   {
     id: "riva-tank",
@@ -142,7 +144,7 @@ export const toquesProducts = [
     name: "Chunky Toque - Fawn",
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
-    image: "/images/toque-fawn.png",
+    image: Assets.Tooque1,
     handle: "chunky-toque-fawn",
   },
   {
@@ -150,7 +152,7 @@ export const toquesProducts = [
     name: "Chunky Toque - Army",
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
-    image: "/images/toque-army.png",
+    image: Assets.Tooque2,
     handle: "chunky-toque-army",
   },
   {
@@ -158,7 +160,7 @@ export const toquesProducts = [
     name: "Chunky Toque - Black",
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
-    image: "/images/toque-black.png",
+    image: Assets.Tooque3,
     handle: "chunky-toque-black",
   },
   {
@@ -166,7 +168,7 @@ export const toquesProducts = [
     name: "Chunky Toque - Maroon",
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
-    image: "/images/toque-maroon.png",
+    image: Assets.Tooque4,
     handle: "chunky-toque-maroon",
   },
 ];

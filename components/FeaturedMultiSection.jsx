@@ -4,6 +4,7 @@ import ExploreBtn from "./buttons/ExploreBtn";
 import HeaderBtn from "./buttons/HeaderBtn";
 import SubTextBtn from "./buttons/SubTextBtn";
 import HeadTagBtn from "./buttons/HeadTagBtn";
+import Assets from "@/assets/images/Assets";
 
 export default function FeaturedMultiSection() {
   return (
@@ -17,7 +18,7 @@ export default function FeaturedMultiSection() {
             className="group relative block lg:min-h-[500px] w-full overflow-hidden"
           >
             <Image
-              src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=1200&auto=format&fit=crop"
+              src={Assets.MultiGridSectionImage1}
               alt="The Original - Iconic Basics"
               fill
               priority
@@ -48,7 +49,7 @@ export default function FeaturedMultiSection() {
             className="group relative block lg:min-h-[500px] w-full overflow-hidden"
           >
             <Image
-              src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=1200&auto=format&fit=crop"
+              src={Assets.MultiGridSectionImage2}
               alt="Crafted Quality - Premium Denim"
               fill
               priority
@@ -77,7 +78,7 @@ export default function FeaturedMultiSection() {
           className="group relative block min-h-[350px] md:min-h-[400px] w-full overflow-hidden"
         >
           <Image
-            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1600&auto=format&fit=crop"
+            src={Assets.MultiGridSectionImage3}
             alt="Experience Our Store"
             fill
             priority

@@ -8,7 +8,7 @@ import { TimeBanner } from "@/components/TimeBanner";
 import Abc from "@/components/ShopTheLook";
 import PanelSection from "@/components/PanelSection";
 import BigScreen from "@/components/BigScreen";
-import FooterImageStrip from "@/components/BottomGridSection";
+import BottomGridSection from "@/components/BottomGridSection";
 import ShopTheLook from "@/components/ShopTheLook";
 import FloatingCardSection from "@/components/FloatingCardSection";
 
@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-{/* 
+
       <ProductGridSection
         heading="NEW ARRIVALS - TOQUES"
         products={toquesProducts}
@@ -60,9 +60,8 @@ export default function HomePage() {
       />
       
 
-      <TimeBanner /> */}
-      {/* <TimeBanner /> */}
-      <FooterImageStrip />
+      <TimeBanner />
+      <BottomGridSection />
     </>
   );
 }

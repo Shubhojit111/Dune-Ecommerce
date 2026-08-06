@@ -4,7 +4,7 @@ import ExploreBtn from "./buttons/ExploreBtn";
 import HeadTagBtn from "./buttons/HeadTagBtn";
 import HeaderBtn from "./buttons/HeaderBtn";
 import SubTextBtn from "./buttons/SubTextBtn";
-import Assets from "@/public/images/Assets";
+import Assets from "@/assets/images/Assets";
 
 export default function FloatingCardSection() {
   return (
@@ -22,7 +22,10 @@ export default function FloatingCardSection() {
         <div className="absolute inset-0 bg-black/15" />
 
         <div className="absolute left-14 top-12 p-8 h-fit w-fit  max-w-[380px] items-start justify-center flex bg-white flex-col z-10 ">
-          <HeadTagBtn text="Timeless Craftsmanship" className="!text-black !mb-0 !tracking-[0.3em]" />
+          <HeadTagBtn
+            text="Timeless Craftsmanship"
+            className="!text-black !mb-0 !tracking-[0.3em]"
+          />
           <HeaderBtn
             text={
               <>

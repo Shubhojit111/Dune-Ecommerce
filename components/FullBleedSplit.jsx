@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ExploreBtn from "./buttons/ExploreBtn";
+import Assets from "@/assets/images/Assets";
 
 export default function FullBleedSplit() {
   return (
@@ -12,7 +13,7 @@ export default function FullBleedSplit() {
           className="group relative block h-[75vh] min-h-[650px] max-h-[750px] w-full overflow-hidden"
         >
           <Image
-            src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop"
+            src={Assets.FullBleedSplitImage1}
             alt="Elevated Comfort"
             fill
             priority
@@ -36,7 +37,7 @@ export default function FullBleedSplit() {
           className="group relative block h-[75vh] min-h-[650px] max-h-[750px] w-full overflow-hidden"
         >
           <Image
-            src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=1200&auto=format&fit=crop"
+            src={Assets.FullBleedSplitImage2}
             alt="Premium Flannel"
             fill
             priority

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Plus, X } from "lucide-react";
-import Assets from "@/public/images/Assets";
+import Assets from "@/assets/images/Assets";
 import HeaderBtn from "./buttons/HeaderBtn";
 
 const DEFAULT_HOTSPOTS = [
@@ -140,9 +140,7 @@ export default function ShopTheLook({
           </div>
         </div>
 
-        <div
-          className="relative h-[140vh] w-full lg:w-[70%] overflow-hidden bg-[#e5e5e5] flex-shrink-0"
-        >
+        <div className="relative h-[140vh] w-full lg:w-[70%] overflow-hidden bg-[#e5e5e5] flex-shrink-0">
           <Image
             src={heroImage}
             alt={title}

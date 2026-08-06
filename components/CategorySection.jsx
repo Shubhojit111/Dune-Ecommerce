@@ -1,3 +1,4 @@
+import Assets from "@/assets/images/Assets";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -5,22 +6,19 @@ const categories = [
   {
     id: "tshirts",
     label: "T-SHIRTS",
-    image:
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1000&auto=format&fit=crop",
+    image: Assets.Category1,
     href: "/collections/t-shirts",
   },
   {
     id: "jackets",
     label: "JACKETS",
-    image:
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=1000&auto=format&fit=crop",
+    image: Assets.Category2,
     href: "/collections/jackets",
   },
   {
     id: "sweatshirts",
     label: "SWEATSHIRTS",
-    image:
-      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=1000&auto=format&fit=crop",
+    image: Assets.Category3,
     href: "/collections/sweatshirts",
   },
 ];
