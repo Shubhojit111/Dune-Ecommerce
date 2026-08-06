@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@200&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------
+   Base
+------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-white text-ink antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ------------------------------
+   Typography
+------------------------------ */
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+
+.font-dune {
+  font-family: "Instrument Serif", serif;
+  font-weight: 100;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.88;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-kerning: normal;
+}
+
+.font-dune-small {
+  font-family: "Instrument Serif", serif;
+  font-weight: 100;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.88;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-kerning: normal;
+}
+
+main {
+  display: block;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ------------------------------
+   Links
+------------------------------ */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ------------------------------
+   Selection
+------------------------------ */
+
+::selection {
+  background: #b0794a;
+  color: #f5f0e6;
+}
+
+/* ------------------------------
+   Scrollbar
+------------------------------ */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f0e6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b0794a;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8f6036;
+}
+
+.borderr {
+  border: 1px solid black !important;
+}
