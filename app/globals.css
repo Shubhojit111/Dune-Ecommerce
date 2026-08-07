@@ -113,3 +113,14 @@ a {
 .borderr {
   border: 1px solid black !important;
 }
+
+/* Masked text reveal — wrap any text in these two classes */
+.mask-reveal {
+  overflow: hidden;
+  display: block;
+}
+
+.mask-reveal__inner {
+  display: block;
+  will-change: transform, opacity;
+}

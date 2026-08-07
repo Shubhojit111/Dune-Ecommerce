@@ -1,4 +1,6 @@
-﻿import HeroImage1 from "@/assets/images/hero.png"
+﻿import HeroImage1 from "@/assets/images/hero1.png";
+import HeroImage2 from "@/assets/images/hero2.png";
+import HeroImage3 from "@/assets/images/hero3.png";
 
 import PanelMain from "@/assets/images/PanelMain.webp";
 import PanelSide from "@/assets/images/PanelSide.webp";
@@ -40,16 +42,23 @@ import BrandLogo5 from "@/assets/images/BrandLogo5.webp";
 
 
 const Assets = {
+  
+  HeroImage1,
+  HeroImage2,
+  HeroImage3,
+
   PanelMain,
   PanelSide,
+  
   BigScreenImage,
+  
   Image1,
   Image2,
+  
   Category1,
   Category2,
   Category3,
-  FooterLogo,
-
+  
   GridImage1,
   GridImage2,
   GridImage3,
@@ -76,7 +85,8 @@ const Assets = {
   BrandLogo4,
   BrandLogo5,
 
-  HeroImage1,
+  FooterLogo,
+
 };
 
 export default Assets;

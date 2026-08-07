@@ -32,11 +32,6 @@ export default function Header() {
     { label: "New Arrivals", href: "/collections/new" },
     { label: "Best Sellers", href: "/collections/best-sellers" },
     { label: "Shop by Brand", href: "/collections/brands", hasDropdown: true },
-    {
-      label: "Theme Features",
-      href: "/pages/theme-features",
-      hasDropdown: true,
-    },
   ];
 
   const navbarBg = scrolled
@@ -51,7 +46,7 @@ export default function Header() {
     ? "bg-[#1E1B17] text-white/90"
     : "bg-transparent text-white/90";
 
-  const mainNavbarPadding = scrolled ? "pt-8" : "pt-4";
+  const mainNavbarPadding = scrolled ? "py-6" : "py-8";
 
   return (
     <header
@@ -105,7 +100,7 @@ export default function Header() {
       </div>
 
       {/* Row 3  Main Navbar */}
-      <div className="flex items-center justify-between px-14 py-6">
+      <div className={`flex items-center justify-between px-14 ${mainNavbarPadding}`}>
         {/* Left */}
         <div className="flex items-center gap-4">
           <button
@@ -125,12 +120,12 @@ export default function Header() {
         </div>
 
         {/* Center */}
-        <nav className="hidden lg:flex items-center gap-8 xl:gap-6">
+        <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
           {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="text-xs lg:text-[20px] font-dune tracking-[0.015em] flex items-center gap-1 font-normal hover:opacity-70 transition-opacity duration-200"
+              className="text-xs lg:text-[22px] font-dune tracking-[0.015em] flex items-center gap-1 font-normal hover:opacity-70 transition-opacity duration-200"
             >
               {item.label}
               {item.hasDropdown && (
