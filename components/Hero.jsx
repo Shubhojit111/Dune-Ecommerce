@@ -106,7 +106,7 @@ export default function Hero() {
       gsap.set(imageWrap, { x: "0vw", autoAlpha: 1 });
     } else {
       // starts 30% in from the left edge of the viewport, slides to fill the screen
-      gsap.set(imageWrap, { x: "25vw", autoAlpha: 0 });
+      gsap.set(imageWrap, { x: "15vw", autoAlpha: 0 });
       tl.to(imageWrap, {
         x: "0vw",
         autoAlpha: 1,
@@ -125,14 +125,14 @@ export default function Hero() {
     tl.to(heading, {
       y: 0,
       autoAlpha: 1,
-      duration: 1,
+      duration: 0.6,
       delay:0,
       ease: "power2.out",
     })
       .to([eyebrow, subtext].filter(Boolean), {
         y: 0,
         autoAlpha: 1,
-        duration: 0.8,
+        duration: 0.6,
         delay:0,
         ease: "power2.out",
       })

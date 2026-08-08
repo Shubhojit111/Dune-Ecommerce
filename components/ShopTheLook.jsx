@@ -15,7 +15,7 @@ const DEFAULT_HOTSPOTS = [
       name: "Bear Pocket Tee - Black",
       brand: "MUTTONHEAD",
       price: "Rs. 4,700.00",
-      image: "https://placehold.co/300x300/1c1c1c/ffffff?text=Bear+Pocket+Tee",
+      image: Assets.Category1,
     },
   },
   {
@@ -26,7 +26,7 @@ const DEFAULT_HOTSPOTS = [
       name: "Wool Shirt Jacket - Forest",
       brand: "MUTTONHEAD",
       price: "Rs. 12,900.00",
-      image: "https://placehold.co/300x300/33402f/ffffff?text=Shirt+Jacket",
+      image: Assets.Category2,
     },
   },
   {
@@ -37,7 +37,7 @@ const DEFAULT_HOTSPOTS = [
       name: "Merino Turtleneck - Ivory",
       brand: "NAKED AND FAMOUS",
       price: "Rs. 6,200.00",
-      image: "https://placehold.co/300x300/e8e2d6/1c1c1c?text=Turtleneck",
+      image: Assets.Category3,
     },
   },
 ];
@@ -53,21 +53,16 @@ function Hotspot({ spot, active, onToggle }) {
       <button
         onClick={() => onToggle(spot.id)}
         aria-label="Show product"
-        className="relative w-7 h-7 rounded-full bg-white border-none flex items-center justify-center cursor-pointer shadow-[0_0_0_8px_rgba(255,255,255,0.25)]"
+        className="relative w-4 h-4 rounded-full bg-white border-none flex items-center justify-center cursor-pointer shadow-[0_0_0_8px_rgba(0,0,0,0.25)]"
       >
-        {active ? (
-          <X size={14} className="text-[#1c1c1c]" />
-        ) : (
-          <Plus size={14} className="text-[#1c1c1c]" />
-        )}
         {!active && (
-          <span className="absolute inset-0 rounded-full animate-ping bg-white/40" />
+          <span className="absolute inset-0 rounded-full animate-ping bg-[white]/80" />
         )}
       </button>
 
       {active && (
         <div
-          className={`absolute top-[38px] w-[200px] bg-white shadow-xl p-3.5 flex gap-3 items-center z-10 ${
+          className={`absolute top-[26px] w-[200px] bg-white shadow-xl p-3 flex gap-3 items-center z-10 ${
             spot.x > 60 ? "right-0" : "left-0"
           }`}
         >
@@ -98,11 +93,21 @@ function Hotspot({ spot, active, onToggle }) {
 export default function ShopTheLook({
   title = "SHOP THE LOOK",
   heroImage = Assets.Image1,
-  featured = DEFAULT_HOTSPOTS[0].product,
   hotspots = DEFAULT_HOTSPOTS,
 }) {
   const [activeId, setActiveId] = useState(null);
+
+  // NEW: track which product is selected for the left panel.
+  // Defaults to the first hotspot's product so something shows initially.
+  const [selectedId, setSelectedId] = useState(hotspots[0]?.id ?? null);
+  const selectedSpot = hotspots.find((h) => h.id === selectedId) ?? hotspots[0];
+  const featured = selectedSpot?.product ?? {};
   const featuredImage = featured.image || heroImage;
+
+  const handleToggle = (id) => {
+    setActiveId((cur) => (cur === id ? null : id)); // existing behavior, unchanged
+    setSelectedId(id); // NEW: also update the left panel item
+  };
 
   return (
     <div className="w-full bg-white px-4 sm:px-8 lg:px-14 my-14">
@@ -112,7 +117,7 @@ export default function ShopTheLook({
         <div className="w-full lg:w-[30%]  flex flex-col items-center justify-center">
           <div className="group relative h-[50vh] w-full overflow-hidden bg-[#E5E5E5]">
             <Image
-              src={Assets.PanelMain}
+              src={featuredImage}
               alt={featured.name || title}
               fill
               sizes="300px"
@@ -147,14 +152,14 @@ export default function ShopTheLook({
             fill
             className="h-full w-full object-cover"
           />
-          {/* {hotspots.map((spot) => (
+          {hotspots.map((spot) => (
             <Hotspot
               key={spot.id}
               spot={spot}
               active={activeId === spot.id}
-              onToggle={(id) => setActiveId((cur) => (cur === id ? null : id))}
+              onToggle={handleToggle}
             />
-          ))} */}
+          ))}
         </div>
       </div>
     </div>
