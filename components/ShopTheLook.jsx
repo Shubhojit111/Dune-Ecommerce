@@ -1,10 +1,15 @@
 ﻿"use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Plus, X } from "lucide-react";
 import Assets from "@/assets/images/Assets";
 import HeaderBtn from "./buttons/HeaderBtn";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const DEFAULT_HOTSPOTS = [
   {
@@ -109,13 +114,41 @@ export default function ShopTheLook({
     setSelectedId(id); // NEW: also update the left panel item
   };
 
+  const sectionRef = useRef(null);
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+
+  useEffect(() => {
+    if (window.innerWidth < 1024) return;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: leftRef.current, // 👈 watch left element
+        start: "top 20%", // 👈 when it hits top → pin
+        endTrigger: rightRef.current, // 👈 use right section height
+        end: "bottom bottom-=10%", // 👈 unpin at section end
+        pin: leftRef.current,
+        pinSpacing: false,
+        markers: true,
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="w-full bg-white px-4 sm:px-8 lg:px-14 my-14">
+    <div
+      ref={sectionRef}
+      className="w-full bg-white px-4 sm:px-8 lg:px-14 my-14"
+    >
       <HeaderBtn text={title} />
 
-      <div className="w-full mt-10 flex flex-col lg:flex-row gap-8 lg:gap-14 justify-between">
-        <div className="w-full lg:w-[30%]  flex flex-col items-center justify-center">
-          <div className="group relative h-[50vh] w-full overflow-hidden bg-[#E5E5E5]">
+      <div className="w-full mt-10 flex flex-col lg:flex-row gap-8 lg:gap-14 justify-between h-full items-center">
+        <div 
+            ref={leftRef} className="w-full lg:w-[30%] h-fit flex flex-col items-center justify-center">
+          <div
+            className="group relative h-[50vh] w-full overflow-hidden bg-[#E5E5E5]"
+          >
             <Image
               src={featuredImage}
               alt={featured.name || title}
@@ -145,7 +178,10 @@ export default function ShopTheLook({
           </div>
         </div>
 
-        <div className="relative h-[140vh] w-full lg:w-[70%] overflow-hidden bg-[#e5e5e5] flex-shrink-0">
+        <div
+          ref={rightRef}
+          className="relative h-[140vh] w-full lg:w-[70%] overflow-hidden bg-[#e5e5e5] flex-shrink-0"
+        >
           <Image
             src={heroImage}
             alt={title}
