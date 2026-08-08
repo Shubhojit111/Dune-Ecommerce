@@ -9,8 +9,8 @@ import HeaderBtn from "./buttons/HeaderBtn";
 const DEFAULT_HOTSPOTS = [
   {
     id: 1,
-    x: 73,
-    y: 43,
+    x: 63, // ← change this to move left/right
+    y: 43, // ← change this to move up/down
     product: {
       name: "Bear Pocket Tee - Black",
       brand: "MUTTONHEAD",
@@ -20,8 +20,8 @@ const DEFAULT_HOTSPOTS = [
   },
   {
     id: 2,
-    x: 84,
-    y: 55,
+    x: 74,
+    y: 62,
     product: {
       name: "Wool Shirt Jacket - Forest",
       brand: "MUTTONHEAD",
@@ -31,7 +31,7 @@ const DEFAULT_HOTSPOTS = [
   },
   {
     id: 3,
-    x: 76,
+    x: 66,
     y: 84,
     product: {
       name: "Merino Turtleneck - Ivory",
