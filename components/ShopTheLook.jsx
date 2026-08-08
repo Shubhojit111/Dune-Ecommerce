@@ -20,7 +20,7 @@ const DEFAULT_HOTSPOTS = [
       name: "Bear Pocket Tee - Black",
       brand: "MUTTONHEAD",
       price: "Rs. 4,700.00",
-      image: Assets.Category1,
+      image: Assets.Category2,
     },
   },
   {
@@ -31,7 +31,7 @@ const DEFAULT_HOTSPOTS = [
       name: "Wool Shirt Jacket - Forest",
       brand: "MUTTONHEAD",
       price: "Rs. 12,900.00",
-      image: Assets.Category2,
+      image: Assets.Category1,
     },
   },
   {
@@ -126,10 +126,10 @@ export default function ShopTheLook({
         trigger: leftRef.current, // 👈 watch left element
         start: "top 20%", // 👈 when it hits top → pin
         endTrigger: rightRef.current, // 👈 use right section height
-        end: "bottom bottom-=10%", // 👈 unpin at section end
+        end: "bottom bottom-=20%", // 👈 unpin at section end
         pin: leftRef.current,
         pinSpacing: false,
-        markers: true,
+        // markers: true,
       });
     });
 
