@@ -1,6 +1,6 @@
 ﻿﻿"use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   Search,
@@ -13,10 +13,21 @@ import {
   ChevronDown,
 } from "lucide-react";
 import HeaderBtn from "./buttons/HeaderBtn";
+import gsap from "gsap";
+import Assets from "@/assets/images/Assets";
+import Image from "next/image";
+import SubTextBtn from "./buttons/SubTextBtn";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // ✅ NEW
+  const [activeMenu, setActiveMenu] = useState(null);
+  const dropdownRef = useRef(null);
+  const shopItemsRef = useRef([]);
+  const brandColsRef = useRef([]);
+  const closeTimeout = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +37,58 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // ✅ GSAP ANIMATION (open + close smooth)
+  useEffect(() => {
+    if (!dropdownRef.current) return;
+
+    const el = dropdownRef.current;
+
+    if (activeMenu) {
+      gsap.killTweensOf(el);
+
+      gsap.fromTo(
+        el,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" },
+      );
+
+      if (activeMenu === "Shop") {
+        gsap.fromTo(
+          shopItemsRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.12,
+            duration: 0.5,
+            ease: "power3.out",
+          },
+        );
+      }
+
+      if (activeMenu === "Shop by Brand") {
+        gsap.fromTo(
+          brandColsRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.15,
+            duration: 0.5,
+            ease: "power3.out",
+          },
+        );
+      }
+    } else {
+      gsap.to(el, {
+        y: 20,
+        opacity: 0,
+        duration: 0.25,
+        ease: "power2.in",
+      });
+    }
+  }, [activeMenu]);
 
   const navItems = [
     { label: "Shop", href: "/collections/all", hasDropdown: true },
@@ -100,7 +163,9 @@ export default function Header() {
       </div>
 
       {/* Row 3  Main Navbar */}
-      <div className={`flex items-center justify-between px-14 ${mainNavbarPadding}`}>
+      <div
+        className={`flex items-center justify-between px-14 ${mainNavbarPadding}`}
+      >
         {/* Left */}
         <div className="flex items-center gap-4">
           <button
@@ -116,7 +181,7 @@ export default function Header() {
           >
             DUNE
           </Link> */}
-          <HeaderBtn text={"DUNE"} className="!text-[34px] !mt-0 !mb-0"/>
+          <HeaderBtn text={"DUNE"} className="!text-[34px] !mt-0 !mb-0" />
         </div>
 
         {/* Center */}
@@ -125,6 +190,17 @@ export default function Header() {
             <Link
               key={item.label}
               href={item.href}
+              onMouseEnter={() => {
+                if (!item.hasDropdown) return;
+                clearTimeout(closeTimeout.current);
+                setActiveMenu(item.label);
+              }}
+              onMouseLeave={() => {
+                if (!item.hasDropdown) return;
+                closeTimeout.current = setTimeout(() => {
+                  setActiveMenu(null);
+                }, 180);
+              }}
               className="text-xs lg:text-[22px] font-dune tracking-[0.015em] flex items-center gap-1 font-normal hover:opacity-70 transition-opacity duration-200"
             >
               {item.label}
@@ -163,45 +239,150 @@ export default function Header() {
           </Link>
         </div>
       </div>
+      {/* ✅ GLOBAL DROPDOWN (NO LAYOUT CHANGE) */}
+      <div
+        ref={dropdownRef}
+        className={`absolute left-0 top-full borderr w-full bg-white text-black shadow-xl px-11 pt-5 pb-8 z-50 will-change-transform ${
+          activeMenu ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+        style={{ opacity: 0 }}
+        onMouseEnter={() => clearTimeout(closeTimeout.current)}
+        onMouseLeave={() => {
+          closeTimeout.current = setTimeout(() => {
+            setActiveMenu(null);
+          }, 180);
+        }}
+      >
+        {/* SHOP */}
+        {activeMenu === "Shop" && (
+          <div className="flex justify-between gap-16">
+            {/* LEFT: 3 IMAGE CARDS */}
+            <div className="flex gap-8">
+              {[
+                {
+                  title: "APPAREL",
+                  img: Assets.BigScreenImage,
+                  links: ["Sweatshirts", "T-Shirts", "Shirts", "Jeans", "Hats"],
+                },
+                {
+                  title: "OUTERWEAR",
+                  img: Assets.BigScreenImage,
+                  links: ["Jackets", "Vests", "Rain gear"],
+                },
+                {
+                  title: "ACCESSORIES",
+                  img: Assets.BigScreenImage,
+                  links: ["Socks", "Hats"],
+                },
+              ].map((item, i) => (
+                <div
+                  key={item.title}
+                  ref={(el) => (shopItemsRef.current[i] = el)}
+                  className="opacity-0 translate-y-10 w-[210px]"
+                >
+                  {/* IMAGE */}
+                  <div className="w-full h-[320px] overflow-hidden mb-6">
+                    <Image
+                      src={item.img}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
-      {/* Mobile Drawer */}
-      {/* {mobileOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
-          onClick={() => setMobileOpen(false)}
-        >
-          <div
-            className="h-full w-4/5 max-w-xs bg-cream p-6 overflow-y-auto shadow-2xl text-ink"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between mb-8 pb-4 border-b border-taupe/20">
-              <span className="font-dune text-2xl tracking-[0.18em]">
-                DUNE
-              </span>
-              <button
-                onClick={() => setMobileOpen(false)}
-                aria-label="Close menu"
-                className="p-1"
-              >
-                <X size={22} />
-              </button>
-            </div>
-            <ul className="space-y-6">
-              {navItems.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className="text-lg font-dune tracking-wide block hover:opacity-70 transition"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
+                  {/* Brand */}
+                  <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-3.5">
+                    {item.title}
+                  </p>
+
+                  {/* LINKS */}
+                  <ul className="flex flex-col gap-[10.5px] text-black/80">
+                    {item.links.map((link) => (
+                      <li
+                        key={link}
+                        className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px] flex flex-col"
+                      >
+                        {link}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
+
+            {/* RIGHT: PROMO IMAGE */}
+            <div
+              ref={(el) => (shopItemsRef.current[3] = el)}
+              className="opacity-0 translate-y-10 w-[460px]"
+            >
+              <div className="w-full h-[480px] overflow-hidden mb-2">
+                <Image
+                  src={Assets.BigScreenImage}
+                  alt="Promo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-1">
+                25% OFF ALL FLANNEL
+              </p>
+              <p className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px]">
+                Shop flannel shirts collection. Softest organic cotton and new
+                patterns.
+              </p>
+            </div>
           </div>
-        </div>
-      )} */}
+        )}
+
+        {/* BRAND */}
+        {activeMenu === "Shop by Brand" && (
+          <div className="flex justify-between gap-16">
+            <div className="w-full flex items-center justify-start">
+              <div className="mx-auto h-full">
+                {[
+                  {
+                    title: "MUTTONHEAD",
+                  },
+                  {
+                    title: "NAKED AND FAMOUS",
+                  },
+                  {
+                    title: "JUNIPER RUDGE",
+                  },
+                  {
+                    title: "BATHER",
+                  },
+                  {
+                    title: "BESIDE",
+                  },
+                ].map((item, i) => (
+                  <div
+                    key={item.title}
+                    className="flex flex-col items-start justify-start mb-[10.5px]"
+                  >
+                    <p className="text-[12px] text-left uppercase tracking-[0.21em] text-[#121212] font-bold ">
+                      {item.title}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <div className="h-[270px] w-[470px] ">
+                <Image
+                  src={Assets.BigScreenImage}
+                  alt="Brand1"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <HeaderBtn text="BOGO" className="!text-[36px] !text-bold" />
+              <SubTextBtn
+                text="Shop All Brands for your fashion from us"
+                className="!text-black"
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

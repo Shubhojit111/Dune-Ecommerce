@@ -33,7 +33,7 @@ import MultiGridSectionImage1 from "@/assets/images/MultiGridSectionImage1.webp"
 import MultiGridSectionImage2 from "@/assets/images/MultiGridSectionImage2.webp";
 import MultiGridSectionImage3 from "@/assets/images/MultiGridSectionImage3.webp";
 
-import BrandLogo1 from "@/assets/images/hero.png";
+import BrandLogo1 from "@/assets/images/BrandLogo2.webp";
 import BrandLogo2 from "@/assets/images/BrandLogo2.webp";
 import BrandLogo3 from "@/assets/images/BrandLogo3.webp";
 import BrandLogo4 from "@/assets/images/BrandLogo4.webp";

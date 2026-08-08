@@ -18,7 +18,7 @@ export default function HomePage() {
     <>
       <Hero />
 
-      {/* <ProductGridSection
+      <ProductGridSection
         heading="NEW ARRIVALS - TOQUES"
         products={toquesProducts}
         centeredHeading={true}
@@ -34,12 +34,12 @@ export default function HomePage() {
 
       <FeaturedMultiSection />
 
-      <BrandSection /> */}
+      <BrandSection />
 
       <ShopTheLook />
       <FloatingCardSection />
 
-      {/* <ProductGridSection
+      <ProductGridSection
         heading="Shop Categories"
         products={toquesProducts}
         centeredHeading={true}
@@ -61,7 +61,7 @@ export default function HomePage() {
       />
 
       <TimeBanner />
-      <BottomGridSection /> */}
+      <BottomGridSection />
     </>
   );
 }
