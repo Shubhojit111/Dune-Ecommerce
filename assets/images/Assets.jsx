@@ -1,6 +1,6 @@
-﻿import HeroImage1 from "@/assets/images/hero1.png";
-import HeroImage2 from "@/assets/images/hero2.png";
-import HeroImage3 from "@/assets/images/hero3.png";
+﻿import HeroImage1 from "@/assets/images/Hero1.png";
+import HeroImage2 from "@/assets/images/Hero2.png";
+import HeroImage3 from "@/assets/images/Hero3.png";
 
 import PanelMain from "@/assets/images/PanelMain.webp";
 import PanelSide from "@/assets/images/PanelSide.webp";
@@ -11,7 +11,7 @@ import Category1 from "@/assets/images/Category1.webp";
 import Category2 from "@/assets/images/Category2.webp";
 import Category3 from "@/assets/images/Category3.webp";
 
-import FooterLogo from "@/assets/images/FooterLogo.avif";
+import FooterLogo from "@/assets/images/hero.png";
 
 import GridImage1 from "@/assets/images/GridImage1.webp";
 import GridImage2 from "@/assets/images/GridImage2.webp";
@@ -33,7 +33,7 @@ import MultiGridSectionImage1 from "@/assets/images/MultiGridSectionImage1.webp"
 import MultiGridSectionImage2 from "@/assets/images/MultiGridSectionImage2.webp";
 import MultiGridSectionImage3 from "@/assets/images/MultiGridSectionImage3.webp";
 
-import BrandLogo1 from "@/assets/images/BrandLogo1.avif";
+import BrandLogo1 from "@/assets/images/hero.png";
 import BrandLogo2 from "@/assets/images/BrandLogo2.webp";
 import BrandLogo3 from "@/assets/images/BrandLogo3.webp";
 import BrandLogo4 from "@/assets/images/BrandLogo4.webp";
