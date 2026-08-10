@@ -10,7 +10,7 @@ export default function FullBleedSplit() {
         {/* Left Screen: ELEVATED COMFORT */}
         <Link
           href="/collections/elevated-comfort"
-          className="group relative block h-[75vh] min-h-[650px] max-h-[750px] w-full overflow-hidden"
+          className="group relative block aspect-[4/5] sm:aspect-auto sm:min-h-[650px] max-h-[750px] w-full overflow-hidden"
         >
           <Image
             src={Assets.FullBleedSplitImage1}
@@ -34,7 +34,7 @@ export default function FullBleedSplit() {
         {/* Right Screen: PREMIUM FLANNEL */}
         <Link
           href="/collections/premium-flannel"
-          className="group relative block h-[75vh] min-h-[650px] max-h-[750px] w-full overflow-hidden"
+          className="group relative block aspect-[4/5] sm:aspect-auto sm:min-h-[650px] max-h-[750px] w-full overflow-hidden"
         >
           <Image
             src={Assets.FullBleedSplitImage2}

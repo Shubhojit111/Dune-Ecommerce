@@ -1,4 +1,4 @@
-﻿import Hero from "@/components/Hero";
+import Hero from "@/components/Hero";
 import ProductGridSection from "@/components/ProductGridSection";
 import FullBleedSplit from "@/components/FullBleedSplit";
 import CategorySection from "@/components/CategorySection";
@@ -18,12 +18,12 @@ export default function HomePage() {
     <>
       <Hero />
 
-      {/* <ProductGridSection
+      <ProductGridSection
         heading="NEW ARRIVALS - TOQUES"
         products={toquesProducts}
         centeredHeading={true}
         columns={4}
-        containerPadding="px-6 md:px-12 lg:px-14"
+        containerPadding="px-4 sm:px-8 lg:px-14"
         py="py-16 md:py-24"
       />
       <BigScreen />
@@ -44,8 +44,9 @@ export default function HomePage() {
         products={toquesProducts}
         centeredHeading={true}
         columns={4}
-        containerPadding="px-6 md:px-12 lg:px-14"
+        containerPadding="px-4 sm:px-8 lg:px-14"
         py="py-16 md:py-24"
+        isCarousel={false}
       />
       <PanelSection />
 
@@ -54,14 +55,14 @@ export default function HomePage() {
         products={toquesProducts}
         centeredHeading={true}
         columns={4}
-        containerPadding="px-6 md:px-12 lg:px-14"
+        containerPadding="px-4 sm:px-8 lg:px-14"
         py="py-16 md:py-24"
         viewAllHref="/product"
         hasViewAllBtn="true"
       />
 
       <TimeBanner />
-      <BottomGridSection /> */}
+      <BottomGridSection />
     </>
   );
 }

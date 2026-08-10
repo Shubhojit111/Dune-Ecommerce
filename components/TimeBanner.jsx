@@ -4,17 +4,18 @@ import React, { useState, useEffect } from "react";
 import Countdown from "react-countdown";
 import HeaderBtn from "./buttons/HeaderBtn";
 import SubTextBtn from "./buttons/SubTextBtn";
+import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 
 function TimeBlock({ value, label, isLast }) {
   return (
     <div
-      className={`flex items-center px-[22px] ${isLast ? "" : "border-r border-[#1a1a1a]/85"}`}
+      className={`flex items-center justify-center w-full px-[16px] sm:px-[22px] ${isLast ? "" : "border-r border-[#1a1a1a]/85"}`}
     >
       <div className="text-center">
         <div className="text-[2px] leading-none font-dune font-normal text-[#1c1c1c] mb-2.5 tabular-nums">
-          <p className="text-[48px]">{String(value)}</p>
+          <p className="text-[36px] sm:text-[48px]">{String(value)}</p>
         </div>
-        <div className="text-[11px] tracking-[1.5px] text-[#121212] font-bold">
+        <div className="text-[10px] sm:text-[11px] tracking-[1.5px] text-[#121212] font-bold">
           {label}
         </div>
       </div>
@@ -39,18 +40,18 @@ export function TimeBanner({
   const pad = (n) => String(n).padStart(2, "0");
 
   return (
-    <div className="w-full px-14 bg-white">
-      <div className="w-full bg-[#c3b5a2] mx-auto flex items-center justify-between flex-nowrap gap-6 px-[140px] py-10">
+    <div className="w-full px-4 sm:px-14 bg-white">
+      <div className="w-full bg-[#c3b5a2] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between flex-nowrap gap-10 px-0 sm:px-[140px] py-12">
         {/* Left: headline */}  
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-5 px-10 sm:px-0">
           <HeaderBtn
             text="BLACK FRIDAY SALE"
-            className="leading-none !text-[58px] mb-7"
+            className="leading-none sm:max-w-full"
           />
           <SubTextBtn text={subcopy} className="!text-black" />
         </div>
 
-        <div className=" w-fit">
+        <div className=" w-full sm:w-fit">
           {target ? (
             <Countdown
               date={target}
@@ -82,8 +83,4 @@ export function TimeBanner({
       </div>
     </div>
   );
-}
-
-{
-  /* Right: countdown, powered by react-countdown */
 }

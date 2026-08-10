@@ -5,40 +5,40 @@ import HeadTagBtn from "./buttons/HeadTagBtn";
 import HeaderBtn from "./buttons/HeaderBtn";
 import SubTextBtn from "./buttons/SubTextBtn";
 import Assets from "@/assets/images/Assets";
+import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
+import HeadTagBtnSmall from "./buttons/HeadTagBtnSmall";
 
 export default function FloatingCardSection() {
   return (
-    <section className="relative ">
-      <div className="relative h-screen min-h-[690px] w-full overflow-hidden -z-10">
-        <Image
-          src={Assets.Image2}
-          alt="Premium essentials - where quality meets comfort"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-
-        {/* Subtle Overlay to ensure crisp readability */}
-        <div className="absolute inset-0 bg-black/15" />
-
-        <div className="absolute left-14 top-12 p-8 h-fit w-fit  max-w-[380px] items-start justify-center flex bg-white flex-col z-10 ">
-          <HeadTagBtn
-            text="Timeless Craftsmanship"
-            className="!text-black !mb-0 !tracking-[0.3em]"
+    <section className="relative w-full mb-12 md:mb-24">
+      <div className="relative w-full md:h-screen md:min-h-[690px]">
+        {/* Background Image */}
+        <div className="relative aspect-[4/5] sm:aspect-square md:absolute md:inset-0 w-full overflow-hidden">
+          <Image
+            src={Assets.Image2}
+            alt="Premium essentials - where quality meets comfort"
+            fill
+            priority
+            className="object-cover object-center"
           />
-          <HeaderBtn
-            text={
-              <>
-                Wildwood <br /> Essentials
-              </>
-            }
-            className="!leading-[60px] !mt-2.5 mb-3"
+          <div className="absolute inset-0 bg-black/10" />
+        </div>
+
+        {/* Card Block: Stacked below on mobile, absolute floating on md+ */}
+        <div className="relative md:absolute md:left-14 md:top-12 p-6 sm:p-8 h-fit w-full md:max-w-[380px] items-start justify-center gap-2 sm:gap-1.5 flex bg-[#F6F6F4] md:bg-white flex-col z-10">
+          <HeadTagBtnSmall
+            text="Timeless Craftsmanship"
+            className=""
+          />
+          <HeaderBtnSmall
+            text="WILDWOOD ESSENTIALS"
+            className=""
           />
           <SubTextBtn
             text="Fierce elegance is about authenticity, refinement, and grace. It's a powerful presence with sophisticated style that creates a commanding aesthetic. Our Wildwood collection embodies timeless craftsmanship and modern sensibility."
-            className="!text-black !leading-[21px] !tracking-[0.9px] !mb-7 "
+            className="!text-stone-700 !leading-relaxed sm:!mb-6 max-w-[90%] sm:max-w-full"
           />
-          <ExploreBtn text="Explore Collection" />
+          <ExploreBtn text="EXPLORE COLLECTION" />
         </div>
       </div>
     </section>

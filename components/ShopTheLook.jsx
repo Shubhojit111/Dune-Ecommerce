@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -67,7 +67,7 @@ function Hotspot({ spot, active, onToggle }) {
 
       {active && (
         <div
-          className={`absolute top-[26px] w-[200px] bg-white shadow-xl p-3 flex gap-3 items-center z-10 ${
+          className={`hidden lg:flex absolute top-[26px] w-[200px] bg-white shadow-xl p-3 gap-3 items-center z-10 ${
             spot.x > 60 ? "right-0" : "left-0"
           }`}
         >
@@ -102,16 +102,14 @@ export default function ShopTheLook({
 }) {
   const [activeId, setActiveId] = useState(null);
 
-  // NEW: track which product is selected for the left panel.
-  // Defaults to the first hotspot's product so something shows initially.
   const [selectedId, setSelectedId] = useState(hotspots[0]?.id ?? null);
   const selectedSpot = hotspots.find((h) => h.id === selectedId) ?? hotspots[0];
   const featured = selectedSpot?.product ?? {};
   const featuredImage = featured.image || heroImage;
 
   const handleToggle = (id) => {
-    setActiveId((cur) => (cur === id ? null : id)); // existing behavior, unchanged
-    setSelectedId(id); // NEW: also update the left panel item
+    setActiveId((cur) => (cur === id ? null : id)); 
+    setSelectedId(id); 
   };
 
   const sectionRef = useRef(null);
@@ -123,10 +121,10 @@ export default function ShopTheLook({
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
-        trigger: leftRef.current, // 👈 watch left element
-        start: "top 20%", // 👈 when it hits top → pin
-        endTrigger: rightRef.current, // 👈 use right section height
-        end: "bottom bottom-=20%", // 👈 unpin at section end
+        trigger: leftRef.current, 
+        start: "top 20%", 
+        endTrigger: rightRef.current, 
+        end: "bottom bottom-=20%",
         pin: leftRef.current,
         pinSpacing: false,
         // markers: true,
@@ -143,44 +141,11 @@ export default function ShopTheLook({
     >
       <HeaderBtn text={title} />
 
-      <div className="w-full mt-10 flex flex-col lg:flex-row gap-8 lg:gap-14 justify-between h-full items-center">
-        <div 
-            ref={leftRef} className="w-full lg:w-[30%] h-fit flex flex-col items-center justify-center">
-          <div
-            className="group relative h-[50vh] w-full overflow-hidden bg-[#E5E5E5]"
-          >
-            <Image
-              src={featuredImage}
-              alt={featured.name || title}
-              fill
-              sizes="300px"
-              className="object-cover transition-all duration-500 group-hover:scale-105"
-            />
-            <div className="absolute bottom-0 left-0 z-50 p-2 w-full">
-              <button className="w-full py-1.5 bg-[#2a2a28] text-white text-[12px] font-medium tracking-wider hidden group-hover:block duration-500 transition-all">
-                Quick View
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-3 text-center">
-            <p className="text-[10px] md:text-[12.5px] tracking-wider text-[#121212] font-semibold">
-              {featured.name || "Product Name"}
-            </p>
-            {featured.brand && (
-              <p className="mt-1 text-[11.5px] uppercase tracking-[0.15em] text-[#121212] font-medium">
-                {featured.brand}
-              </p>
-            )}
-            <p className="mt-1.5 text-xs md:text-[13px] text-ink font-semibold">
-              {featured.price}
-            </p>
-          </div>
-        </div>
-
+      <div className="w-full mt-4 sm:mt-10 flex flex-col lg:flex-row gap-4 lg:gap-14 justify-between h-full items-center">
+        {/* Main Hero Image with hotspots (order 1 on mobile, order 2 on desktop) */}
         <div
           ref={rightRef}
-          className="relative h-[140vh] w-full lg:w-[70%] overflow-hidden bg-[#e5e5e5] flex-shrink-0"
+          className="order-1 lg:order-2 relative h-[45vh] sm:h-[60vh] lg:h-[140vh] w-full lg:w-[70%] overflow-hidden bg-[#e5e5e5] flex-shrink-0"
         >
           <Image
             src={heroImage}
@@ -196,6 +161,41 @@ export default function ShopTheLook({
               onToggle={handleToggle}
             />
           ))}
+        </div>
+
+        {/* Selected Product Panel – hidden on mobile, visible on desktop */}
+        <div 
+          ref={leftRef} className="flex order-2 lg:order-1 w-full lg:w-[30%] h-[100px] sm:h-fit flex-col items-start lg:items-center justify-center">
+          {/* On Mobile: Horizontal card; On Desktop: Vertical stacked card */}
+          <div className="flex lg:flex-col items-center gap-4 lg:gap-0 w-full bg-transparent p-0 rounded-sm">
+            <div className="group relative h-24 w-24 lg:h-[50vh] lg:w-full flex-shrink-0 overflow-hidden bg-[#E5E5E5]">
+              <Image
+                src={featuredImage}
+                alt={featured.name || title}
+                fill
+                className="object-cover transition-all duration-500 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 z-50 p-2 w-full hidden lg:block">
+                <button className="w-full py-1.5 bg-[#2a2a28] text-white text-[12px] font-medium tracking-wider hidden group-hover:block duration-500 transition-all">
+                  Quick View
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-0 lg:mt-3 text-left lg:text-center">
+              <p className="text-[13px] lg:text-[12.5px] tracking-wider text-[#121212] font-semibold">
+                {featured.name || "Product Name"}
+              </p>
+              {featured.brand && (
+                <p className="mt-1 lg:mt-1 text-[11px] lg:text-[11.5px] uppercase tracking-[0.15em] text-[#767676] lg:text-[#121212] font-medium">
+                  {featured.brand}
+                </p>
+              )}
+              <p className="mt-1.5 lg:mt-1.5 text-xs lg:text-[13px] text-ink font-semibold">
+                {featured.price}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

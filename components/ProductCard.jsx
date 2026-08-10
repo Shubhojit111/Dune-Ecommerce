@@ -8,7 +8,7 @@ export default function ProductCard({ product }) {
   return (
     <div className="group relative flex flex-col items-center">
       <Link href={`/products/${product.handle}`} className="block w-full">
-        <div className="group relative h-[45vh] w-full overflow-hidden bg-[#E5E5E5] transition-all duration-300 group-hover:opacity-95">
+        <div className="group relative aspect-[3/4] sm:aspect-auto h-[160px] sm:h-[280px] md:h-[45vh] w-full overflow-hidden bg-[#E5E5E5] transition-all duration-300 group-hover:opacity-95">
           <Image
             src={product.image}
             alt={product.name}

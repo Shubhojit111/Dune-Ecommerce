@@ -29,18 +29,20 @@ const brands = [
 
 export default function BrandSection() {
   return (
-    <section className="bg-white my-24 ">
-      <div className="mx-auto w-full px-6 lg:px-14">
-        <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-12 lg:gap-x-16">
-          {brands.map((brand) => (
+    <section className="bg-white sm:my-24 ">
+      <div className="mx-auto w-full px-4 sm:px-8 lg:px-14">
+        <div className="grid grid-cols-2 md:flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-14 gap-y-8 sm:gap-y-12 lg:gap-x-16">
+          {brands.map((brand, index) => (
             <div
               key={brand.name}
-              className="group flex items-center justify-center"
+              className={`group flex items-center justify-center ${
+                index === 4 ? "col-span-2 md:col-span-1" : ""
+              }`}
             >
               <Image
                 src={brand.image}
                 alt={brand.name}
-                className="h-[84px] w-auto object-contain opacity-70 transition-all duration-500 group-hover:opacity-100"
+                className="h-[80px] sm:h-[84px] w-auto object-contain opacity-70 transition-all duration-500 group-hover:opacity-100"
               />
             </div>
           ))}

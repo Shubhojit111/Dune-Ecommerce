@@ -168,11 +168,11 @@ export default function Hero() {
               <div className="absolute inset-0 bg-black/15" />
             </div>
 
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white pt-16 borderr">
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 text-center text-white pt-14 sm:pt-16">
               {slide.eyebrow && (
                 <p
                   data-hero-eyebrow
-                  className="text-[12px] md:text-[13px] uppercase tracking-[0.25em] font-semibold text-white/90 "
+                  className="text-[14px] md:text-[13px] uppercase tracking-[0.25em] font-bold text-white/90 "
                 >
                   {slide.eyebrow}
                 </p>
@@ -180,7 +180,7 @@ export default function Hero() {
               {slide.heading && (
                 <h1
                   data-hero-heading
-                  className="mt-2.5 mb-4 font-dune text-5xl sm:text-6xl md:text-[75px] tracking-tight uppercase leading-none font-normal text-white drop-shadow-sm"
+                  className="mt-3 sm:mt-3 mb-5 sm:mb-4 font-dune text-[44px] sm:text-5xl md:text-[75px] tracking-tight uppercase leading-tight font-normal text-white drop-shadow-sm"
                 >
                   {slide.heading}
                 </h1>
@@ -188,7 +188,7 @@ export default function Hero() {
               {slide.subtext && (
                 <p
                   data-hero-subtext
-                  className="mb-8 text-sm md:text-base text-white/90 max-w-md font-semibold tracking-[0.08em]"
+                  className="mb-8 text-[16px] sm:text-base text-white/90 font-semibold tracking-[0.08em] max-w-[80%] sm:max-w-md"
                 >
                   {slide.subtext}
                 </p>

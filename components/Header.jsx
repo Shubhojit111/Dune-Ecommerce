@@ -1,4 +1,4 @@
-﻿﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -109,7 +109,7 @@ export default function Header() {
     ? "bg-[#1E1B17] text-white/90"
     : "bg-transparent text-white/90";
 
-  const mainNavbarPadding = scrolled ? "py-6" : "py-8";
+  const mainNavbarPadding = scrolled ? "py-4 sm:py-6" : "py-8";
 
   return (
     <header
@@ -117,9 +117,11 @@ export default function Header() {
     >
       {/* Row 1  Announcement Bar */}
       <div
-        className={`text-[11px] font-medium tracking-[0.1em] py-2.5 px-14 text-center select-none transition-colors duration-300 bg-[#785C43]`}
+        className={`text-[11px] font-medium tracking-[0.1em] py-2.5 px-4 sm:px-8 lg:px-14 text-center select-none transition-colors duration-300 bg-[#785C43] 
+          ${scrolled ? "hidden sm:block" : ""}
+          `}
       >
-        <div className="flex items-center justify-center gap-1.5 text-[10px] text-white">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 text-[10px] text-white">
           <span className="uppercase font-semibold">HASSLE-FREE RETURNS</span>
           <span className="opacity-90 tracking-[0.08em]">
             30-day postage paid returns
@@ -129,7 +131,7 @@ export default function Header() {
 
       {/* Row 2  Address / Socials / Currency (lg+) */}
       <div
-        className={`hidden lg:flex items-center justify-between mx-14 overflow-hidden text-[12px] transition-all duration-300 border-b-white ${addressRowState} ${addressRowBg}`}
+        className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 border-b-white ${addressRowState} ${addressRowBg}`}
       >
         <div className="flex items-center font-normal tracking-wide">
           <span>337 Roncesvalles Ave, Toronto</span>
@@ -164,24 +166,11 @@ export default function Header() {
 
       {/* Row 3  Main Navbar */}
       <div
-        className={`flex items-center justify-between px-14 ${mainNavbarPadding}`}
+        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${mainNavbarPadding}`}
       >
         {/* Left */}
         <div className="flex items-center gap-4">
-          <button
-            className="lg:hidden p-1"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu size={22} />
-          </button>
-          {/* <Link
-            href="/"
-            className="font-dune text-2xl lg:text-[34px] tracking-[0.01em] font-normal uppercase select-none"
-          >
-            DUNE
-          </Link> */}
-          <HeaderBtn text={"DUNE"} className="!text-[34px] !mt-0 !mb-0" />
+          <HeaderBtn text={"DUNE"} className="!text-[28px] sm:!text-[34px] !mt-0 !mb-0" />
         </div>
 
         {/* Center */}
@@ -216,26 +205,33 @@ export default function Header() {
         </nav>
 
         {/* Right */}
-        <div className="flex items-center gap-5 lg:gap-6">
-          <Link
-            href="/account"
-            aria-label="Account"
-            className="hidden sm:block hover:opacity-70 transition p-1"
-          >
-            <User size={20} strokeWidth={1.75} />
-          </Link>
+        <div className="flex items-center gap-4 sm:gap-5 lg:gap-6">
           <button
             aria-label="Search"
             className="hover:opacity-70 transition p-1"
           >
-            <Search size={20} strokeWidth={1.75} />
+            <Search size={22} strokeWidth={1.5} />
+          </button>
+          <button
+            className="lg:hidden p-1 hover:opacity-70 transition"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open menu"
+          >
+            <Menu size={24} strokeWidth={1.5} />
           </button>
           <Link
             href="/cart"
             aria-label="Cart"
             className="relative hover:opacity-70 transition p-1"
           >
-            <ShoppingBag size={20} strokeWidth={1.75} />
+            <ShoppingBag size={22} strokeWidth={1.5} />
+          </Link>
+          <Link
+            href="/account"
+            aria-label="Account"
+            className="hidden sm:block hover:opacity-70 transition p-1"
+          >
+            <User size={22} strokeWidth={1.5} />
           </Link>
         </div>
       </div>
@@ -260,17 +256,17 @@ export default function Header() {
               {[
                 {
                   title: "APPAREL",
-                  img: Assets.BigScreenImage,
+                  img: Assets.HeroImage1,
                   links: ["Sweatshirts", "T-Shirts", "Shirts", "Jeans", "Hats"],
                 },
                 {
                   title: "OUTERWEAR",
-                  img: Assets.BigScreenImage,
+                  img: Assets.HeroImage2,
                   links: ["Jackets", "Vests", "Rain gear"],
                 },
                 {
                   title: "ACCESSORIES",
-                  img: Assets.BigScreenImage,
+                  img: Assets.HeroImage3,
                   links: ["Socks", "Hats"],
                 },
               ].map((item, i) => (
@@ -382,6 +378,58 @@ export default function Header() {
           </div>
         )}
       </div>
+
+      {/* MOBILE DRAWER */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 flex lg:hidden">
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileOpen(false)}
+          />
+          <div className="relative w-full max-w-xs bg-white h-full shadow-2xl flex flex-col justify-between p-6 z-10 overflow-y-auto">
+            <div>
+              <div className="flex items-center justify-between pb-6 border-b border-stone-200">
+                <HeaderBtn text={"DUNE"} className="!text-[28px] !mt-0 !mb-0" />
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  className="p-2 text-stone-700 hover:text-black"
+                  aria-label="Close menu"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              <nav className="mt-6 flex flex-col gap-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="font-dune text-3xl tracking-wide text-ink hover:opacity-70 transition py-1"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+
+            <div className="pt-6 border-t border-stone-200 flex flex-col gap-4 text-xs font-semibold uppercase tracking-wider text-stone-700">
+              <Link
+                href="/account"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 py-1 hover:text-black"
+              >
+                <User size={18} />
+                <span>Account</span>
+              </Link>
+              <div className="flex items-center justify-between py-1 text-stone-600">
+                <span>Location / Currency</span>
+                <span className="font-bold text-black">India (INR)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

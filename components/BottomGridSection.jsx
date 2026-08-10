@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Assets from "@/assets/images/Assets";
 
 const galleryImages = [
@@ -30,12 +30,12 @@ const galleryImages = [
 
 export default function BottomGridSection() {
   return (
-    <section className="w-full bg-white px-14 mt-16">
+    <section className="w-full bg-white px-4 sm:px-8 lg:px-14 mt-16">
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-        {galleryImages.map((image) => (
+        {galleryImages.map((image, index) => (
           <div
-            key={image.alt}
-            className="relative h-[380px] overflow-hidden bg-[#e5e2dc] md:h-[460px]"
+            key={index}
+            className="relative aspect-square w-full overflow-hidden bg-[#e5e2dc] md:h-[460px] md:aspect-auto"
           >
             <Image
               src={image.src}
