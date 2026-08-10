@@ -87,7 +87,7 @@ export default function Header() {
         duration: 0.25,
         ease: "power2.in",
       });
-    };
+    }
   }, [activeMenu]);
 
   const navItems = [
