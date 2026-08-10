@@ -87,7 +87,7 @@ export default function Header() {
         duration: 0.25,
         ease: "power2.in",
       });
-    }
+    };
   }, [activeMenu]);
 
   const navItems = [
@@ -242,10 +242,9 @@ export default function Header() {
       {/* ✅ GLOBAL DROPDOWN (NO LAYOUT CHANGE) */}
       <div
         ref={dropdownRef}
-        className={`absolute left-0 top-full borderr w-full bg-white text-black shadow-xl px-11 pt-5 pb-8 z-50 will-change-transform ${
-          activeMenu ? "pointer-events-auto" : "pointer-events-none"
+        className={`absolute left-0 top-full w-full bg-white text-black shadow-xl px-11 pt-5 pb-8 z-50 will-change-transform ${
+          activeMenu ? "pointer-events-auto" : "pointer-events-none hidden"
         }`}
-        style={{ opacity: 0 }}
         onMouseEnter={() => clearTimeout(closeTimeout.current)}
         onMouseLeave={() => {
           closeTimeout.current = setTimeout(() => {
@@ -290,7 +289,7 @@ export default function Header() {
                   </div>
 
                   {/* Brand */}
-                  <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-3.5">
+                  <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-black mb-3.5">
                     {item.title}
                   </p>
 
@@ -359,7 +358,7 @@ export default function Header() {
                     key={item.title}
                     className="flex flex-col items-start justify-start mb-[10.5px]"
                   >
-                    <p className="text-[12px] text-left uppercase tracking-[0.21em] text-[#121212] font-bold ">
+                    <p className="text-[12px] text-left uppercase tracking-[0.21em] text-[#121212] font-black ">
                       {item.title}
                     </p>
                   </div>
