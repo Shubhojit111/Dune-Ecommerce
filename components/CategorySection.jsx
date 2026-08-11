@@ -41,15 +41,15 @@ export default function CategorySection() {
               href={cat.href}
               className="flex flex-col items-center"
             >
-              <div className="hover:scale-y-[1.03] transition-transform duration-500 ease-in-out relative aspect-square w-full overflow-hidden bg-[#EAEAEA]">
+              <div className="relative aspect-square w-full overflow-hidden bg-[#EAEAEA]">
                 <Image
                   src={cat.image}
                   alt={cat.label}
                   fill
-                  className="object-cover object-center"
+                  className="object-cover object-center hover:scale-[1.05] transition-transform duration-500 ease-in-out "
                 />
               </div>
-              <h3 className="mt-2 font-dune text-[30px] sm:text-xl md:text-3xl tracking-wide uppercase text-ink font-normal text-center">
+              <h3 className="mt-2 sm:mt-4 font-dune text-[30px] sm:text-xl md:text-3xl tracking-wide uppercase text-ink font-normal text-center">
                 {cat.label}
               </h3>
             </Link>

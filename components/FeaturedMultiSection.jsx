@@ -12,7 +12,7 @@ export default function FeaturedMultiSection() {
     <section className="bg-white px-4 sm:px-8 lg:px-6 py-16">
       <div className="w-full mx-auto space-y-6 md:space-y-6">
         {/* Row 1: Two promo boxes side-by-side */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6">
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6">
           {/* Top Left: Iconic Basics */}
           <Link
             href="/collections/iconic-basics"
@@ -25,21 +25,17 @@ export default function FeaturedMultiSection() {
               priority
               className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white gap-1.5">
-              <HeadTagBtn 
-              text="ICONIC BASICS"
-              className="text-white"
-              />
-              <HeaderBtn 
-              text="THE ORIGINAL" 
-              className="text-white"
+
+            <div className="absolute inset-0 bg-black/20 z-10" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white gap-1.5 z-20">
+              <HeadTagBtn text="ICONIC BASICS" className="text-white" />
+              <HeaderBtn text="THE ORIGINAL" className="text-white" />
+
+              <SubTextBtn
+                text="Timeless pieces that define your wardrobe."
+                className="mb-4"
               />
 
-              <SubTextBtn 
-              text="Timeless pieces that define your wardrobe."
-              className="mb-4"
-              />
-              
               <ExploreBtn text="Discover" />
             </div>
           </Link>
@@ -56,17 +52,13 @@ export default function FeaturedMultiSection() {
               priority
               className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute flex flex-col items-end justify-center right-0 bottom-0 px-4 md:px-8 py-8 gap-1.5 text-end">
-              <HeadTagBtn 
-              text="PREMIUM DENIM"
-              className="text-white"
-              />
-              <HeaderBtn 
-              text="CRAFTED QUALITY" 
-              className="text-white"/>
-              <SubTextBtn 
-              text="Expertly made denim for the discerning customer."
-              className="mb-4"
+            <div className="absolute inset-0 bg-black/20 z-10" />
+            <div className="absolute flex flex-col items-end justify-center right-0 bottom-0 px-4 md:px-8 py-8 gap-1.5 text-end z-20">
+              <HeadTagBtn text="PREMIUM DENIM" className="text-white" />
+              <HeaderBtn text="CRAFTED QUALITY" className="text-white" />
+              <SubTextBtn
+                text="Expertly made denim for the discerning customer."
+                className="mb-4"
               />
               <ExploreBtn text="Shop now" />
             </div>
@@ -83,14 +75,13 @@ export default function FeaturedMultiSection() {
             alt="Experience Our Store"
             fill
             priority
-            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
           />
-          <div className="absolute inset-0 flex flex-col items-start justify-end px-4 md:px-6 pb-4 md:p-10 text-left text-white">
-            <HeadTagBtn 
-            text="VISIT US"
-            className="text-white"
-            />
-            <HeaderBtnSmall text="EXPERIENCE OUR STORE" className=" my-1.5"/>
+          <div className="absolute inset-0 bg-black/20 z-10" />
+
+          <div className="absolute inset-0 flex flex-col items-start justify-end px-4 md:px-6 pb-4 md:p-10 text-left text-white z-20">
+            <HeadTagBtn text="VISIT US" className="text-white" />
+            <HeaderBtnSmall text="EXPERIENCE OUR STORE" className=" my-1.5" />
             <SubTextBtn text="337 Roncesvalles Ave, Toronto" className="mb-4" />
             <ExploreBtn text={"GET DIRECTIONS"} />
           </div>

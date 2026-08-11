@@ -39,7 +39,9 @@ export default function HomePage() {
       <ShopTheLook />
       <FloatingCardSection />
 
-      <ProductGridSection
+      <CategorySection />
+
+      {/* <ProductGridSection
         heading="Shop Categories"
         products={toquesProducts}
         centeredHeading={true}
@@ -47,8 +49,9 @@ export default function HomePage() {
         containerPadding="px-4 sm:px-8 lg:px-14"
         py="py-16 md:py-24"
         isCarousel={false}
-      />
-      <PanelSection />
+        />
+      <PanelSection /> */}
+        
 
       <ProductGridSection
         heading="Shop Sweatshirts"

@@ -31,7 +31,7 @@ export default function BrandSection() {
   return (
     <section className="bg-white sm:my-24 ">
       <div className="mx-auto w-full px-4 sm:px-8 lg:px-14">
-        <div className="grid grid-cols-2 md:flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-14 gap-y-8 sm:gap-y-12 lg:gap-x-16">
+        <div className="grid grid-cols-2 md:flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-14 gap-y-2 sm:gap-y-12 lg:gap-x-16">
           {brands.map((brand, index) => (
             <div
               key={brand.name}
@@ -42,7 +42,7 @@ export default function BrandSection() {
               <Image
                 src={brand.image}
                 alt={brand.name}
-                className="h-[80px] sm:h-[84px] w-auto object-contain opacity-70 transition-all duration-500 group-hover:opacity-100"
+                className="h-[80px] sm:h-[84px] w-auto object-contain opacity-60 transition-all duration-500 group-hover:opacity-100"
               />
             </div>
           ))}

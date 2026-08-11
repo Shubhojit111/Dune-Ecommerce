@@ -7,7 +7,7 @@ import SubTextBtn from "./buttons/SubTextBtn";
 
 const BigScreen = () => {
   return (
-    <section className="relative w-full mb-12 md:mb-24">
+    <section className="relative w-full mb-6 md:mb-24">
       {/* Container: Stacked on mobile, overlay on desktop */}
       <div className="relative w-full md:h-[800px] lg:h-[1200px] xl:h-[1500px]">
         {/* Image wrapper */}
@@ -54,7 +54,7 @@ const BigScreen = () => {
           <HeadTagBtn text="SHOP THE LOOK" className="!text-stone-600 md:!text-white" />
           <HeaderBtn
             text="MADE TO GO TOGETHER"
-            className="!text-stone-900 md:!text-white"
+            className="!text-stone-900 md:!text-white !max-w-[3/4] !sm:w-full"
           />
           <SubTextBtn
             text="Pieces that elevate each other, no matter how you style them. Designed to feel effortless every time."
