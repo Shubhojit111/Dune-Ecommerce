@@ -1,15 +1,14 @@
 import Assets from "@/assets/images/Assets";
 import Image from "next/image";
 import Link from "next/link";
-import HeaderBtn from "./buttons/HeaderBtn";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 
-const categories = [
+const defaultCategories = [
   {
-    id: "tshirts",
-    label: "T-SHIRTS",
+    id: "hats",
+    label: "HATS",
     image: Assets.Category1,
-    href: "/collections/t-shirts",
+    href: "/collections/hats",
   },
   {
     id: "jackets",
@@ -18,20 +17,30 @@ const categories = [
     href: "/collections/jackets",
   },
   {
-    id: "sweatshirts",
-    label: "SWEATSHIRTS",
+    id: "sweatpants",
+    label: "SWEATPANTS",
     image: Assets.Category3,
-    href: "/collections/sweatshirts",
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "homegoods",
+    label: "HOMEGOODS",
+    image: Assets.Category1,
+    href: "/collections/homegoods",
   },
 ];
 
-
-export default function CategorySection() {
+export default function CategorySection({
+  buttonText = "SHOP BY CATEGORY",
+  categories = defaultCategories,
+  containerPadding = "px-4 sm:px-8 lg:px-14",
+  sectionPadding = "py-16 md:py-24",
+}) {
   return (
-    <section className="bg-white px-4 sm:px-8 lg:px-14 py-16 md:py-24">
+    <section className={`bg-white ${containerPadding} ${sectionPadding}`}>
       <div className="w-full mx-auto">
         <div className="mb-12 flex justify-center">
-          <HeaderBtnSmall text="SHOP BY CATEGORY" className="!text-stone-900" />
+          <HeaderBtnSmall text={buttonText || "SHOP BY CATEGORY"} className="!text-stone-900" />
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">

@@ -10,7 +10,7 @@ import HeadTagBtnSmall from "./buttons/HeadTagBtnSmall";
 
 export default function FloatingCardSection() {
   return (
-    <section className="relative w-full mb-12 md:mb-0 borderr">
+    <section className="relative w-full mb-12 md:mb-0">
       <div className="relative w-full md:h-screen md:min-h-[690px]">
         {/* Background Image */}
         <div className="sm:absolute inset-0 relative h-[400px] md:h-full  overflow-hidden">

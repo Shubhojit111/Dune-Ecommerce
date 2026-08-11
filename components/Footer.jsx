@@ -127,7 +127,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-[#e9e8e6] text-[#1c1c1c]">
-      <div className="w-full px-4 sm:px-8 lg:px-14 py-12 md:py-16">
+      <div className="w-full px-4 sm:px-8 lg:px-14 pt-0 pb-12 md:py-16">
         {/* MOBILE LAYOUT (< lg): Accordions + Centered Logo & Form (Matches Image 4 & 5) */}
         <div className="flex flex-col lg:hidden w-full">
           {/* Accordion List */}
@@ -140,7 +140,7 @@ export default function Footer() {
                     onClick={() => toggleSection(sec.title)}
                     className="w-full py-4 flex items-center justify-between text-xs tracking-[0.2em] font-semibold text-center uppercase text-[#1c1c1c] transition hover:opacity-70"
                   >
-                    <span className="mx-auto pl-5">{sec.title}</span>
+                    <span className="mx-auto pl-5 text-[14px]">{sec.title}</span>
                     {isOpen ? <ChevronDown className="rotate-180 transition-transform" size={16} /> : <ChevronDown size={16} />}
                   </button>
 
@@ -162,11 +162,8 @@ export default function Footer() {
             })}
           </div>
 
-          {/* Horizontal Divider Line above Mountain Logo */}
-          <div className="w-full border-t border-stone-300 mt-8 mb-6" />
-
           {/* Mountains Logo */}
-          <div className="flex flex-col items-center justify-center mb-6">
+          <div className="flex flex-col items-center justify-center mt-6 mb-6">
             <div className="relative w-[150px] h-[130px]">
               <Image
                 src={Assets.FooterLogo}

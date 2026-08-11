@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 
@@ -15,6 +15,7 @@ export default function ProductGridSection({
   isCarousel = true,
 }) {
   const scrollRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -27,6 +28,24 @@ export default function ProductGridSection({
       scrollRef.current.scrollBy({ left: 240, behavior: "smooth" });
     }
   };
+
+  const updateScrollProgress = () => {
+    if (scrollRef.current) {
+      const el = scrollRef.current;
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll > 0) {
+        setScrollProgress((el.scrollLeft / maxScroll) * 100);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateScrollProgress();
+    el.addEventListener("scroll", updateScrollProgress);
+    return () => el.removeEventListener("scroll", updateScrollProgress);
+  }, [products]);
 
   const colsClass =
     columns === 4
@@ -60,7 +79,7 @@ export default function ProductGridSection({
           <div>
             <div
               ref={scrollRef}
-              className="flex md:grid md:grid-cols-4 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-4 md:gap-6 pb-2"
+              className="flex md:grid md:grid-cols-4 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-4 md:gap-6 pb-4 [&::-webkit-scrollbar]:hidden"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {products.map((product) => (
@@ -73,24 +92,27 @@ export default function ProductGridSection({
               ))}
             </div>
 
-            {/* Mobile Scrollbar Control Bar (matching Image 1) */}
-            <div className="flex md:hidden items-center justify-between gap-3 mt-6 px-2">
+            {/* Mobile Scrollbar Control Bar */}
+            <div className="flex md:hidden items-center justify-between gap-3 mt-4 px-2">
               <button
                 onClick={scrollLeft}
                 aria-label="Scroll left"
                 className="text-stone-500 hover:text-black p-1 text-xs font-bold"
               >
-                ▲
+                ◀
               </button>
               <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
-                <div className="h-full bg-stone-700 w-1/3 rounded-full transition-all duration-300" />
+                <div
+                  className="h-full bg-stone-700 rounded-full transition-all duration-300"
+                  style={{ width: `${Math.max(20, Math.min(100, 33 + scrollProgress * 0.5))}%`, marginLeft: `${scrollProgress * 0.5}%` }}
+                />
               </div>
               <button
                 onClick={scrollRight}
                 aria-label="Scroll right"
                 className="text-stone-500 hover:text-black p-1 text-xs font-bold"
               >
-                ▼
+                ▶
               </button>
             </div>
           </div>
