@@ -1,6 +1,6 @@
 import "./globals.css";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Impulse Theme — Dune | Warm, earthy essentials",
@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
+        <Navbar />
         <main>{children}</main>
         <Footer />
       </body>

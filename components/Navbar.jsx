@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -9,8 +9,11 @@ import {
   Menu,
   X,
   ChevronDownIcon,
+  Instagram,
+  Facebook,
   Link2,
   ChevronDown,
+  Pin,
 } from "lucide-react";
 import HeaderBtn from "./buttons/HeaderBtn";
 import gsap from "gsap";
@@ -18,58 +21,11 @@ import Assets from "@/assets/images/Assets";
 import Image from "next/image";
 import SubTextBtn from "./buttons/SubTextBtn";
 
-function InstagramIcon({ size = 26 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect
-        x="3"
-        y="3"
-        width="18"
-        height="18"
-        rx="5"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
-      <circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" />
-    </svg>
-  );
-}
-
-function FacebookIcon({ size = 26 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M14 8.5V7.1c0-.7.5-1.1 1.2-1.1H17V3h-2.6C11.7 3 10 4.7 10 7.2v1.3H8v3h2V21h3.2v-9.5h2.6l.5-3H13.2z" />
-    </svg>
-  );
-}
-
-function PinterestIcon({ size = 26 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0a12 12 0 0 0-4.37 23.17c-.06-.94-.11-2.38.02-3.4.12-.93.8-5.9.8-5.9s-.2-.4-.2-1c0-.94.55-1.64 1.23-1.64.58 0 .86.43.86.96 0 .58-.37 1.46-.56 2.27-.16.68.34 1.24 1.01 1.24 1.21 0 2.14-1.28 2.14-3.12 0-1.63-1.17-2.77-2.84-2.77-1.94 0-3.07 1.45-3.07 2.95 0 .58.22 1.21.5 1.55a.2.2 0 0 1 .05.19c-.05.22-.17.68-.2.78-.03.13-.1.16-.24.1-.9-.42-1.46-1.73-1.46-2.79 0-2.27 1.65-4.36 4.76-4.36 2.5 0 4.44 1.78 4.44 4.16 0 2.48-1.56 4.48-3.74 4.48-.73 0-1.42-.38-1.65-.83l-.45 1.72c-.16.63-.6 1.42-.9 1.9A12 12 0 1 0 12 0z" />
-    </svg>
-  );
-}
-
-export default function Header() {
+export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
 
-  // ✅ NEW
   const [activeMenu, setActiveMenu] = useState(null);
   const dropdownRef = useRef(null);
   const shopItemsRef = useRef([]);
@@ -88,7 +44,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ✅ GSAP ANIMATION (open + close smooth)
   useEffect(() => {
     if (!dropdownRef.current) return;
 
@@ -140,7 +95,6 @@ export default function Header() {
     }
   }, [activeMenu]);
 
-  // ✅ MOBILE DRAWER GSAP ANIMATION
   useEffect(() => {
     if (mobileOpen) {
       const tl = gsap.timeline();
@@ -193,7 +147,7 @@ export default function Header() {
     { label: "New Arrivals", href: "/collections/new" },
     { label: "Best Sellers", href: "/collections/best-sellers" },
     { label: "Shop by Brand", href: "/collections/brands", hasDropdown: true, hasAccent: true },
-    { label: "Theme Features", href: "/theme-features", hasDropdown: true, hasAccent: true },
+   
   ];
 
   const navbarBg = scrolled
@@ -212,7 +166,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed w-full top-0 z-40 transition-colors duration-300 ${navbarBg}`}
+      className={`fixed w-full top-0 z-[9999] transition-colors duration-300 ${navbarBg}`}
     >
       {/* Row 1  Announcement Bar */}
       <div
@@ -241,19 +195,19 @@ export default function Header() {
               aria-label="Instagram"
               className="hover:opacity-75 transition"
             >
-              <Link2 width={20} height={20} />
+              <Pin width={20} height={20} strokeWidth={1.5} />
             </button>
             <button
               aria-label="Facebook"
               className="hover:opacity-75 transition"
             >
-              <Link2 width={20} height={20} />
+              <Pin width={20} height={20} strokeWidth={1.5} />
             </button>
             <button
               aria-label="Pinterest"
               className="hover:opacity-75 transition"
             >
-              <Link2 width={20} height={20} />
+              <Pin width={20} height={20} strokeWidth={1.5} />
             </button>
           </div>
           <div className="flex items-center gap-1 cursor-pointer hover:opacity-75 transition font-bold tracking-wide">
@@ -334,10 +288,11 @@ export default function Header() {
           </Link>
         </div>
       </div>
-      {/* ✅ GLOBAL DROPDOWN (NO LAYOUT CHANGE) */}
+
+      {/* GLOBAL DROPDOWN */}
       <div
         ref={dropdownRef}
-        className={`absolute left-0 top-full w-full bg-white text-black shadow-xl px-11 pt-5 pb-8 z-50 will-change-transform ${
+        className={`absolute left-0 top-full w-full bg-white text-black shadow-xl px-11 pt-5 pb-8 z-[9998] will-change-transform ${
           activeMenu ? "pointer-events-auto" : "pointer-events-none hidden"
         }`}
         onMouseEnter={() => clearTimeout(closeTimeout.current)}
@@ -480,28 +435,28 @@ export default function Header() {
 
       {/* MOBILE DRAWER */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end lg:hidden">
+        <div className="fixed inset-0 z-[10000] flex justify-end lg:hidden">
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
             onClick={() => setMobileOpen(false)}
           />
           <div
             ref={mobileDrawerRef}
-            className="relative w-[85%] max-w-[400px] bg-white h-full shadow-2xl flex flex-col z-10 overflow-y-auto px-7 pt-10 pb-10"
+            className="relative w-[85%] max-w-[380px] bg-white h-full shadow-2xl flex flex-col z-10 overflow-y-auto px-6 sm:px-8 pt-8 pb-8"
           >
             {/* Close Button - Top Right */}
-            <div className="flex justify-end mb-8">
+            <div className="flex justify-end mb-6">
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-1 text-ink hover:opacity-70 transition"
                 aria-label="Close menu"
               >
-                <X size={34} strokeWidth={1.2} />
+                <X size={28} strokeWidth={1.2} />
               </button>
             </div>
 
             {/* Top Divider */}
-            <div className="w-full border-t border-ink/60 mb-2" />
+            <div className="w-full border-t border-ink/60" />
 
             {/* Nav Menu */}
             <nav className="flex flex-col">
@@ -518,36 +473,36 @@ export default function Header() {
                         onClick={() =>
                           setMobileDropdown(isOpen ? null : item.label)
                         }
-                        className={`w-full flex items-center justify-between py-5 ${
-                          item.hasAccent ? "relative pl-6" : ""
+                        className={`w-full flex items-center justify-between py-4 ${
+                          item.hasAccent ? "relative pl-5" : ""
                         }`}
                       >
                         {item.hasAccent && (
-                          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-8 bg-ink/50" />
+                          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-ink/50" />
                         )}
-                        <span className="font-dune text-[28px] sm:text-[32px] tracking-wide text-ink font-normal">
+                        <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
                           {item.label}
                         </span>
                         <ChevronDown
                           className={`text-ink/70 flex-shrink-0 ml-2 transition-transform duration-300 ${
                             isOpen ? "rotate-180" : ""
                           }`}
-                          size={24}
-                          strokeWidth={1.2}
+                          size={18}
+                          strokeWidth={1.4}
                         />
                       </button>
                     ) : (
                       <Link
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className={`w-full flex items-center justify-between py-5 ${
-                          item.hasAccent ? "relative pl-6" : ""
+                        className={`w-full flex items-center justify-between py-4 ${
+                          item.hasAccent ? "relative pl-5" : ""
                         }`}
                       >
                         {item.hasAccent && (
-                          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-8 bg-ink/50" />
+                          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-ink/50" />
                         )}
-                        <span className="font-dune text-[28px] sm:text-[32px] tracking-wide text-ink font-normal">
+                        <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
                           {item.label}
                         </span>
                       </Link>
@@ -564,14 +519,14 @@ export default function Header() {
                 <Link
                   href="/account"
                   onClick={() => setMobileOpen(false)}
-                  className="w-full flex items-center gap-3 py-5"
+                  className="w-full flex items-center gap-2.5 py-4"
                 >
                   <User
-                    size={30}
+                    size={22}
                     strokeWidth={1.2}
                     className="text-ink/80 flex-shrink-0"
                   />
-                  <span className="font-dune text-[28px] sm:text-[32px] tracking-wide text-ink font-normal">
+                  <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
                     Log in
                   </span>
                 </Link>
@@ -579,16 +534,16 @@ export default function Header() {
             </nav>
 
             {/* Bottom Section */}
-            <div className="mt-10 flex flex-col gap-8">
+            <div className="mt-8 flex flex-col gap-6">
               {/* Address */}
               <div
                 ref={(el) => (mobileExtraRef.current[0] = el)}
                 className="opacity-0"
               >
-                <p className="font-dune text-[22px] sm:text-[24px] leading-tight text-stone-600">
+                <p className="!text-[14px] sm:!text-[17px] leading-tight text-stone-600 font-medium">
                   337 Roncesvalles
                 </p>
-                <p className="font-dune text-[22px] sm:text-[24px] leading-tight text-stone-600 mt-1">
+                <p className="!text-[14px] sm:!text-[17px] leading-tight text-stone-600 font-medium mt-1">
                   Ave, Toronto
                 </p>
               </div>
@@ -598,14 +553,14 @@ export default function Header() {
                 ref={(el) => (mobileExtraRef.current[1] = el)}
                 className="opacity-0 grid grid-cols-3 gap-0"
               >
-                <div className="flex items-center justify-center py-4 border border-ink/80">
-                  <InstagramIcon size={28} />
+                <div className="flex items-center justify-center py-3 border border-ink/80">
+                  <Pin size={22} strokeWidth={1.5} color="black"/>
                 </div>
-                <div className="flex items-center justify-center py-4 border border-ink/80 border-l-0">
-                  <FacebookIcon size={28} />
+                <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
+                  <Pin size={22} strokeWidth={1.5} color="black"/>
                 </div>
-                <div className="flex items-center justify-center py-4 border border-ink/80 border-l-0">
-                  <PinterestIcon size={28} />
+                <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
+                  <Pin size={22} strokeWidth={1.5} color="black"/>
                 </div>
               </div>
             </div>
