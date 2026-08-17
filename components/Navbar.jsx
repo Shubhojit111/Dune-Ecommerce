@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
+
 import {
   Search,
   ShoppingBag,
@@ -186,33 +188,33 @@ export default function Navbar() {
       <div
         className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 border-b-white ${addressRowState} ${addressRowBg}`}
       >
-        <div className="flex items-center font-normal tracking-wide">
-          <span>337 Roncesvalles Ave, Toronto</span>
+        <div className="flex items-center font-bold tracking-wider">
+          <span>337 Roncesvalles Ave, Torronto</span>
         </div>
         <div className="flex items-center gap-16">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               aria-label="Instagram"
               className="hover:opacity-75 transition"
             >
-              <Pin width={20} height={20} strokeWidth={1.5} />
+              <Icon icon="fa6-brands:instagram" className="h-5 w-5"/>
             </button>
             <button
               aria-label="Facebook"
               className="hover:opacity-75 transition"
             >
-              <Pin width={20} height={20} strokeWidth={1.5} />
+              <Icon icon="fa6-brands:facebook" className="h-5 w-5"/>
             </button>
             <button
               aria-label="Pinterest"
               className="hover:opacity-75 transition"
             >
-              <Pin width={20} height={20} strokeWidth={1.5} />
+              <Icon icon="fa6-brands:pinterest" className="h-5 w-5"/>
             </button>
           </div>
           <div className="flex items-center gap-1 cursor-pointer hover:opacity-75 transition font-bold tracking-wide">
-            <span className="text-[14px]">India (INR)</span>
-            <ChevronDown width={12} height={12} />
+            <span className="text-[16px] leading-none">India (INR)</span>
+            <ChevronDownIcon />
           </div>
         </div>
       </div>
@@ -223,7 +225,7 @@ export default function Navbar() {
       >
         {/* Left */}
         <div className="flex items-center gap-4">
-          <HeaderBtn text={"DUNE"} className="!text-[28px] sm:!text-[34px] !mt-0 !mb-0" />
+          <HeaderBtn href="/" text={"DUNE"} className="!text-[28px] sm:!text-[34px] cursor-pointer !mt-0 !mb-0" />
         </div>
 
         {/* Center */}
@@ -263,28 +265,28 @@ export default function Navbar() {
             aria-label="Search"
             className="hover:opacity-70 transition p-1"
           >
-            <Search size={22} strokeWidth={1.5} />
+            <Icon icon="lucide:search" className="h-6 w-6"/>
           </button>
           <button
             className="lg:hidden p-1 hover:opacity-70 transition"
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
-            <Menu size={24} strokeWidth={1.5} />
+            <Icon icon="lucide:menu" className="h-6 w-6"/>
           </button>
           <Link
             href="/cart"
             aria-label="Cart"
             className="relative hover:opacity-70 transition p-1"
           >
-            <ShoppingBag size={22} strokeWidth={1.5} />
+            <Icon icon="lucide:shopping-cart" className="h-6 w-6"/>
           </Link>
           <Link
             href="/account"
             aria-label="Account"
             className="hidden sm:block hover:opacity-70 transition p-1"
           >
-            <User size={22} strokeWidth={1.5} />
+            <Icon icon="lucide:user-round" strokeWidth={1} className="h-6 w-6"/>
           </Link>
         </div>
       </div>

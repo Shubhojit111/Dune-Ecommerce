@@ -41,18 +41,6 @@ export default function HomePage() {
 
       <CategorySection />
 
-      {/* <ProductGridSection
-        heading="Shop Categories"
-        products={toquesProducts}
-        centeredHeading={true}
-        columns={4}
-        containerPadding="px-4 sm:px-8 lg:px-14"
-        py="py-16 md:py-24"
-        isCarousel={false}
-        />
-      <PanelSection /> */}
-        
-
       <ProductGridSection
         heading="Shop Sweatshirts"
         products={toquesProducts}

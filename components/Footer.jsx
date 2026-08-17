@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { Mail, ChevronDown } from "lucide-react";
 import Countdown from "react-countdown";
 import HeadTagBtn from "./buttons/HeadTagBtn";
@@ -43,12 +44,12 @@ function FooterColumn({ title, links }) {
       <ul className="list-none m-0 p-0">
         {links.map((link, i) => (
           <li key={i} className="mb-3.5">
-            <a
+            <Link
               href="#"
               className="jst text-[14.5px] text-[#1c1c1c] no-underline hover:opacity-70"
             >
               {link}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -58,12 +59,12 @@ function FooterColumn({ title, links }) {
 
 function SocialIcon({ children }) {
   return (
-    <a
+    <Link
       href="#"
       className="w-[34px] h-[34px] rounded-full border border-[#1c1c1c] flex items-center justify-center text-[#1c1c1c] no-underline hover:bg-[#1c1c1c] hover:text-white transition-colors"
     >
       {children}
-    </a>
+    </Link>
   );
 }
 function InstagramIcon({ size = 26 }) {
@@ -147,13 +148,13 @@ export default function Footer() {
                   {isOpen && (
                     <div className="pb-6 flex flex-col items-center gap-3">
                       {sec.links.map((link, idx) => (
-                        <a
+                        <Link
                           key={idx}
                           href="#"
                           className="text-[13px] text-[#333333] hover:opacity-70 font-medium tracking-wide transition"
                         >
                           {link}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   )}

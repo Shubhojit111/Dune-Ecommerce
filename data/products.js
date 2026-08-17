@@ -145,6 +145,7 @@ export const toquesProducts = [
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
     image: Assets.Tooque1,
+    secondImage: Assets.BigScreenImage,
     handle: "chunky-toque-fawn",
   },
   {
@@ -153,6 +154,7 @@ export const toquesProducts = [
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
     image: Assets.Tooque2,
+    secondImage: Assets.BigScreenImage,
     handle: "chunky-toque-army",
   },
   {
@@ -161,6 +163,7 @@ export const toquesProducts = [
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
     image: Assets.Tooque3,
+    secondImage: Assets.BigScreenImage,
     handle: "chunky-toque-black",
   },
   {
@@ -169,6 +172,7 @@ export const toquesProducts = [
     brand: "MUTTONHEAD",
     price: "Rs. 3,700.00",
     image: Assets.Tooque4,
+    secondImage: Assets.BigScreenImage,
     handle: "chunky-toque-maroon",
   },
 ];
