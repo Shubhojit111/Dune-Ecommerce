@@ -177,6 +177,165 @@ export const toquesProducts = [
   },
 ];
 
+export const demoCategories = [
+  {
+    id: "hats",
+    label: "HATS",
+    image: Assets.Category1,
+    href: "/collections/hats",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "jackets",
+    label: "JACKETS",
+    image: Assets.Category2,
+    href: "/collections/jackets",
+  },
+  {
+    id: "sweatpants",
+    label: "SWEATPANTS",
+    image: Assets.Category3,
+    href: "/collections/sweatpants",
+  },
+  {
+    id: "homegoods",
+    label: "HOMEGOODS",
+    image: Assets.Category1,
+    href: "/collections/homegoods",
+  },
+];
+
 export const mainNav = [
   {
     label: "New",

@@ -3,7 +3,7 @@ import ProductGridSection from "@/components/ProductGridSection";
 import FullBleedSplit from "@/components/FullBleedSplit";
 import CategorySection from "@/components/CategorySection";
 import FeaturedMultiSection from "@/components/FeaturedMultiSection";
-import { toquesProducts } from "@/data/products";
+import { demoCategories, toquesProducts } from "@/data/products";
 import { TimeBanner } from "@/components/TimeBanner";
 import Abc from "@/components/ShopTheLook";
 import PanelSection from "@/components/PanelSection";
@@ -30,7 +30,15 @@ export default function HomePage() {
 
       <FullBleedSplit />
 
-      <CategorySection />
+      <CategorySection
+        heading="Shop By Category"
+        categories={demoCategories}
+        columns={3}
+        itemsToShow={3}
+        hasViewAllBtn={false}
+        // viewAllHref="/collections/all"
+        // viewAllBtnText="VIEW ALL"
+      />
 
       <FeaturedMultiSection />
 
@@ -39,7 +47,17 @@ export default function HomePage() {
       <ShopTheLook />
       <FloatingCardSection />
 
-      <CategorySection />
+      <CategorySection
+        heading="Shop Categories"
+        categories={demoCategories}
+        columns={4}
+        itemsToShow={4}
+        hasViewAllBtn={false}
+        // viewAllHref="/collections/all"
+        // viewAllBtnText="VIEW ALL"
+      />
+
+      <PanelSection />
 
       <ProductGridSection
         heading="Shop Sweatshirts"
