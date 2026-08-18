@@ -97,7 +97,7 @@ function Hotspot({ spot, active, onToggle }) {
 
 export default function ShopTheLook({
   title = "SHOP THE LOOK",
-  heroImage = Assets.Image1,
+  heroImage,
   hotspots = DEFAULT_HOTSPOTS,
 }) {
   const [activeId, setActiveId] = useState(null);
@@ -183,15 +183,15 @@ export default function ShopTheLook({
             </div>
 
             <div className="mt-0 lg:mt-3 text-left lg:text-center">
-              <p className="text-[13px] lg:text-[12.5px] tracking-wider text-[#121212] font-semibold">
+              <p className="text-[13px] lg:text-[12.5px] tracking-wider text-ink/90 font-normal">
                 {featured.name || "Product Name"}
               </p>
               {featured.brand && (
-                <p className="mt-1 lg:mt-1 text-[11px] lg:text-[11.5px] uppercase tracking-[0.15em] text-[#767676] lg:text-[#121212] font-medium">
+                <p className="mt-1 lg:mt-1 text-[11px] lg:text-[11.5px] uppercase tracking-[0.15em] text-ink/50 font-normal">
                   {featured.brand}
                 </p>
               )}
-              <p className="mt-1.5 lg:mt-1.5 text-xs lg:text-[13px] text-ink font-semibold">
+              <p className="mt-1.5 lg:mt-1.5 text-xs lg:text-[13px] text-ink/90 font-normal">
                 {featured.price}
               </p>
             </div>

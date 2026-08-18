@@ -12,6 +12,7 @@ import BottomGridSection from "@/components/BottomGridSection";
 import ShopTheLook from "@/components/ShopTheLook";
 import FloatingCardSection from "@/components/FloatingCardSection";
 import BrandSection from "@/components/BrandSection";
+import Assets from "@/assets/images/Assets";
 
 export default function HomePage() {
   return (
@@ -23,8 +24,6 @@ export default function HomePage() {
         products={toquesProducts}
         centeredHeading={true}
         columns={4}
-        containerPadding="px-4 sm:px-8 lg:px-14"
-        py="py-16 md:py-24"
       />
       <BigScreen />
 
@@ -44,8 +43,14 @@ export default function HomePage() {
 
       <BrandSection />
 
-      <ShopTheLook />
-      <FloatingCardSection />
+      <ShopTheLook heroImage={Assets.ShopTheLook} />
+      <FloatingCardSection
+        bgImage={Assets.FloatingCardSection}
+        headerbtnText="Timeless Craftsmanship"
+        titleText="WILDWOOD ESSENTIALS"
+        descriptionText="Fierce elegance is about authenticity, refinement, and grace. It's a powerful presence with sophisticated style that creates a commanding aesthetic. Our Wildwood collection embodies timeless craftsmanship and modern sensibility."
+        btnText="EXPLORE COLLECTION"
+      />
 
       <CategorySection
         heading="Shop Categories"
@@ -64,10 +69,9 @@ export default function HomePage() {
         products={toquesProducts}
         centeredHeading={true}
         columns={4}
-        containerPadding="px-4 sm:px-8 lg:px-14"
-        py="py-16 md:py-24"
+        isCarousel={false}
         viewAllHref="/product"
-        hasViewAllBtn="true"
+        hasViewAllBtn={true}
       />
 
       <TimeBanner />

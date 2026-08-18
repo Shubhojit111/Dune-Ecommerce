@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 
 import {
@@ -24,6 +25,10 @@ import Image from "next/image";
 import SubTextBtn from "./buttons/SubTextBtn";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isProductPage =
+    typeof pathname === "string" && pathname.startsWith("/products");
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
@@ -154,7 +159,9 @@ export default function Navbar() {
 
   const navbarBg = scrolled
     ? "bg-white/95 backdrop-blur-md border-b border-stone-200 text-[#1E1B17] shadow-sm"
-    : "bg-transparent text-white";
+    : isProductPage
+      ? "bg-transparent text-[#1E1B17]"
+      : "bg-transparent text-white";
 
   const addressRowState = scrolled
     ? "max-h-0 py-0 border-b-0 opacity-0 pointer-events-none"
@@ -162,7 +169,9 @@ export default function Navbar() {
 
   const addressRowBg = scrolled
     ? "bg-[#1E1B17] text-white/90"
-    : "bg-transparent text-white/90";
+    : isProductPage
+      ? "bg-transparent text-[#1E1B17]/80 border-[#1E1B17]/15"
+      : "bg-transparent text-white/90";
 
   const mainNavbarPadding = scrolled ? "py-4 sm:py-6" : "py-8";
 
@@ -186,7 +195,7 @@ export default function Navbar() {
 
       {/* Row 2  Address / Socials / Currency (lg+) */}
       <div
-        className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 border-b-white ${addressRowState} ${addressRowBg}`}
+        className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 ${isProductPage ? "border-b-[#1E1B17]/15" : "border-b-white"} ${addressRowState} ${addressRowBg}`}
       >
         <div className="flex items-center font-bold tracking-wider">
           <span>337 Roncesvalles Ave, Torronto</span>
@@ -341,7 +350,7 @@ export default function Navbar() {
                   </div>
 
                   {/* Brand */}
-                  <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-black mb-3.5">
+                  <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-medium mb-3.5">
                     {item.title}
                   </p>
 
@@ -350,7 +359,7 @@ export default function Navbar() {
                     {item.links.map((link) => (
                       <li
                         key={link}
-                        className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px] flex flex-col"
+                        className="text-[#1c1c1c] text-[11px] font-normal tracking-[0.8px] flex flex-col"
                       >
                         {link}
                       </li>
@@ -410,7 +419,7 @@ export default function Navbar() {
                     key={item.title}
                     className="flex flex-col items-start justify-start mb-[10.5px]"
                   >
-                    <p className="text-[12px] text-left uppercase tracking-[0.21em] text-[#121212] font-black ">
+                    <p className="text-[12px] text-left uppercase tracking-[0.21em] text-[#121212] font-medium">
                       {item.title}
                     </p>
                   </div>

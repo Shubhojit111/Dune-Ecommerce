@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from "react";
 import { Plus, X } from "lucide-react";
 
@@ -89,7 +91,7 @@ const DEFAULT_HOTSPOTS = [
   },
 ];
 
-export default function GridSection({ spot, active, onToggle }) {
+export default function Hotspot({ spot, active, onToggle }) {
   return (
     <div
       className="absolute -translate-x-1/2 -translate-y-1/2"

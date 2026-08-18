@@ -4,9 +4,17 @@ import HeroImage3 from "@/assets/images/Hero3.png";
 
 import PanelMain from "@/assets/images/PanelMain.webp";
 import PanelSide from "@/assets/images/PanelSide.webp";
+
 import BigScreenImage from "@/assets/images/BigScreenImage.webp";
-import Image1 from "@/assets/images/Image1.webp";
-import Image2 from "@/assets/images/Image2.webp";
+
+import ShopTheLook from "@/assets/images/Image1.webp";
+import ShopTheLookBg from "@/assets/images/ShopTheLookProducts.webp";
+
+import TimeBannerProductsBg from "@/assets/images/TimeBannerProductsBg.webp";
+
+import FloatingCardSection from "@/assets/images/Image2.webp";
+import FloatingCardSection2 from "@/assets/images/FloatingCardSection2.webp";
+
 import Category1 from "@/assets/images/Category1.webp";
 import Category2 from "@/assets/images/Category2.webp";
 import Category3 from "@/assets/images/Category3.webp";
@@ -39,7 +47,7 @@ import BrandLogo3 from "@/assets/images/BrandLogo3.webp";
 import BrandLogo4 from "@/assets/images/BrandLogo4.webp";
 import BrandLogo5 from "@/assets/images/BrandLogo5.webp";
 
-
+import Flagship1 from "@/assets/images/Flagship1.webp";
 
 const Assets = {
   
@@ -52,8 +60,13 @@ const Assets = {
   
   BigScreenImage,
   
-  Image1,
-  Image2,
+  ShopTheLook,
+  ShopTheLookBg,
+
+  TimeBannerProductsBg,
+  
+  FloatingCardSection,
+  FloatingCardSection2,
   
   Category1,
   Category2,
@@ -86,6 +99,8 @@ const Assets = {
   BrandLogo5,
 
   FooterLogo,
+
+  Flagship1,
 
 };
 

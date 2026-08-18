@@ -7,17 +7,19 @@ import SubTextBtn from "./buttons/SubTextBtn";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 import HeadTagBtn from "./buttons/HeadTagBtn";
 import ExploreBtn from "./buttons/ExploreBtn";
+import Image from "next/image";
+import Assets from "@/assets/images/Assets";
 
 function TimeBlock({ value, label, isLast }) {
   return (
     <div
-      className={`flex items-center justify-center w-full px-[16px] sm:px-[22px] ${isLast ? "" : "border-r border-[#1a1a1a]/85"}`}
+      className={`flex items-center justify-center w-full px-[16px] sm:px-[22px] ${isLast ? "" : "border-r border-white/85"}`}
     >
       <div className="text-center">
-        <div className="text-[2px] leading-none font-dune font-normal text-[#1c1c1c] mb-2.5 tabular-nums">
-          <p className="text-[36px] sm:text-[48px]">{String(value)}</p>
+        <div className="text-[2px] leading-none font-dune font-normal text-white mb-2.5 tabular-nums">
+          <p className="text-[36px] sm:text-[48px] text-white">{String(value)}</p>
         </div>
-        <div className="text-[10px] sm:text-[11px] tracking-[1.5px] text-[#121212] font-bold">
+        <div className="text-[10px] sm:text-[11px] tracking-[1.5px] text-white font-bold">
           {label}
         </div>
       </div>
@@ -25,9 +27,9 @@ function TimeBlock({ value, label, isLast }) {
   );
 }
 
-export function TimeBanner({
+export function TimeBannerFullScreen({
   headline = "BLACK FRIDAY SALE",
-  subcopy = "Only this weekend get an additional 30% Off all Fall & Winter collections.",
+  subcopy = "Hurry up! Only this weekend, get an additional 30% off your entire order if you spend 120$ or more!",
   targetDate,
   Isbtn = true,
 }) {
@@ -43,18 +45,25 @@ export function TimeBanner({
   const pad = (n) => String(n).padStart(2, "0");
 
   return (
-    <div className="w-full px-4 sm:px-14 bg-white">
-      <div className="w-full bg-[#c3b5a2] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between flex-nowrap gap-10 px-0 sm:px-[140px] py-12">
-        {/* Left: headline */}  
-        <div className="flex flex-col gap-5 px-10 sm:px-0">
+    <div className="relative w-full bg-white">
+      <Image
+        src={Assets.TimeBannerProductsBg}
+        fill
+        alt="Time Banner"
+        className="absolute top-0 left-0 w-full h-full object-cover"
+      />
+
+      <div className="relative w-full mx-auto grid grid-cols-3 items-start sm:items-center justify-items-center gap-10 px-0 sm:px-20 py-12 ">
+        {/* Left: headline */}
+        <div className="flex flex-col gap-5 ">
           <HeaderBtn
             text="BLACK FRIDAY SALE"
-            className="leading-none sm:max-w-full"
+            className="leading-none sm:max-w-full text-white"
           />
-          <SubTextBtn text={subcopy} className="!text-black" />
+          <SubTextBtn text={subcopy} className="" />
         </div>
 
-        <div className=" w-full sm:w-fit">
+        <div className="">
           {target ? (
             <Countdown
               date={target}
@@ -83,6 +92,8 @@ export function TimeBanner({
             </div>
           )}
         </div>
+
+        <div className=""><ExploreBtn text="Shop Collection" /></div>
       </div>
     </div>
   );

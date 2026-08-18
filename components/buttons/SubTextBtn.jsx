@@ -2,7 +2,7 @@ import React from "react";
 
 const SubTextBtn = ({text, className}) => {
   return (
-    <p className={`text-xs sm:text-[12.5px] tracking-wider text-white/90 leading-relaxed font-bold mb-4 ${className}`}>
+    <p className={`text-xs sm:text-[12.5px] tracking-wider text-white/90 leading-relaxed font-medium mb-4 ${className}`}>
       {text || "Timeless pieces that define your wardrobe."}
     </p>
   );

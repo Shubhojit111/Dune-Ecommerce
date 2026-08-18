@@ -4,6 +4,15 @@ import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 
+// Literal class strings so Tailwind's JIT can statically detect them
+const COLS_MAP = {
+  2: "grid-cols-2",
+  3: "grid-cols-2 md:grid-cols-3",
+  4: "grid-cols-2 md:grid-cols-4",
+  5: "grid-cols-2 md:grid-cols-3 lg:grid-cols-5",
+  6: "grid-cols-2 md:grid-cols-3 lg:grid-cols-6",
+};
+
 export default function ProductGridSection({
   heading,
   products,
@@ -11,8 +20,8 @@ export default function ProductGridSection({
   hasViewAllBtn,
   centeredHeading = true,
   columns = 4,
-  containerPadding = "px-4 sm:px-8 lg:px-14",
   isCarousel = true,
+  itemsToShow,
 }) {
   const scrollRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -47,28 +56,26 @@ export default function ProductGridSection({
     return () => el.removeEventListener("scroll", updateScrollProgress);
   }, [products]);
 
-  const colsClass =
-    columns === 4
-      ? "grid-cols-2 md:grid-cols-4"
-      : columns === 3
-        ? "grid-cols-2 md:grid-cols-3"
-        : "grid-cols-2 md:grid-cols-3 lg:grid-cols-5";
+  const colsClass = COLS_MAP[columns] || COLS_MAP[4];
+  const visibleProducts =
+    itemsToShow == null ? products : products.slice(0, Number(itemsToShow));
 
   return (
-    <section className={`w-full py-12 md:py-24 ${containerPadding} bg-[#fff]`}>
-      <div className="mx-auto">
+    <section className="w-full px-4 sm:px-8 lg:px-14 py-16 md:py-24 bg-white">
+      <div className="w-full mx-auto">
+        {/* Heading + View All */}
         <div
-          className={`mb-8 md:mb-14 flex flex-col items-center text-center justify-center`}
+          className={`mb-8 md:mb-14 flex flex-col items-center text-center justify-center ${
+            centeredHeading ? "" : "items-start text-left"
+          }`}
         >
-          <h2
-            className={`font-dune text-[32px] sm:text-5xl tracking-wide uppercase text-ink font-normal text-center`}
-          >
+          <h2 className="font-dune text-[32px] sm:text-5xl tracking-wide uppercase text-ink font-normal text-center">
             {heading}
           </h2>
           {hasViewAllBtn && (
             <Link
               href={viewAllHref || "/collections/all"}
-              className={`flex items-center justify-center rounded-full px-5 py-2.5 text-[11px] uppercase tracking-[0.25em] font-bold text-black transition-all duration-300 bg-transparent border border-ink/40 hover:border-ink hover:scale-102 cursor-pointer mt-6`}
+              className="flex items-center justify-center rounded-full px-5 py-2.5 text-[11px] uppercase tracking-[0.25em] font-normal text-black transition-all duration-300 bg-transparent border border-ink/40 hover:border-ink hover:scale-102 cursor-pointer mt-6"
             >
               View All
             </Link>
@@ -82,7 +89,7 @@ export default function ProductGridSection({
               className="flex md:grid md:grid-cols-4 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-4 md:gap-6 pb-4 [&::-webkit-scrollbar]:hidden"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {products.map((product) => (
+              {visibleProducts.map((product) => (
                 <div
                   key={product.id}
                   className="w-[40vw] sm:w-[45vw] md:w-auto flex-shrink-0 snap-start md:flex-shrink"
@@ -118,7 +125,7 @@ export default function ProductGridSection({
           </div>
         ) : (
           <div className={`grid ${colsClass} gap-4 md:gap-6`}>
-            {products.map((product) => (
+            {visibleProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

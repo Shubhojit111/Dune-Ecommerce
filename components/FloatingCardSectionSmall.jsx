@@ -8,7 +8,7 @@ import Assets from "@/assets/images/Assets";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 import HeadTagBtnSmall from "./buttons/HeadTagBtnSmall";
 
-export default function FloatingCardSection({
+export default function FloatingCardSectionSmall({
   bgImage,
   headerbtnText,
   titleText,
@@ -17,7 +17,7 @@ export default function FloatingCardSection({
 }) {
   return (
     <section className="relative w-full mb-12 md:mb-0">
-      <div className="relative w-full md:h-screen md:min-h-[690px]">
+      <div className="relative w-full md:h-screen md:max-h-[700px]">
         {/* Background Image */}
         <div className="sm:absolute inset-0 relative h-[400px] items-center md:h-full  overflow-hidden">
           <Image

@@ -8,6 +8,7 @@ import HeadTagBtn from "./buttons/HeadTagBtn";
 import Assets from "@/assets/images/Assets";
 
 import Image from "next/image";
+import { Icon } from "@iconify/react";
 
 /* ------------------------------------------------------------------ */
 /*  2. FOOTER (Shopify-style)                                         */
@@ -226,7 +227,7 @@ export default function Footer() {
                 {shopLinks.map((item, index) => (
                   <div
                     key={index}
-                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.7px] flex flex-col mb-3 hover:opacity-70 cursor-pointer"
+                    className="text-[#1c1c1c] text-[12.5px] font-normal tracking-[0.7px] flex flex-col mb-3 hover:opacity-70 cursor-pointer"
                   >
                     {item}
                   </div>
@@ -240,7 +241,7 @@ export default function Footer() {
                 {brandLinks.map((item, index) => (
                   <div
                     key={index}
-                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.7px] flex flex-col mb-3.5 hover:opacity-70 cursor-pointer"
+                    className="text-[#1c1c1c] text-[12.5px] font-normal tracking-[0.7px] flex flex-col mb-3.5 hover:opacity-70 cursor-pointer"
                   >
                     {item}
                   </div>
@@ -254,7 +255,7 @@ export default function Footer() {
                 {aboutLinks.map((item, index) => (
                   <div
                     key={index}
-                    className="text-[#1c1c1c] text-[12.5px] font-semibold tracking-[0.7px] flex flex-col mb-3 hover:opacity-70 cursor-pointer"
+                    className="text-[#1c1c1c] text-[12.5px] font-normal tracking-[0.7px] flex flex-col mb-3 hover:opacity-70 cursor-pointer"
                   >
                     {item}
                   </div>
@@ -277,7 +278,7 @@ export default function Footer() {
               <h2 className="m-0 !text-[48px] font-dune text-[#1a1a1a]">
                 SIGN UP &amp; SAVE 15%
               </h2>
-              <p className="text-[13px] text-[#1c1c1c] leading-[1.6] mt-5 mb-[20px] max-w-[500px] tracking-[0.1px]">
+              <p className="text-[13px] text-[#1c1c1c] leading-[1.6] mt-4 mb-[20px] max-w-[500px] tracking-[0.1px]">
                 Be the first to know about our biggest and best sales. We'll never
                 send more than one email a month.
               </p>
@@ -286,7 +287,7 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="border-none outline-none bg-transparent text-[14px] placeholder:text-[12px] placeholder:font-semibold placeholder:tracking-wider placeholder:text-[#1c1c1c] text-[#1c1c1c] w-full"
+                  className="border-none outline-none bg-transparent text-[14px] placeholder:text-[13px] placeholder:font-normal placeholder:tracking-wider placeholder:text-[#1c1c1c] text-[#1c1c1c] w-full"
                 />
                 <button
                   aria-label="Subscribe"
@@ -297,9 +298,9 @@ export default function Footer() {
               </div>
 
               <div className="flex gap-3 mt-[26px]">
-                <InstagramIcon />
-                <FacebookIcon />
-                <PinterestIcon />
+                <Icon icon="fa6-brands:instagram" className="h-6 w-7"/>
+                <Icon icon="fa6-brands:facebook" className="h-6 w-6"/>
+                <Icon icon="fa6-brands:pinterest" className="h-6 w-6"/>
               </div>
             </div>
           </div>
