@@ -24,6 +24,8 @@ export default function HomePage() {
         products={toquesProducts}
         centeredHeading={true}
         columns={4}
+        itemsToShow={4}
+        hasViewAllBtn={false}
       />
       <BigScreen />
 
@@ -55,8 +57,8 @@ export default function HomePage() {
       <CategorySection
         heading="Shop Categories"
         categories={demoCategories}
-        columns={4}
-        itemsToShow={4}
+        columns={3}
+        itemsToShow={3}
         hasViewAllBtn={false}
         // viewAllHref="/collections/all"
         // viewAllBtnText="VIEW ALL"
@@ -69,7 +71,7 @@ export default function HomePage() {
         products={toquesProducts}
         centeredHeading={true}
         columns={4}
-        isCarousel={false}
+        itemsToShow={4}
         viewAllHref="/product"
         hasViewAllBtn={true}
       />

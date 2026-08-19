@@ -20,7 +20,6 @@ export default function ProductGridSection({
   hasViewAllBtn,
   centeredHeading = true,
   columns = 4,
-  isCarousel = true,
   itemsToShow,
 }) {
   const scrollRef = useRef(null);
@@ -61,7 +60,7 @@ export default function ProductGridSection({
     itemsToShow == null ? products : products.slice(0, Number(itemsToShow));
 
   return (
-    <section className="w-full px-4 sm:px-8 lg:px-14 py-0 md:py-24 bg-white">
+    <section className="w-full px-4 sm:px-8 lg:px-14 py-12 md:py-24 bg-white">
       <div className="w-full mx-auto">
         {/* Heading + View All */}
         <div
@@ -82,54 +81,45 @@ export default function ProductGridSection({
           )}
         </div>
 
-        {isCarousel ? (
-          <div>
+        {/* Mobile: horizontal scroll carousel / Desktop: grid */}
+        <div
+          ref={scrollRef}
+          className={`flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 md:grid md:overflow-x-visible md:gap-6 md:pb-0 ${colsClass} [&::-webkit-scrollbar]:hidden`}
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {visibleProducts.map((product) => (
             <div
-              ref={scrollRef}
-              className="flex md:grid md:grid-cols-4 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-4 md:gap-6 pb-4 [&::-webkit-scrollbar]:hidden"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              key={product.id}
+              className="w-[40vw] sm:w-[45vw] md:w-auto flex-shrink-0 snap-start md:flex-shrink"
             >
-              {visibleProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="w-[40vw] sm:w-[45vw] md:w-auto flex-shrink-0 snap-start md:flex-shrink"
-                >
-                  <ProductCard product={product} />
-                </div>
-              ))}
+              <ProductCard product={product} />
             </div>
+          ))}
+        </div>
 
-            {/* Mobile Scrollbar Control Bar */}
-            <div className="flex md:hidden items-center justify-between gap-3 mt-4 px-2">
-              <button
-                onClick={scrollLeft}
-                aria-label="Scroll left"
-                className="text-stone-500 hover:text-black p-1 text-xs font-bold"
-              >
-                ◀
-              </button>
-              <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-stone-700 rounded-full transition-all duration-300"
-                  style={{ width: `${Math.max(20, Math.min(100, 33 + scrollProgress * 0.5))}%`, marginLeft: `${scrollProgress * 0.5}%` }}
-                />
-              </div>
-              <button
-                onClick={scrollRight}
-                aria-label="Scroll right"
-                className="text-stone-500 hover:text-black p-1 text-xs font-bold"
-              >
-                ▶
-              </button>
-            </div>
+        {/* Mobile Scrollbar Control Bar */}
+        <div className="flex md:hidden items-center justify-between gap-3 mt-4 px-2">
+          <button
+            onClick={scrollLeft}
+            aria-label="Scroll left"
+            className="text-stone-500 hover:text-black p-1 text-xs font-bold"
+          >
+            ◀
+          </button>
+          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-stone-700 rounded-full transition-all duration-300"
+              style={{ width: `${Math.max(20, Math.min(100, 33 + scrollProgress * 0.5))}%`, marginLeft: `${scrollProgress * 0.5}%` }}
+            />
           </div>
-        ) : (
-          <div className={`grid ${colsClass} gap-4 md:gap-6`}>
-            {visibleProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
+          <button
+            onClick={scrollRight}
+            aria-label="Scroll right"
+            className="text-stone-500 hover:text-black p-1 text-xs font-bold"
+          >
+            ▶
+          </button>
+        </div>
       </div>
     </section>
   );

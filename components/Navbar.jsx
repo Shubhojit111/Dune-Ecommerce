@@ -158,9 +158,9 @@ export default function Navbar() {
   ];
 
   const navbarBg = scrolled
-    ? "bg-white/95 backdrop-blur-md border-b border-stone-200 text-[#1E1B17] shadow-sm"
+    ? "bg-white/95 backdrop-blur-md text-[#1E1B17] border-b border-stone-200  shadow-sm"
     : isProductPage
-      ? "bg-transparent text-[#1E1B17] "
+      ? "bg-white text-[#1E1B17] "
       : "bg-transparent text-white";
 
   const addressRowState = scrolled
@@ -177,7 +177,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed w-full bg-white top-0 z-[100] transition-colors duration-300 ${navbarBg}`}
+      className={`fixed w-full top-0 z-[100] transition-colors duration-300 ${navbarBg}`}
     >
       {/* Row 1  Announcement Bar */}
       <div

@@ -24,7 +24,6 @@ export default function ProductPage({ params }) {
         centeredHeading={true}
         columns={3}
         itemsToShow={3}
-        isCarousel={false}
         hasViewAllBtn={true}
         />
 
@@ -42,7 +41,6 @@ export default function ProductPage({ params }) {
         centeredHeading={true}
         columns={4}
         itemsToShow={1}
-        isCarousel={false}
         hasViewAllBtn={true}
         />
 
@@ -74,7 +72,6 @@ export default function ProductPage({ params }) {
         centeredHeading={true}
         columns={5}
         itemsToShow={5}
-        isCarousel={false}
         hasViewAllBtn={true}
       />
 
