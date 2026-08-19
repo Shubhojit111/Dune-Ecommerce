@@ -59,7 +59,7 @@ export default function ProductPage({ params }) {
                 We believe no one should have to deal with fast fashion,
                 scratchy fabrics, and poor fits.
               </p>
-            </p>
+            </p> 
           </>
         }
         bgImage={Assets.FloatingCardSection2}
