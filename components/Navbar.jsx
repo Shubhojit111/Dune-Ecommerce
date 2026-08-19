@@ -44,7 +44,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 20);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll);
@@ -160,12 +160,12 @@ export default function Navbar() {
   const navbarBg = scrolled
     ? "bg-white/95 backdrop-blur-md border-b border-stone-200 text-[#1E1B17] shadow-sm"
     : isProductPage
-      ? "bg-transparent text-[#1E1B17]"
+      ? "bg-transparent text-[#1E1B17] "
       : "bg-transparent text-white";
 
   const addressRowState = scrolled
     ? "max-h-0 py-0 border-b-0 opacity-0 pointer-events-none"
-    : "max-h-12 py-2.5 border-b opacity-100";
+    : "max-h-12 py-1.5 border-b opacity-100";
 
   const addressRowBg = scrolled
     ? "bg-[#1E1B17] text-white/90"
@@ -173,11 +173,11 @@ export default function Navbar() {
       ? "bg-transparent text-[#1E1B17]/80 border-[#1E1B17]/15"
       : "bg-transparent text-white/90";
 
-  const mainNavbarPadding = scrolled ? "py-4 sm:py-6" : "py-8";
+  const mainNavbarPadding = scrolled ? "py-4 sm:py-6" : "py-4 sm:py-8";
 
   return (
     <header
-      className={`fixed w-full top-0 z-[9999] transition-colors duration-300 ${navbarBg}`}
+      className={`fixed w-full bg-white top-0 z-[100] transition-colors duration-300 ${navbarBg}`}
     >
       {/* Row 1  Announcement Bar */}
       <div
@@ -197,8 +197,8 @@ export default function Navbar() {
       <div
         className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 ${isProductPage ? "border-b-[#1E1B17]/15" : "border-b-white"} ${addressRowState} ${addressRowBg}`}
       >
-        <div className="flex items-center font-bold tracking-wider">
-          <span>337 Roncesvalles Ave, Torronto</span>
+        <div className="flex items-center font-medium">
+          <span className="text-[14px] leading-none">337 Roncesvalles Ave, Torronto</span>
         </div>
         <div className="flex items-center gap-16">
           <div className="flex items-center gap-2.5">
@@ -230,7 +230,7 @@ export default function Navbar() {
 
       {/* Row 3  Main Navbar */}
       <div
-        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${mainNavbarPadding}`}
+        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${isProductPage ? "border-b border-s" : null} ${mainNavbarPadding}`}
       >
         {/* Left */}
         <div className="flex items-center gap-4">

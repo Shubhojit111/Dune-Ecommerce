@@ -79,13 +79,13 @@ export default function ProductDetailsPage() {
   };
 
   return (
-    <section className="w-full  min-h-screen pt-32 sm:pt-36 md:pt-40 pb-20">
+    <section className="w-full min-h-screen pt-[120px] sm:pt-36 md:pt-44 pb-20">
       <div className="px-4 sm:px-8 lg:px-14 w-full">
-        <div className="flex gap-10 lg:gap-12 items-start  mt-12">
+        <div className="flex flex-col md:flex-row gap-10 lg:gap-12 items-start  lg:mt-12">
           {/* LEFT: Product image */}
           <div className="w-full min-w-[60%]">
             {/* Main image */}
-            <div className="relative w-auto h-[1000px] bg-sand overflow-hidden mb-5">
+            <div className="relative -mx-4 sm:mx-0 w-auto sm:w-auto h-[450px] lg:h-[1000px] bg-sand overflow-hidden mb-5">
               <Image
                 src={mainImage}
                 alt="Camping Hoodie"
@@ -93,10 +93,14 @@ export default function ProductDetailsPage() {
                 className="object-cover object-center"
                 priority
               />
+
+              <div className="absolute sm:hidden bottom-4 right-4 p-3 bg-white/80 rounded-full border border-ink/20 flex items-center justify-center">
+                <Icon icon="lucide:search" strokeWidth={1} className="h-6 w-6" />
+              </div>
             </div>
 
             {/* Thumbnail row */}
-            <div className="flex items-center gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+            <div className=" flex items-center gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
               {THUMBNAILS.map((src, i) => (
                 <button
                   key={i}
@@ -119,7 +123,7 @@ export default function ProductDetailsPage() {
             </div>
           </div>
           {/* RIGHT: Product details */}
-          <div className="w-full py-2 ">
+          <div className="w-full md:py-2 flex flex-col items-center sm:items-start">
             {/* Breadcrumb */}
             <nav className="text-[11.5px] tracking-wide text-ink mb-3.5">
               <ol className="flex items-center gap-1 flex-wrap">
@@ -146,12 +150,12 @@ export default function ProductDetailsPage() {
                     Sweatshirts
                   </Link>
                 </li>
-                <li className="">/</li>
+                {/* <li className="">/</li> */}
               </ol>
             </nav>
             <HeadTagBtn
               text="Muttonhead"
-              className="!text-ink !font-medium tracking-[0.3em]"
+              className="!text-ink !font-medium tracking-[0.3em] mb-2 sm:mb-0"
             />
 
             <HeaderBtnSmall
@@ -162,24 +166,24 @@ export default function ProductDetailsPage() {
                   Grey Quilt
                 </>
               }
-              className="w-full !leading-[1.2]"
+              className="w-full text-center sm:text-start !leading-[1.2]"
             />
-            <p className="text-[14.5px] text-ink/80 font-normal mt-6 mb-8">
+            <p className=" sm:text-[14.5px] text-ink/80 font-normal mt-6 mb-6">
               Rs. 12,500.00
             </p>
 
             {/* Size */}
-            <div className="mb-8">
-              <p className="mb-3 text-[11.5px] tracking-[0.05em] text-ink/80 font-medium">
-                <span className="tracking-[0.22em] text-[11.5px]">SIZE</span>{" "}
+            <div className="mb-8 text-center flex flex-col items-center sm:items-start">
+              <p className="mb-3 text-[13px] sm:text-[11.5px] tracking-[0.05em] text-ink/80 font-medium">
+                <span className="tracking-[0.22em]">SIZE</span>
                 &nbsp;— Size chart
               </p>
-              <div className="flex gap-1.5">
+              <div className="flex gap-1.5 items-center justify-center">
                 {SIZES.map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`py-2.5 px-3.5 leading-none border text-[13px] font-normal tracking-wide transition-all duration-200 w-fit h-fit ${
+                    className={`px-4 py-3 sm:py-2.5 sm:px-3.5 leading-none border text-[14px] sm:text-[13px] font-normal tracking-wide transition-all duration-200 w-fit h-fit ${
                       selectedSize === size
                         ? "border-ink/80 border-2"
                         : "border-ink/30"
@@ -192,9 +196,9 @@ export default function ProductDetailsPage() {
             </div>
 
             {/* Color */}
-            <div className="mb-8">
-              <p className="mb-3 text-[11.5px] tracking-[0.05em] text-ink/80 font-medium">
-                <span className="tracking-[0.22em] text-[11.5px]">COLOR</span>{" "}
+            <div className="mb-8 text-center flex flex-col items-center">
+              <p className="mb-3 text-[13px] sm:text-[11.5px] tracking-[0.05em] text-ink/80 font-medium">
+                <span className="tracking-[0.22em] text-[11.5px]">COLOR</span>
                 &nbsp;— Heather grey
               </p>
               <div className="flex items-center gap-4">
@@ -230,17 +234,17 @@ export default function ProductDetailsPage() {
             {/* Shipping + stock status */}
             <div className="space-y-2 mb-8">
               <div className="flex items-center gap-3 text-[12px] text-ink/70 font-medium">
-                <Truck size={17} className="text-ink/70" />
-                <span>Free worldwide shipping</span>
+                <Truck className="text-ink/70 h-6 w-6 sm:h-4 sm:w-4" />
+                <span className="text-[14px] sm:text-[12px]">Free worldwide shipping</span>
               </div>
               <div className="flex items-center gap-3 text-[13px] text-ink/70 font-medium">
-                <CheckCircle size={17} className="text-green-600" />
-                <span>In stock, ready to ship</span>
+                <CheckCircle className="text-green-600 h-6 w-6 sm:h-4 sm:w-4" />
+                <span className="text-[14px] sm:text-[12px]">In stock, ready to ship</span>
               </div>
             </div>
 
             {/* CTA buttons */}
-            <div className="flex flex-col gap-3 mb-8 max-w-full">
+            <div className="flex flex-col gap-3 mb-8 w-full">
               <button className="leading-none py-[18px] w-full border border-ink rounded-full text-[13px] uppercase tracking-[0.25em] font-bold text-ink hover:bg-ink hover:text-cream transition-all duration-300">
                 Add to cart
               </button>

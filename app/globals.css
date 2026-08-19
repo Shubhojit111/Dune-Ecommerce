@@ -111,3 +111,7 @@ a {
   display: block;
   will-change: transform, opacity;
 }
+
+.borderr {
+  border: 1px solid rgb(255, 0, 0) !important;
+}

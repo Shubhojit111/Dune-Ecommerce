@@ -17,6 +17,8 @@ export default function ProductPage({ params }) {
     <div className="bg-[white]">
       <ProductDetailsPage />
 
+      {/* 
+      
       <ProductGridSection
         heading="More top picks"
         products={toquesProducts}
@@ -98,7 +100,9 @@ export default function ProductPage({ params }) {
       />
 
       <TestimonialSection />
-      <JournalSection />
+      <JournalSection /> 
+      
+      */}
       {/*
        */}
     </div>
