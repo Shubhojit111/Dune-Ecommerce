@@ -9,7 +9,7 @@ export default function VideoSection({
   buttonHref = "/our-story",
 }) {
   return (
-    <section className="relative w-full h-[80vh] min-h-[500px] overflow-hidden bg-black">
+    <section className="relative w-full h-[40vh] sm:h-[80vh] min-h-[500px] overflow-hidden bg-black">
       {/* Background video */}
       <div className="absolute inset-0 w-full h-full pointer-events-none">
         <iframe

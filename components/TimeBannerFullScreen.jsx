@@ -45,7 +45,7 @@ export function TimeBannerFullScreen({
   const pad = (n) => String(n).padStart(2, "0");
 
   return (
-    <div className="relative w-full bg-white">
+    <div className="relative w-full bg-white mb-8">
       <Image
         src={Assets.TimeBannerProductsBg}
         fill
@@ -53,9 +53,9 @@ export function TimeBannerFullScreen({
         className="absolute top-0 left-0 w-full h-full object-cover"
       />
 
-      <div className="relative w-full mx-auto grid grid-cols-3 items-start sm:items-center justify-items-center gap-10 px-0 sm:px-20 py-12 ">
+      <div className="relative w-full mx-auto grid grid-cols-1 sm:grid-cols-3 items-center sm:items-center justify-center gap-10 p-10 sm:px-20 py-12 ">
         {/* Left: headline */}
-        <div className="flex flex-col gap-5 ">
+        <div className="flex flex-col gap-5">
           <HeaderBtn
             text="BLACK FRIDAY SALE"
             className="leading-none sm:max-w-full text-white"
@@ -93,7 +93,7 @@ export function TimeBannerFullScreen({
           )}
         </div>
 
-        <div className=""><ExploreBtn text="Shop Collection" /></div>
+        <div className="w-full mx-auto text-center"><ExploreBtn text="Shop Collection" /></div>
       </div>
     </div>
   );

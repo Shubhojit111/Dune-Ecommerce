@@ -17,7 +17,6 @@ export default function ProductPage({ params }) {
     <div className="bg-[white]">
       <ProductDetailsPage />
 
-      {/* 
       
       <ProductGridSection
         heading="More top picks"
@@ -27,7 +26,7 @@ export default function ProductPage({ params }) {
         itemsToShow={3}
         isCarousel={false}
         hasViewAllBtn={true}
-      />
+        />
 
       <ShopTheLook heroImage={Assets.ShopTheLookBg} />
 
@@ -45,7 +44,7 @@ export default function ProductPage({ params }) {
         itemsToShow={1}
         isCarousel={false}
         hasViewAllBtn={true}
-      />
+        />
 
       <FloatingCardSectionSmall
         titleText="Designed for comfort."
@@ -64,9 +63,10 @@ export default function ProductPage({ params }) {
           </>
         }
         bgImage={Assets.FloatingCardSection2}
-      />
+        />
 
       <FlagshipStoreSection />
+        {/* 
 
       <ProductGridSection
         heading="You may also like"

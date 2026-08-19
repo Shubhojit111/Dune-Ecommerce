@@ -61,7 +61,7 @@ export default function ProductGridSection({
     itemsToShow == null ? products : products.slice(0, Number(itemsToShow));
 
   return (
-    <section className="w-full px-4 sm:px-8 lg:px-14 py-16 md:py-24 bg-white">
+    <section className="w-full px-4 sm:px-8 lg:px-14 py-0 md:py-24 bg-white">
       <div className="w-full mx-auto">
         {/* Heading + View All */}
         <div
