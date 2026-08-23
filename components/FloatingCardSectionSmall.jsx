@@ -16,7 +16,7 @@ export default function FloatingCardSectionSmall({
   btnText,
 }) {
   return (
-    <section className="relative w-full mb-0">
+    <section className="relative w-full mb-0 group">
       <div className="relative w-full md:h-screen md:max-h-[700px]">
         {/* Background Image */}
         <div className="sm:absolute inset-0 relative h-[400px] items-center md:h-full  overflow-hidden">

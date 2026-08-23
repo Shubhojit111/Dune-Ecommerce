@@ -157,7 +157,7 @@ export default function TestimonialSection() {
   };
 
   return (
-    <section className="w-full bg-gray-200 borderr py-20 sm:py-24 md:py-20 overflow-hidden">
+    <section className="w-full bg-gray-200 py-20 sm:py-24 md:py-20 overflow-hidden">
       <div className="px-4 sm:px-8 lg:px-14 w-full text-center mb-16">
         <HeaderBtnSmall text="Hear It From Them" className="text-center" />
       </div>

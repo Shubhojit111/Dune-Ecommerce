@@ -162,19 +162,26 @@ export default function ProductDetailsPage() {
   const [specOpen, setSpecOpen] = useState(false); // new: "Product Specification" accordion (benefits)
   const [specOpen2, setSpecOpen2] = useState(false); // new: "Product Specification" accordion (materials)
 
-  const rowRef = useRef(null); // wraps the flex row containing both columns
-  const imageColRef = useRef(null); // the right-side image column
+  const rowRef = useRef(null);
+  const imageColRef = useRef(null);
+  const detailsColRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (window.innerWidth < 768) return;
+
       ScrollTrigger.create({
         trigger: rowRef.current,
-        start: "top top",
+        start: "5% top",
+        endTrigger: detailsColRef.current,
         end: "bottom bottom",
         pin: imageColRef.current,
-        pinSpacing: false,
-        // markers: true,
+        pinSpacing: true,
+        markers: true,
+        invalidateOnRefresh: true,
       });
+
+      ScrollTrigger.refresh();
     }, rowRef);
 
     return () => ctx.revert();
@@ -208,9 +215,9 @@ export default function ProductDetailsPage() {
   return (
     <section className="w-full min-h-screen pt-[120px] sm:pt-36 md:pt-44 pb-6 lg:pb-10">
       <div className="px-4 sm:px-8 lg:px-14 w-full">
-        <div className="flex flex-col md:flex-row gap-10 lg:gap-12 items-start w-full min-w-0 lg:mt-12">
+        <div ref={rowRef} className="flex flex-col md:flex-row gap-10 lg:gap-12 items-start w-full min-w-0 lg:mt-12">
           {/* LEFT: Product image */}
-          <div className="w-full md:w-[60%] min-w-0 flex-shrink-0">
+          <div ref={imageColRef} className="w-full md:w-[60%] min-w-0 flex-shrink-0">
             {/* Main image */}
             <div className="relative -mx-4 sm:mx-0 w-auto sm:w-auto h-[450px] lg:h-[1000px] bg-sand overflow-hidden mb-5">
               <Image
@@ -254,7 +261,7 @@ export default function ProductDetailsPage() {
             </div>
           </div>
           {/* RIGHT: Product details */}
-          <div className="w-full md:w-[40%] min-w-0 flex-1 md:py-2 flex flex-col items-center sm:items-start">
+          <div ref={detailsColRef} className="w-full md:w-[40%] min-w-0 flex-1 md:py-2 flex flex-col items-center sm:items-start">
             {/* Breadcrumb */}
             <nav className="text-[11.5px] tracking-wide text-ink mb-3.5">
               <ol className="flex items-center gap-1 flex-wrap">

@@ -17,7 +17,6 @@ export default function ProductPage({ params }) {
     <div className="bg-[white]">
       <ProductDetailsPage />
 
-      
       <ProductGridSection
         heading="More top picks"
         products={toquesProducts}
@@ -25,7 +24,7 @@ export default function ProductPage({ params }) {
         columns={3}
         itemsToShow={3}
         hasViewAllBtn={true}
-        />
+      />
 
       <ShopTheLook heroImage={Assets.ShopTheLookBg} />
 
@@ -42,7 +41,7 @@ export default function ProductPage({ params }) {
         columns={4}
         itemsToShow={1}
         hasViewAllBtn={true}
-        />
+      />
 
       <FloatingCardSectionSmall
         titleText="Designed for comfort."
@@ -57,14 +56,13 @@ export default function ProductPage({ params }) {
                 We believe no one should have to deal with fast fashion,
                 scratchy fabrics, and poor fits.
               </p>
-            </p> 
+            </p>
           </>
         }
         bgImage={Assets.FloatingCardSection2}
-        />
+      />
 
       <FlagshipStoreSection />
-        {/* 
 
       <ProductGridSection
         heading="You may also like"
@@ -97,9 +95,8 @@ export default function ProductPage({ params }) {
       />
 
       <TestimonialSection />
-      <JournalSection /> 
-      
-      */}
+      <JournalSection />
+
       {/*
        */}
     </div>
