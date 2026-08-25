@@ -5,7 +5,7 @@ import JournalSection from "@/components/JournalSection";
 import ProductGridSection from "@/components/ProductGridSection";
 import { toquesProducts } from "@/data/products";
 import ShopTheLook from "@/components/ShopTheLook";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import { TimeBannerFullScreen } from "@/components/TimeBannerFullScreen";
 import FloatingCardSection from "@/components/FloatingCardSection";
 import FloatingCardSectionSmall from "@/components/FloatingCardSectionSmall";

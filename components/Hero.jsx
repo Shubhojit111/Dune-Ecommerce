@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import ExploreBtn from "./buttons/ExploreBtn";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 
 const SLIDES = [
   {

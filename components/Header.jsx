@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import HeaderBtn from "./buttons/HeaderBtn";
 import gsap from "gsap";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import Image from "next/image";
 import SubTextBtn from "./buttons/SubTextBtn";
 

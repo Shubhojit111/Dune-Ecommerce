@@ -20,14 +20,13 @@ import {
 } from "lucide-react";
 import HeaderBtn from "./buttons/HeaderBtn";
 import gsap from "gsap";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import Image from "next/image";
 import SubTextBtn from "./buttons/SubTextBtn";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const isProductPage =
-    typeof pathname === "string" && pathname.startsWith("/products");
+  const isOtherPage = typeof pathname === "string" && pathname !== "/";
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(null);
@@ -125,7 +124,7 @@ export default function Navbar() {
           duration: 0.5,
           ease: "power3.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
       tl.fromTo(
@@ -138,7 +137,7 @@ export default function Navbar() {
           duration: 0.45,
           ease: "power3.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
     } else if (mobileDrawerRef.current) {
       gsap.to(mobileDrawerRef.current, {
@@ -153,13 +152,18 @@ export default function Navbar() {
     { label: "Shop", href: "/collections/all", hasDropdown: true },
     { label: "New Arrivals", href: "/collections/new" },
     { label: "Best Sellers", href: "/collections/best-sellers" },
-    { label: "Shop by Brand", href: "/collections/brands", hasDropdown: true, hasAccent: true },
-   
+    {
+      label: "Shop by Brand",
+      href: "/collections/brands",
+      hasDropdown: true,
+      hasAccent: true,
+    },
+    { label: "About", href: "/about" },
   ];
 
   const navbarBg = scrolled
     ? "bg-white/95 backdrop-blur-md text-[#1E1B17] border-b border-stone-200  shadow-sm"
-    : isProductPage
+    : isOtherPage
       ? "bg-white text-[#1E1B17] "
       : "bg-transparent text-white";
 
@@ -168,8 +172,8 @@ export default function Navbar() {
     : "max-h-12 py-1.5 border-b opacity-100";
 
   const addressRowBg = scrolled
-    ? "bg-[#1E1B17] text-white/90"
-    : isProductPage
+    ? " text-white/90"
+    : isOtherPage
       ? "bg-transparent text-[#1E1B17]/80 border-[#1E1B17]/15"
       : "bg-transparent text-white/90";
 
@@ -195,10 +199,12 @@ export default function Navbar() {
 
       {/* Row 2  Address / Socials / Currency (lg+) */}
       <div
-        className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 ${isProductPage ? "border-b-[#1E1B17]/15" : "border-b-white"} ${addressRowState} ${addressRowBg}`}
+        className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 ${isOtherPage ? "border-b-[#1E1B17]/15" : "border-b-white"} ${addressRowState} ${addressRowBg}`}
       >
         <div className="flex items-center font-medium">
-          <span className="text-[14px] leading-none">337 Roncesvalles Ave, Torronto</span>
+          <span className="text-[13px] leading-none">
+            337 Roncesvalles Ave, Torronto
+          </span>
         </div>
         <div className="flex items-center gap-16">
           <div className="flex items-center gap-2.5">
@@ -206,35 +212,39 @@ export default function Navbar() {
               aria-label="Instagram"
               className="hover:opacity-75 transition"
             >
-              <Icon icon="fa6-brands:instagram" className="h-5 w-5"/>
+              <Icon icon="fa6-brands:instagram" className="h-5 w-5" />
             </button>
             <button
               aria-label="Facebook"
               className="hover:opacity-75 transition"
             >
-              <Icon icon="fa6-brands:facebook" className="h-5 w-5"/>
+              <Icon icon="fa6-brands:facebook" className="h-5 w-5" />
             </button>
             <button
               aria-label="Pinterest"
               className="hover:opacity-75 transition"
             >
-              <Icon icon="fa6-brands:pinterest" className="h-5 w-5"/>
+              <Icon icon="fa6-brands:pinterest" className="h-5 w-5" />
             </button>
           </div>
-          <div className="flex items-center gap-1 cursor-pointer hover:opacity-75 transition font-bold tracking-wide">
-            <span className="text-[16px] leading-none">India (INR)</span>
-            <ChevronDownIcon />
+          <div className="flex items-center gap-1 cursor-pointer hover:opacity-75 transition font-medium tracking-wide">
+            <span className="text-[15px] leading-none">India (INR)</span>
+            <ChevronDownIcon className="opacity-80 h-5 w-5" />
           </div>
         </div>
       </div>
 
       {/* Row 3  Main Navbar */}
       <div
-        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${isProductPage ? "border-b border-s" : null} ${mainNavbarPadding}`}
+        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${isOtherPage ? "border-b border-stone-200" : null} ${mainNavbarPadding}`}
       >
         {/* Left */}
         <div className="flex items-center gap-4">
-          <HeaderBtn href="/" text={"DUNE"} className="!text-[28px] sm:!text-[34px] cursor-pointer !mt-0 !mb-0" />
+          <HeaderBtn
+            href="/"
+            text={"DUNE"}
+            className="!text-[28px] sm:!text-[34px] cursor-pointer !mt-0 !mb-0"
+          />
         </div>
 
         {/* Center */}
@@ -270,33 +280,39 @@ export default function Navbar() {
 
         {/* Right */}
         <div className="flex items-center gap-4 sm:gap-5 lg:gap-6">
-          <button
-            aria-label="Search"
-            className="hover:opacity-70 transition p-1"
-          >
-            <Icon icon="lucide:search" className="h-6 w-6"/>
-          </button>
-          <button
-            className="lg:hidden p-1 hover:opacity-70 transition"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
-            <Icon icon="lucide:menu" className="h-6 w-6"/>
-          </button>
-          <Link
-            href="/cart"
-            aria-label="Cart"
-            className="relative hover:opacity-70 transition p-1"
-          >
-            <Icon icon="lucide:shopping-cart" className="h-6 w-6"/>
-          </Link>
           <Link
             href="/account"
             aria-label="Account"
             className="hidden sm:block hover:opacity-70 transition p-1"
           >
-            <Icon icon="lucide:user-round" strokeWidth={1} className="h-6 w-6"/>
+            <Icon
+              icon="lucide:user-round"
+              strokeWidth={1}
+              className="h-6 w-6"
+            />
           </Link>
+          <button
+            aria-label="Search"
+            className="hover:opacity-70 transition p-1"
+          >
+            <Icon icon="lucide:search" className="h-6 w-6" />
+          </button>
+
+          <Link
+            href="/cart"
+            aria-label="Cart"
+            className="relative hover:opacity-70 transition p-1"
+          >
+            <Icon icon="lucide:shopping-cart" className="h-6 w-6" />
+          </Link>
+
+          <button
+            className="lg:hidden p-1 hover:opacity-70 transition"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open menu"
+          >
+            <Icon icon="lucide:menu" className="h-6 w-6" />
+          </button>
         </div>
       </div>
 
@@ -565,13 +581,13 @@ export default function Navbar() {
                 className="opacity-0 grid grid-cols-3 gap-0"
               >
                 <div className="flex items-center justify-center py-3 border border-ink/80">
-                  <Pin size={22} strokeWidth={1.5} color="black"/>
+                  <Pin size={22} strokeWidth={1.5} color="black" />
                 </div>
                 <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
-                  <Pin size={22} strokeWidth={1.5} color="black"/>
+                  <Pin size={22} strokeWidth={1.5} color="black" />
                 </div>
                 <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
-                  <Pin size={22} strokeWidth={1.5} color="black"/>
+                  <Pin size={22} strokeWidth={1.5} color="black" />
                 </div>
               </div>
             </div>

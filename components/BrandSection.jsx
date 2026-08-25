@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import HeaderBtn from "./buttons/HeaderBtn";
 
 const brands = [

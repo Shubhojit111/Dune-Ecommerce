@@ -4,7 +4,7 @@ import ExploreBtn from "./buttons/ExploreBtn";
 import HeaderBtn from "./buttons/HeaderBtn";
 import SubTextBtn from "./buttons/SubTextBtn";
 import HeadTagBtn from "./buttons/HeadTagBtn";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 
 export default function FeaturedMultiSection() {

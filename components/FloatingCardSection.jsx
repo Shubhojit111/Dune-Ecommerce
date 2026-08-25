@@ -10,7 +10,7 @@ import ExploreBtn from "./buttons/ExploreBtn";
 import HeadTagBtn from "./buttons/HeadTagBtn";
 import HeaderBtn from "./buttons/HeaderBtn";
 import SubTextBtn from "./buttons/SubTextBtn";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 import HeadTagBtnSmall from "./buttons/HeadTagBtnSmall";
 

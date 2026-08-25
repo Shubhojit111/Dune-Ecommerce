@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Mail, ChevronDown } from "lucide-react";
 import Countdown from "react-countdown";
 import HeadTagBtn from "./buttons/HeadTagBtn";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 
 import Image from "next/image";
 import { Icon } from "@iconify/react";
@@ -14,26 +14,24 @@ import { Icon } from "@iconify/react";
 /*  2. FOOTER (Shopify-style)                                         */
 /* ------------------------------------------------------------------ */
 const shopLinks = [
-  "Apparel",
-  "Outerwear",
-  "Accessories",
-  "Homegoods",
-  "New Arrivals",
-  "Sale",
+  { label: "Apparel", href: "/collections/apparel" },
+  { label: "Outerwear", href: "/collections/outerwear" },
+  { label: "Accessories", href: "/collections/accessories" },
+  { label: "Homegoods", href: "/collections/homegoods" },
+  { label: "New Arrivals", href: "/collections/new-arrivals" },
+  { label: "Sale", href: "/collections/sale" },
 ];
 const brandLinks = [
-  "Muttonhead",
-  "Naked and Famous",
-  "Juniper Ridge",
-  "Bather",
-  "Beside",
+  { label: "Muttonhead", href: "/brands/muttonhead" },
+  { label: "Naked and Famous", href: "/brands/naked-and-famous" },
+  { label: "Juniper Ridge", href: "/brands/juniper-ridge" },
+  { label: "Bather", href: "/brands/bather" },
+  { label: "Beside", href: "/brands/beside" },
 ];
 const aboutLinks = [
-  "Theme Features",
-  "About",
-  "FAQ",
-  "Contact",
-  "Theme Features",
+  { label: "About", href: "/about" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function FooterColumn({ title, links }) {
@@ -46,10 +44,10 @@ function FooterColumn({ title, links }) {
         {links.map((link, i) => (
           <li key={i} className="mb-3.5">
             <Link
-              href="#"
+              href={link.href}
               className="jst text-[14.5px] text-[#1c1c1c] no-underline hover:opacity-70"
             >
-              {link}
+              {link.label}
             </Link>
           </li>
         ))}
@@ -151,10 +149,10 @@ export default function Footer() {
                       {sec.links.map((link, idx) => (
                         <Link
                           key={idx}
-                          href="#"
+                          href={link.href}
                           className="text-[13px] text-[#333333] hover:opacity-70 font-medium tracking-wide transition"
                         >
-                          {link}
+                          {link.label}
                         </Link>
                       ))}
                     </div>
@@ -225,12 +223,13 @@ export default function Footer() {
                   className="!text-black font-dune !text-[12px] mb-[24px]"
                 />
                 {shopLinks.map((item, index) => (
-                  <div
+                  <Link
                     key={index}
+                    href={item.href}
                     className="text-[#1c1c1c] text-[12.5px] font-normal tracking-[0.7px] flex flex-col mb-3 hover:opacity-70 cursor-pointer"
                   >
-                    {item}
-                  </div>
+                    {item.label}
+                  </Link>
                 ))}
               </div>
               <div className="flex flex-col h-full whitespace-nowrap">
@@ -239,12 +238,13 @@ export default function Footer() {
                   className="!text-black font-dune !text-[12px] mb-[24px]"
                 />
                 {brandLinks.map((item, index) => (
-                  <div
+                  <Link
                     key={index}
+                    href={item.href}
                     className="text-[#1c1c1c] text-[12.5px] font-normal tracking-[0.7px] flex flex-col mb-3.5 hover:opacity-70 cursor-pointer"
                   >
-                    {item}
-                  </div>
+                    {item.label}
+                  </Link>
                 ))}
               </div>
               <div className="flex flex-col h-full whitespace-nowrap">
@@ -253,12 +253,13 @@ export default function Footer() {
                   className="!text-black font-dune !text-[12px] mb-[24px]"
                 />
                 {aboutLinks.map((item, index) => (
-                  <div
+                  <Link
                     key={index}
+                    href={item.href}
                     className="text-[#1c1c1c] text-[12.5px] font-normal tracking-[0.7px] flex flex-col mb-3 hover:opacity-70 cursor-pointer"
                   >
-                    {item}
-                  </div>
+                    {item.label}
+                  </Link>
                 ))}
               </div>
             </div>

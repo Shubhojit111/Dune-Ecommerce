@@ -47,7 +47,12 @@ import BrandLogo3 from "@/assets/images/BrandLogo3.webp";
 import BrandLogo4 from "@/assets/images/BrandLogo4.webp";
 import BrandLogo5 from "@/assets/images/BrandLogo5.webp";
 
+import JournalImage1 from "@/assets/images/Journal1.webp";
+import JournalImage2 from "@/assets/images/Journal2.webp";
+import JournalImage3 from "@/assets/images/Journal3.webp";
+
 import Flagship1 from "@/assets/images/Flagship1.webp";
+import AboutHeaderVideo from "@/assets/videos/AboutHeader.mp4";
 
 const Assets = {
   
@@ -101,6 +106,12 @@ const Assets = {
   FooterLogo,
 
   Flagship1,
+
+  JournalImage1,
+  JournalImage2,
+  JournalImage3,
+
+  AboutHeaderVideo,
 
 };
 

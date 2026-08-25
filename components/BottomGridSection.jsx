@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 
 const galleryImages = [
   {

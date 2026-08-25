@@ -2,7 +2,7 @@
 // (impulse-theme-fashion.myshopify.com) — swap in your own
 // Storefront API query later if you want this live.
 
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 
 export const featuredSlides = [
   {

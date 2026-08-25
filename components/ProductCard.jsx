@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 
 export default function ProductCard({ product }) {
   const DEFAULT_COLORS = [
@@ -54,17 +54,17 @@ export default function ProductCard({ product }) {
           </div>
         </div>
 
-        <div className="mt-3 sm:mt-4 text-center w-full">
-          <p className="text-[10px] md:text-[12.5px] tracking-wider text-gray-800 font-normal">
+        <div className="mt-3 sm:mt-2 flex flex-col items-center justify-center gap-1 text-center w-full">
+          <p className="text-[10px] md:text-[11.5px] tracking-wider text-gray-800 font-normal">
             {product.name}
           </p>
           {product.brand && (
-            <p className="mt-1.5 text-[11.5px] uppercase tracking-[0.2em] text-[#121212] font-light">
+            <p className=" text-[11.5px] uppercase tracking-[0.2em] text-[#121212] font-light">
               {product.brand}
             </p>
           )}
           {product.salePrice ? (
-            <p className="mt-1 text-xs md:text-[12.5px] text-gray-800 flex items-center justify-center gap-2.5 flex-wrap">
+            <p className=" text-xs md:text-[12.5px] text-gray-800 flex items-center justify-center gap-2.5 flex-wrap">
               <span className="text-taupe line-through">
                 {product.regularPrice}
               </span>
@@ -76,14 +76,14 @@ export default function ProductCard({ product }) {
               )}
             </p>
           ) : (
-            <p className="mt-2 text-xs md:text-[12.5px] text-gray-800 font-normal tracking-wider">
+            <p className="text-xs md:text-[12.5px] text-gray-800 font-normal tracking-wider">
               {product.price}
             </p>
           )}
 
           {/* Color swatches — only if product has colors */}
           {hasColors && (
-            <div className="mt-3 flex items-center justify-center gap-2">
+            <div className="mt-2 flex items-center justify-center gap-2">
               {colors.slice(0, 4).map((c, i) => (
                 <button
                   key={i}

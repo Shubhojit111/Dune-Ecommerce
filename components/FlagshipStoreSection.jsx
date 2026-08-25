@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import HeadTagBtn from "./buttons/HeadTagBtn";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 import ExploreBtn from "./buttons/ExploreBtn";

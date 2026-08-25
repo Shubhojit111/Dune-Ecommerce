@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Plus, X } from "lucide-react";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import Image from "next/image";
 import HeaderBtn from "./buttons/HeaderBtn";
 import HeadTagBtn from "./buttons/HeadTagBtn";

@@ -1,4 +1,4 @@
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import Image from "next/image";
 import Link from "next/link";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";

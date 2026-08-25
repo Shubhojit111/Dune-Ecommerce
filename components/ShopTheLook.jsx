@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Plus, X } from "lucide-react";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import HeaderBtn from "./buttons/HeaderBtn";
 
 import gsap from "gsap";

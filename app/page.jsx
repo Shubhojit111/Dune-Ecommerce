@@ -12,7 +12,7 @@ import BottomGridSection from "@/components/BottomGridSection";
 import ShopTheLook from "@/components/ShopTheLook";
 import FloatingCardSection from "@/components/FloatingCardSection";
 import BrandSection from "@/components/BrandSection";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 
 export default function HomePage() {
   return (

@@ -8,7 +8,7 @@ import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 import HeadTagBtn from "./buttons/HeadTagBtn";
 import ExploreBtn from "./buttons/ExploreBtn";
 import Image from "next/image";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 
 function TimeBlock({ value, label, isLast }) {
   return (

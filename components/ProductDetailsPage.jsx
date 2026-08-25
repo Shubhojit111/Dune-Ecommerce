@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"; // add useRef, useEffect
 import Image from "next/image";
 import Link from "next/link";
-import Assets from "@/assets/images/Assets";
+import Assets from "@/assets/Assets";
 import {
   Truck,
   CheckCircle,
