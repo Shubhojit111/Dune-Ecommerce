@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
+import { useCart } from "@/context/CartContext";
 
 import {
   Search,
@@ -27,6 +28,7 @@ import SubTextBtn from "./buttons/SubTextBtn";
 export default function Navbar() {
   const pathname = usePathname();
   const isOtherPage = typeof pathname === "string" && pathname !== "/";
+  const { itemCount } = useCart();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(null);
@@ -304,6 +306,11 @@ export default function Navbar() {
             className="relative hover:opacity-70 transition p-1"
           >
             <Icon icon="lucide:shopping-cart" className="h-6 w-6" />
+            {itemCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-ink text-white text-[10px] font-bold flex items-center justify-center leading-none">
+                {itemCount}
+              </span>
+            )}
           </Link>
 
           <button

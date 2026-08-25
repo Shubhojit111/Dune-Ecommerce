@@ -3,7 +3,9 @@
 import { useState, useRef, useEffect } from "react"; // add useRef, useEffect
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Assets from "@/assets/Assets";
+import { useCart } from "@/context/CartContext";
 import {
   Truck,
   CheckCircle,
@@ -153,8 +155,20 @@ const BENEFITS = [
   },
 ];
 
-export default function ProductDetailsPage() {
-  const [mainImage, setMainImage] = useState(Assets.Category3);
+export default function ProductDetailsPage({ product }) {
+  const router = useRouter();
+  const { addItem, error: cartError } = useCart();
+
+  // Derive product-specific values from the passed product prop (with fallbacks)
+  const productId = product?.id || product?.handle || "unknown-product";
+  const productName = product?.name || "Camping Hoodie - Heather Grey Quilt";
+  const productBrand = product?.brand || "Muttonhead";
+  const productPrice = product?.salePrice || product?.price || product?.regularPrice || "Rs. 12,500.00";
+  const productImage = product?.image || Assets.Category3;
+  const productSecondImage = product?.secondImage || product?.hoverImage || productImage;
+  const productColors = product?.colors?.length ? product.colors : COLORS;
+
+  const [mainImage, setMainImage] = useState(productImage);
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedColor, setSelectedColor] = useState(0);
   const [shippingOpen, setShippingOpen] = useState(false);
@@ -292,22 +306,16 @@ export default function ProductDetailsPage() {
               </ol>
             </nav>
             <HeadTagBtn
-              text="Muttonhead"
+              text={productBrand}
               className="!text-ink !font-medium tracking-[0.3em] mb-2 sm:mb-0"
             />
 
             <HeaderBtnSmall
-              text={
-                <>
-                  Camping Hoodie - Heather
-                  <br />
-                  Grey Quilt
-                </>
-              }
+              text={productName}
               className="w-full text-center sm:text-start !leading-[1.2]"
             />
             <p className=" sm:text-[14.5px] text-ink/80 font-normal mt-6 mb-6">
-              Rs. 12,500.00
+              {productPrice}
             </p>
 
             {/* Size */}
@@ -477,10 +485,38 @@ export default function ProductDetailsPage() {
 
             {/* CTA buttons */}
             <div className="flex flex-col gap-3 mb-8 w-full">
-              <button className="leading-none py-[18px] w-full border border-ink rounded-full text-[13px] uppercase tracking-[0.25em] font-bold text-ink hover:bg-ink hover:text-cream transition-all duration-300">
+              {cartError && (
+                <p className="text-[12px] text-red-600 text-center mb-1">{cartError}</p>
+              )}
+              <button
+                onClick={() =>
+                  addItem({
+                    id: productId,
+                    name: productName,
+                    size: selectedSize,
+                    color: productColors[selectedColor]?.name || `Color ${selectedColor + 1}`,
+                    price: productPrice,
+                    image: productImage,
+                  })
+                }
+                className="leading-none py-[18px] w-full border border-ink rounded-full text-[13px] uppercase tracking-[0.25em] font-bold text-ink hover:bg-ink hover:text-cream transition-all duration-300"
+              >
                 Add to cart
               </button>
-              <button className="leading-none py-[18px] w-full bg-ink text-cream rounded-full text-[13px] uppercase tracking-[0.25em] font-bold hover:bg-ink/90 transition-all duration-300">
+              <button
+                onClick={() => {
+                  addItem({
+                    id: productId,
+                    name: productName,
+                    size: selectedSize,
+                    color: productColors[selectedColor]?.name || `Color ${selectedColor + 1}`,
+                    price: productPrice,
+                    image: productImage,
+                  });
+                  router.push("/cart");
+                }}
+                className="leading-none py-[18px] w-full bg-ink text-cream rounded-full text-[13px] uppercase tracking-[0.25em] font-bold hover:bg-ink/90 transition-all duration-300"
+              >
                 Buy it now
               </button>
             </div>

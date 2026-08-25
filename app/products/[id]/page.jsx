@@ -3,7 +3,7 @@ import FlagshipStoreSection from "@/components/FlagshipStoreSection";
 import TestimonialSection from "@/components/TestimonialSection";
 import JournalSection from "@/components/JournalSection";
 import ProductGridSection from "@/components/ProductGridSection";
-import { toquesProducts } from "@/data/products";
+import { toquesProducts, linenEdit, allNew, featuredSlides } from "@/data/products";
 import ShopTheLook from "@/components/ShopTheLook";
 import Assets from "@/assets/Assets";
 import { TimeBannerFullScreen } from "@/components/TimeBannerFullScreen";
@@ -12,10 +12,18 @@ import FloatingCardSectionSmall from "@/components/FloatingCardSectionSmall";
 import TrustSection from "@/components/TrustSection";
 import VideoSection from "@/components/VideoSection";
 
+// Combine all product arrays for lookup
+const ALL_PRODUCTS = [...toquesProducts, ...linenEdit, ...allNew, ...featuredSlides];
+
 export default function ProductPage({ params }) {
+  // Find the product matching the route id (check both id and handle)
+  const product =
+    ALL_PRODUCTS.find((p) => p.id === params.id || p.handle === params.id) ||
+    toquesProducts[0];
+
   return (
     <div className="bg-[white]">
-      <ProductDetailsPage />
+      <ProductDetailsPage product={product} />
 
       <ProductGridSection
         heading="More top picks"
