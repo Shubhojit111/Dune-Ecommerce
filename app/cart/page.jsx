@@ -14,12 +14,12 @@ import HeaderBtn from "@/components/buttons/HeaderBtn";
 gsap.registerPlugin(ScrollTrigger);
 
 function formatRs(n) {
-  return (
-    "Rs. " +
-    n.toLocaleString("en-IN", {
-      minimumFractionDigits: 2,
-    })
-  );
+  const rounded = Math.round(n);
+  const hasDecimals = n % 1 !== 0;
+  return "Rs. " + rounded.toLocaleString("en-IN", {
+    minimumFractionDigits: hasDecimals ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
 }
 
 export default function CartPage() {
@@ -111,21 +111,27 @@ export default function CartPage() {
               items.map((item, idx) => (
                 <div key={item.cartId}>
                   <div className="flex gap-6 py-6 items-start">
-                    {/* Product Image */}
-                    <div className="relative w-[150px] h-[170px] flex-shrink-0 overflow-hidden bg-[#e5e3e0]">
+                    {/* Product Image — clickable */}
+                    <Link
+                      href={`/products/${item.id}`}
+                      className="relative w-[150px] h-[170px] flex-shrink-0 overflow-hidden bg-[#e5e3e0] block"
+                    >
                       <Image
                         src={item.image}
                         alt={item.name}
                         fill
                         className="object-cover"
                       />
-                    </div>
+                    </Link>
 
                     {/* Product Details */}
                     <div className="flex-1 font-sans">
-                      <div className="text-[15px] text-[#1e3a5f] mb-3 leading-[1.4]">
+                      <Link
+                        href={`/products/${item.id}`}
+                        className="text-[15px] text-[#1e3a5f] mb-3 leading-[1.4] hover:underline block"
+                      >
                         {item.name}
-                      </div>
+                      </Link>
 
                       <div className="text-[14px] mb-3">
                         <strong>Size:</strong> {item.size}
@@ -201,9 +207,46 @@ export default function CartPage() {
                   placeholder=""
                 />
 
-                <div className="flex justify-between text-[15px] mb-5">
-                  <span>Subtotal</span>
-                  <span>{formatRs(subtotal)}</span>
+                {/* Invoice breakdown */}
+                <div className="border-t border-[#d8d6d2] pt-4 mb-4">
+                  <div className="text-[13px] tracking-[2px] mb-3">INVOICE</div>
+
+                  {/* Line items */}
+                  <div className="space-y-2 mb-4">
+                    {items.map((item) => (
+                      <div key={item.cartId} className="flex justify-between text-[13px] text-[#1a1a1a]">
+                        <span className="flex-1 min-w-0 truncate pr-2">
+                          {item.qty} × {item.name}
+                        </span>
+                        <span className="whitespace-nowrap">
+                          {formatRs(parsePrice(item.price) * item.qty)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <hr className="border-none border-t border-[#d8d6d2] mb-3" />
+
+                  {/* Totals */}
+                  <div className="flex justify-between text-[14px] mb-2">
+                    <span>Subtotal</span>
+                    <span>{formatRs(subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-[14px] mb-2">
+                    <span>Shipping</span>
+                    <span className="text-[#555]">Calculated at checkout</span>
+                  </div>
+                  <div className="flex justify-between text-[14px] mb-2">
+                    <span>Taxes</span>
+                    <span className="text-[#555]">Calculated at checkout</span>
+                  </div>
+
+                  <hr className="border-none border-t border-[#d8d6d2] my-3" />
+
+                  <div className="flex justify-between text-[16px] font-bold">
+                    <span>Total</span>
+                    <span>{formatRs(subtotal)}</span>
+                  </div>
                 </div>
 
                 <button

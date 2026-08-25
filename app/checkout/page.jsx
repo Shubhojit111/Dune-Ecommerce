@@ -8,7 +8,12 @@ import { useCart, parsePrice } from "@/context/CartContext";
 import HeaderBtn from "@/components/buttons/HeaderBtn";
 
 function formatRs(n) {
-  return "Rs. " + n.toLocaleString("en-IN", { minimumFractionDigits: 2 });
+  const rounded = Math.round(n);
+  const hasDecimals = n % 1 !== 0;
+  return "Rs. " + rounded.toLocaleString("en-IN", {
+    minimumFractionDigits: hasDecimals ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
 }
 
 export default function CheckoutPage() {
@@ -241,7 +246,11 @@ export default function CheckoutPage() {
               {/* Item list */}
               <div className="space-y-4 mb-6">
                 {items.map((item) => (
-                  <div key={item.cartId} className="flex gap-3 items-start">
+                  <Link
+                    key={item.cartId}
+                    href={`/products/${item.id}`}
+                    className="flex gap-3 items-start hover:opacity-70 transition-opacity"
+                  >
                     <div className="relative w-[60px] h-[70px] flex-shrink-0 overflow-hidden bg-[#e5e3e0]">
                       <Image
                         src={item.image}
@@ -264,7 +273,7 @@ export default function CheckoutPage() {
                     <div className="text-[13px] text-[#1a1a1a] whitespace-nowrap">
                       {formatRs(parsePrice(item.price) * item.qty)}
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
 
