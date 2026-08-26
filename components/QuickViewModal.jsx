@@ -58,21 +58,25 @@ export default function QuickViewModal({ isOpen, onClose, children }) {
 
       {/* Panel */}
       <div
-        className={`relative w-full h-[80vh] w-[70vw] overflow-y-auto bg-white shadow-2xl transition-all duration-300 ease-out ${
+        className={`relative w-full h-[80vh] w-[70vw] bg-white shadow-2xl transition-all duration-300 ease-out flex flex-col ${
           isVisible
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-[0.97] translate-y-2"
         }`}
       >
+        {/* Close button — fixed at top-right, always visible */}
         <button
           onClick={onClose}
           aria-label="Close quick view"
-          className="absolute top-4 right-4 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/80 hover:bg-white transition-colors"
+          className="absolute top-4 right-4 z-20 flex items-center justify-center w-8 h-8 rounded-full bg-white/80 hover:bg-white transition-colors"
         >
           <X size={18} strokeWidth={1.5} />
         </button>
 
-        {children}
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto">
+          {children}
+        </div>
       </div>
     </div>
   );
