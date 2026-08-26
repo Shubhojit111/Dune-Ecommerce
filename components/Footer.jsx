@@ -34,84 +34,6 @@ const aboutLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-function FooterColumn({ title, links }) {
-  return (
-    <div>
-      <div className="jst text-xs tracking-[2px] text-[#5b7a99] font-medium mb-[22px]">
-        {title}
-      </div>
-      <ul className="list-none m-0 p-0">
-        {links.map((link, i) => (
-          <li key={i} className="mb-3.5">
-            <Link
-              href={link.href}
-              className="jst text-[14.5px] text-[#1c1c1c] no-underline hover:opacity-70"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function SocialIcon({ children }) {
-  return (
-    <Link
-      href="#"
-      className="w-[34px] h-[34px] rounded-full border border-[#1c1c1c] flex items-center justify-center text-[#1c1c1c] no-underline hover:bg-[#1c1c1c] hover:text-white transition-colors"
-    >
-      {children}
-    </Link>
-  );
-}
-function InstagramIcon({ size = 26 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect
-        x="3"
-        y="3"
-        width="18"
-        height="18"
-        rx="5"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
-      <circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" />
-    </svg>
-  );
-}
-
-function FacebookIcon({ size = 26 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M14 8.5V7.1c0-.7.5-1.1 1.2-1.1H17V3h-2.6C11.7 3 10 4.7 10 7.2v1.3H8v3h2V21h3.2v-9.5h2.6l.5-3H13.2z" />
-    </svg>
-  );
-}
-
-function PinterestIcon({ size = 26 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0a12 12 0 0 0-4.37 23.17c-.06-.94-.11-2.38.02-3.4.12-.93.8-5.9.8-5.9s-.2-.4-.2-1c0-.94.55-1.64 1.23-1.64.58 0 .86.43.86.96 0 .58-.37 1.46-.56 2.27-.16.68.34 1.24 1.01 1.24 1.21 0 2.14-1.28 2.14-3.12 0-1.63-1.17-2.77-2.84-2.77-1.94 0-3.07 1.45-3.07 2.95 0 .58.22 1.21.5 1.55a.2.2 0 0 1 .05.19c-.05.22-.17.68-.2.78-.03.13-.1.16-.24.1-.9-.42-1.46-1.73-1.46-2.79 0-2.27 1.65-4.36 4.76-4.36 2.5 0 4.44 1.78 4.44 4.16 0 2.48-1.56 4.48-3.74 4.48-.73 0-1.42-.38-1.65-.83l-.45 1.72c-.16.63-.6 1.42-.9 1.9A12 12 0 1 0 12 0z" />
-    </svg>
-  );
-}
-
 export default function Footer() {
   const [openSection, setOpenSection] = useState(null);
 
@@ -135,13 +57,25 @@ export default function Footer() {
             {accordionSections.map((sec) => {
               const isOpen = openSection === sec.title;
               return (
-                <div key={sec.title} className="border-b border-stone-300 last:border-b-0">
+                <div
+                  key={sec.title}
+                  className="border-b border-stone-300 last:border-b-0"
+                >
                   <button
                     onClick={() => toggleSection(sec.title)}
                     className="w-full py-4 flex items-center justify-between text-xs tracking-[0.2em] font-semibold text-center uppercase text-[#1c1c1c] transition hover:opacity-70"
                   >
-                    <span className="mx-auto pl-5 text-[14px]">{sec.title}</span>
-                    {isOpen ? <ChevronDown className="rotate-180 transition-transform" size={16} /> : <ChevronDown size={16} />}
+                    <span className="mx-auto pl-5 text-[14px]">
+                      {sec.title}
+                    </span>
+                    {isOpen ? (
+                      <ChevronDown
+                        className="rotate-180 transition-transform"
+                        size={16}
+                      />
+                    ) : (
+                      <ChevronDown size={16} />
+                    )}
                   </button>
 
                   {isOpen && (
@@ -199,9 +133,9 @@ export default function Footer() {
             </div>
 
             <div className="flex justify-center items-center gap-5 mt-6 mb-8">
-              <InstagramIcon size={24} />
-              <FacebookIcon size={24} />
-              <PinterestIcon size={24} />
+              <Icon icon="fa6-brands:instagram" className="h-5 w-5" />
+              <Icon icon="fa6-brands:facebook" className="h-5 w-5" />
+              <Icon icon="fa6-brands:pinterest" className="h-5 w-5" />
             </div>
           </div>
 
@@ -264,7 +198,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-start justify-start">
               <div className="relative w-[130px] h-[120px]">
                 <Image
                   src={Assets.FooterLogo}
@@ -280,8 +214,8 @@ export default function Footer() {
                 SIGN UP &amp; SAVE 15%
               </h2>
               <p className="text-[13px] text-[#1c1c1c] leading-[1.6] mt-4 mb-[20px] max-w-[500px] tracking-[0.1px]">
-                Be the first to know about our biggest and best sales. We'll never
-                send more than one email a month.
+                Be the first to know about our biggest and best sales. We'll
+                never send more than one email a month.
               </p>
 
               <div className="flex items-center justify-between border-b-2 border-[#1c1c1c] pb-2 max-w-[55%]">
@@ -299,9 +233,9 @@ export default function Footer() {
               </div>
 
               <div className="flex gap-3 mt-[26px]">
-                <Icon icon="fa6-brands:instagram" className="h-6 w-7"/>
-                <Icon icon="fa6-brands:facebook" className="h-6 w-6"/>
-                <Icon icon="fa6-brands:pinterest" className="h-6 w-6"/>
+                <Icon icon="fa6-brands:instagram" className="h-6 w-7" />
+                <Icon icon="fa6-brands:facebook" className="h-6 w-6" />
+                <Icon icon="fa6-brands:pinterest" className="h-6 w-6" />
               </div>
             </div>
           </div>

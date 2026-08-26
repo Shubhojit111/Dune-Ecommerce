@@ -43,26 +43,12 @@ export default function ProductCard({ product }) {
             className="object-cover absolute top-0 left-0 object-center transition-opacity duration-500 ease-in-out opacity-0 group-hover:opacity-100"
           />
 
-          {/* Add to cart — slides up from bottom on hover */}
+          {/* quick view — slides up from bottom on hover */}
           <div className="absolute bottom-0 left-0 z-50 p-2 w-full overflow-hidden">
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                addItem({
-                  id: product.handle || product.id,
-                  name: product.name,
-                  size: "M",
-                  color: hasColors ? `Color ${selectedColor + 1}` : "default",
-                  price: product.salePrice || product.price || product.regularPrice || "Rs. 0.00",
-                  image: product.image,
-                });
-              }}
-              className="w-full py-1.5 bg-[#2a2a28] text-white text-[12px] font-medium tracking-wider
-                         transition-all duration-500 ease-in-out
-                         translate-y-full opacity-0
-                         group-hover:translate-y-0 group-hover:opacity-100"
+              className="w-full py-1.5 bg-[#2a2a28] text-white text-[12px] font-medium tracking-wider transition-all duration-500 ease-in-out translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
             >
-              Add to cart
+              Quick View
             </button>
           </div>
         </div>

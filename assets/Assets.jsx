@@ -19,7 +19,7 @@ import Category1 from "@/assets/images/Category1.webp";
 import Category2 from "@/assets/images/Category2.webp";
 import Category3 from "@/assets/images/Category3.webp";
 
-import FooterLogo from "@/assets/images/hero.png";
+import FooterLogo from "@/assets/images/Frame_3.png";
 
 import GridImage1 from "@/assets/images/GridImage1.webp";
 import GridImage2 from "@/assets/images/GridImage2.webp";
