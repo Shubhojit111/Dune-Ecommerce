@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Assets from "@/assets/Assets";
 import { useCart } from "@/context/CartContext";
+import QuickViewModal from "@/components/QuickViewModal"; // adjust path
+import ProductDetailsPage from "@/components/ProductDetailsPage"; // adjust path
+import ProductQuickView from "./ProductQuickView";
 
 export default function ProductCard({ product }) {
   const { addItem } = useCart();
@@ -15,6 +18,7 @@ export default function ProductCard({ product }) {
     { swatch: "#5C2A35" },
   ];
   const [selectedColor, setSelectedColor] = useState(0);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const hoverImg =
     product.hoverImage || product.secondImage || Assets.BigScreenImage;
   const colors = product.colors?.length ? product.colors : DEFAULT_COLORS;
@@ -46,6 +50,11 @@ export default function ProductCard({ product }) {
           {/* quick view — slides up from bottom on hover */}
           <div className="absolute bottom-0 left-0 z-50 p-2 w-full overflow-hidden">
             <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsQuickViewOpen(true);
+              }}
               className="w-full py-1.5 bg-[#2a2a28] text-white text-[12px] font-medium tracking-wider transition-all duration-500 ease-in-out translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
             >
               Quick View
@@ -107,6 +116,13 @@ export default function ProductCard({ product }) {
           )}
         </div>
       </Link>
+
+      <QuickViewModal
+        isOpen={isQuickViewOpen}
+        onClose={() => setIsQuickViewOpen(false)}
+      >
+        <ProductQuickView product={product} />
+      </QuickViewModal>
     </div>
   );
 }
