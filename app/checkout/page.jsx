@@ -4,17 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCart, parsePrice } from "@/context/CartContext";
+import { useCart, parsePrice, formatPrice } from "@/context/CartContext";
 import HeaderBtn from "@/components/buttons/HeaderBtn";
-
-function formatRs(n) {
-  const rounded = Math.round(n);
-  const hasDecimals = n % 1 !== 0;
-  return "Rs. " + rounded.toLocaleString("en-IN", {
-    minimumFractionDigits: hasDecimals ? 2 : 0,
-    maximumFractionDigits: 2,
-  });
-}
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -239,7 +230,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Order summary — sticky */}
-          <aside className="flex-[0_1_380px] min-w-[300px] sticky top-[100px] self-start">
+          <aside className="w-full lg:flex-[0_1_380px] lg:min-w-[300px] lg:sticky top-[100px] self-start mt-8 lg:mt-0">
             <div className="bg-[#e9e7e3] p-8 font-sans">
               <div className="text-[13px] tracking-[2px] mb-4">ORDER SUMMARY</div>
 
@@ -271,7 +262,9 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                     <div className="text-[13px] text-[#1a1a1a] whitespace-nowrap">
-                      {formatRs(parsePrice(item.price) * item.qty)}
+                      {item.qty > 1
+                        ? formatPrice(parsePrice(item.price) * item.qty, item.price)
+                        : item.price}
                     </div>
                   </Link>
                 ))}
@@ -282,16 +275,16 @@ export default function CheckoutPage() {
               {/* Totals */}
               <div className="flex justify-between text-[14px] mb-2">
                 <span>Subtotal</span>
-                <span>{formatRs(subtotal)}</span>
+                <span>{formatPrice(subtotal, items[0]?.price)}</span>
               </div>
               <div className="flex justify-between text-[14px] mb-2">
                 <span>Shipping</span>
-                <span>{shipping === 0 ? "FREE" : formatRs(shipping)}</span>
+                <span>{shipping === 0 ? "FREE" : formatPrice(shipping, items[0]?.price)}</span>
               </div>
               <hr className="border-none border-t border-[#d8d6d2] my-3" />
               <div className="flex justify-between text-[16px] font-bold">
                 <span>Total</span>
-                <span>{formatRs(total)}</span>
+                <span>{formatPrice(total, items[0]?.price)}</span>
               </div>
 
               {shipping === 0 && (
@@ -301,7 +294,7 @@ export default function CheckoutPage() {
               )}
               {shipping > 0 && (
                 <p className="text-[12px] text-[#555] mt-3">
-                  Add {formatRs(5000 - subtotal)} more for FREE shipping.
+                  Add {formatPrice(5000 - subtotal, items[0]?.price)} more for FREE shipping.
                 </p>
               )}
             </div>

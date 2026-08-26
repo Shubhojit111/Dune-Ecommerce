@@ -5,6 +5,8 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 const CartContext = createContext(null);
 
 const STORAGE_KEY = "dune-cart";
+const STORAGE_VERSION = "v2"; // bump to force-clear stale corrupt data
+const VERSIONED_KEY = `${STORAGE_KEY}-${STORAGE_VERSION}`;
 
 // Generate a deterministic cart ID based on product id + size + color
 // This ensures adding the same product+size+color combo increments qty
@@ -13,15 +15,35 @@ function makeCartId(id, size, color) {
   return `${id}__${size || "default"}__${color || "default"}`;
 }
 
-// Parse price string ("Rs. 3,700.00" / "$96") into a number
+// Parse price string ("Rs. 3,700.00" / "$96" / "₹899") into a number
 export function parsePrice(price) {
   if (typeof price === "number") return price;
   if (typeof price === "string") {
-    const cleaned = price.replace(/[^0-9.]/g, "");
+    // Remove commas first, then strip everything except digits and dot
+    const noCommas = price.replace(/,/g, "");
+    const cleaned = noCommas.replace(/[^0-9.]/g, "");
     const parsed = parseFloat(cleaned);
     return isNaN(parsed) ? 0 : parsed;
   }
   return 0;
+}
+
+// Extract currency symbol from a price string
+export function getCurrencySymbol(price) {
+  if (typeof price !== "string") return "Rs. ";
+  const match = price.match(/^([^\d\s]+)/);
+  return match ? match[1].trim() + " " : "Rs. ";
+}
+
+// Format a number using the currency symbol from a reference price string
+export function formatPrice(amount, refPrice) {
+  const symbol = getCurrencySymbol(refPrice);
+  const rounded = Math.round(amount);
+  const hasDecimals = amount % 1 !== 0;
+  return symbol + rounded.toLocaleString("en-IN", {
+    minimumFractionDigits: hasDecimals ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
 }
 
 export function CartProvider({ children }) {
@@ -32,7 +54,13 @@ export function CartProvider({ children }) {
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      // Clean up old version keys to prevent stale corrupt data
+      const oldData = localStorage.getItem(STORAGE_KEY);
+      if (oldData) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+
+      const stored = localStorage.getItem(VERSIONED_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
@@ -49,7 +77,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     if (!hydrated) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      localStorage.setItem(VERSIONED_KEY, JSON.stringify(items));
     } catch (e) {
       console.error("Failed to save cart to localStorage:", e);
       setError("Unable to save cart. Storage may be full.");

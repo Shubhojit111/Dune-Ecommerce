@@ -8,19 +8,12 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import { useCart, parsePrice } from "@/context/CartContext";
+import { useCart, parsePrice, formatPrice } from "@/context/CartContext";
 import HeaderBtn from "@/components/buttons/HeaderBtn";
+import ProductGridSection from "@/components/ProductGridSection";
+import { toquesProducts, linenEdit, allNew } from "@/data/products";
 
 gsap.registerPlugin(ScrollTrigger);
-
-function formatRs(n) {
-  const rounded = Math.round(n);
-  const hasDecimals = n % 1 !== 0;
-  return "Rs. " + rounded.toLocaleString("en-IN", {
-    minimumFractionDigits: hasDecimals ? 2 : 0,
-    maximumFractionDigits: 2,
-  });
-}
 
 export default function CartPage() {
   const router = useRouter();
@@ -41,9 +34,9 @@ export default function CartPage() {
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: cartRef.current,
-        start: "top 140px",
+        start: "top 130px",
         endTrigger: cartRef.current,
-        end: "bottom bottom-=200px",
+        end: "bottom bottom",
         pin: summaryRef.current,
         pinSpacing: true,
         anticipatePin: 1,
@@ -67,210 +60,234 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-serif text-[#1a1a1a]">
-      {/* Header */}
-      <div className="w-full px-4 sm:px-8 lg:px-14 pt-[140px] sm:pt-36 md:pt-52 pb-16 text-center">
-        <div className="flex justify-center">
-          <HeaderBtn text="Cart" />
-        </div>
-
-        <Link
-          href="/"
-          className="inline-block mt-4 text-[14px] text-[#1a1a1a] underline font-sans"
-        >
-          Continue shopping
-        </Link>
-      </div>
-
-      {/* Error */}
-      {error && (
-        <p className="text-center font-sans text-[14px] text-red-600 mb-4 px-4">
-          {error}
-        </p>
-      )}
-
-      {/* Cart Content */}
-      <div className="w-full px-4 sm:px-8 lg:px-14 pb-20">
-        <div className="max-w-[1600px] mx-auto w-full flex flex-wrap gap-12 items-start">
-          {/* LEFT — Cart Items */}
-          <div ref={cartRef} className="flex-1 min-w-[320px] basis-[600px]">
-            {items.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="font-sans text-[15px] text-[#555]">
-                  Your cart is empty.
-                </p>
-
-                <Link
-                  href="/"
-                  className="inline-block mt-4 text-[14px] text-[#1a1a1a] underline font-sans"
-                >
-                  Browse products
-                </Link>
-              </div>
-            ) : (
-              items.map((item, idx) => (
-                <div key={item.cartId}>
-                  <div className="flex gap-6 py-6 items-start">
-                    {/* Product Image — clickable */}
-                    <Link
-                      href={`/products/${item.id}`}
-                      className="relative w-[150px] h-[170px] flex-shrink-0 overflow-hidden bg-[#e5e3e0] block"
-                    >
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </Link>
-
-                    {/* Product Details */}
-                    <div className="flex-1 font-sans">
-                      <Link
-                        href={`/products/${item.id}`}
-                        className="text-[15px] text-[#1e3a5f] mb-3 leading-[1.4] hover:underline block"
-                      >
-                        {item.name}
-                      </Link>
-
-                      <div className="text-[14px] mb-3">
-                        <strong>Size:</strong> {item.size}
-                      </div>
-
-                      {item.color && item.color !== "default" && (
-                        <div className="text-[14px] mb-3">
-                          <strong>Color:</strong> {item.color}
-                        </div>
-                      )}
-
-                      {/* Quantity */}
-                      <div className="inline-flex items-center border border-[#999] mb-3.5">
-                        <button
-                          className="w-[34px] h-[34px] border-none bg-transparent cursor-pointer text-[16px] leading-none"
-                          onClick={() => updateQty(item.cartId, -1)}
-                          aria-label={`Decrease quantity of ${item.name}`}
-                        >
-                          −
-                        </button>
-
-                        <span className="w-[32px] text-center text-[14px]">
-                          {item.qty}
-                        </span>
-
-                        <button
-                          className="w-[34px] h-[34px] border-none bg-transparent cursor-pointer text-[16px] leading-none"
-                          onClick={() => updateQty(item.cartId, 1)}
-                          aria-label={`Increase quantity of ${item.name}`}
-                        >
-                          +
-                        </button>
-                      </div>
-
-                      {/* Remove */}
-                      <button
-                        className="block border-none bg-none p-0 text-[14px] underline cursor-pointer text-[#1a1a1a] font-sans"
-                        onClick={() => removeItem(item.cartId)}
-                      >
-                        Remove
-                      </button>
-                    </div>
-
-                    {/* Price */}
-                    <div className="font-sans text-[14px] text-[#1e3a5f] whitespace-nowrap pt-1">
-                      {formatRs(parsePrice(item.price) * item.qty)}
-                    </div>
-                  </div>
-
-                  {idx < items.length - 1 && (
-                    <hr className="border-none border-t border-[#d8d6d2] m-0" />
-                  )}
-                </div>
-              ))
-            )}
+    <>
+      <div className="min-h-screen bg-white flex flex-col font-serif text-[#1a1a1a]">
+        {/* Header */}
+        <div className="w-full px-4 sm:px-8 lg:px-14 pt-[140px] sm:pt-36 md:pt-52 pb-8 md:pb-16 text-center">
+          <div className="flex justify-center">
+            <HeaderBtn text="Cart" />
           </div>
 
-          {/* RIGHT — Order Summary */}
-          {items.length > 0 && (
-            <aside
-              ref={summaryRef}
-              className="w-[380px] min-w-[300px] flex-shrink-0"
-            >
-              <div className="bg-[#e9e7e3] p-8 font-sans">
-                <div className="text-[13px] tracking-[2px] mb-4">
-                  ORDER NOTE
+          <Link
+            href="/"
+            className="inline-block mt-4 text-[14px] text-[#1a1a1a] underline font-sans"
+          >
+            Continue shopping
+          </Link>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <p className="text-center font-sans text-[14px] text-red-600 mb-4 px-4">
+            {error}
+          </p>
+        )}
+
+        {/* Cart Content */}
+        <div className="w-full px-4 sm:px-8 lg:px-14 pb-20">
+          <div className="max-w-[1600px] mx-auto w-full flex flex-wrap gap-12 items-start">
+            {/* LEFT — Cart Items */}
+            <div ref={cartRef} className="flex-1 min-w-[320px] basis-[600px] ">
+              {items.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="font-sans text-[15px] text-[#555]">
+                    Your cart is empty.
+                  </p>
+
+                  <Link
+                    href="/"
+                    className="inline-block mt-4 text-[14px] text-[#1a1a1a] underline font-sans"
+                  >
+                    Browse products
+                  </Link>
                 </div>
+              ) : (
+                items.map((item, idx) => (
+                  <div key={item.cartId}>
+                    <div className="flex gap-6 py-6 items-start">
+                      {/* Product Image — clickable */}
+                      <Link
+                        href={`/products/${item.id}`}
+                        className="relative w-[150px] h-[170px] flex-shrink-0 overflow-hidden bg-[#e5e3e0] block"
+                      >
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </Link>
 
-                <textarea
-                  className="w-full min-h-[100px] box-border p-3 border border-[#999] font-sans text-[14px] resize-y mb-6 bg-white"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  placeholder=""
-                />
+                      {/* Product Details */}
+                      <div className="flex-1 font-sans">
+                        <Link
+                          href={`/products/${item.id}`}
+                          className="text-[15px] text-[#1e3a5f] mb-3 leading-[1.4] hover:underline block"
+                        >
+                          {item.name}
+                        </Link>
 
-                {/* Invoice breakdown */}
-                <div className="border-t border-[#d8d6d2] pt-4 mb-4">
-                  <div className="text-[13px] tracking-[2px] mb-3">INVOICE</div>
+                        <div className="text-[14px] mb-3">
+                          <strong>Size:</strong> {item.size}
+                        </div>
 
-                  {/* Line items */}
-                  <div className="space-y-2 mb-4">
-                    {items.map((item) => (
-                      <div key={item.cartId} className="flex justify-between text-[13px] text-[#1a1a1a]">
-                        <span className="flex-1 min-w-0 truncate pr-2">
-                          {item.qty} × {item.name}
-                        </span>
-                        <span className="whitespace-nowrap">
-                          {formatRs(parsePrice(item.price) * item.qty)}
-                        </span>
+                        {item.color && item.color !== "default" && (
+                          <div className="text-[14px] mb-3">
+                            <strong>Color:</strong> {item.color}
+                          </div>
+                        )}
+
+                        {/* Quantity */}
+                        <div className="inline-flex items-center border border-[#999] mb-3.5">
+                          <button
+                            className="w-[34px] h-[34px] border-none bg-transparent cursor-pointer text-[16px] leading-none"
+                            onClick={() => updateQty(item.cartId, -1)}
+                            aria-label={`Decrease quantity of ${item.name}`}
+                          >
+                            −
+                          </button>
+
+                          <span className="w-[32px] text-center text-[14px]">
+                            {item.qty}
+                          </span>
+
+                          <button
+                            className="w-[34px] h-[34px] border-none bg-transparent cursor-pointer text-[16px] leading-none"
+                            onClick={() => updateQty(item.cartId, 1)}
+                            aria-label={`Increase quantity of ${item.name}`}
+                          >
+                            +
+                          </button>
+                        </div>
+
+                        {/* Remove */}
+                        <button
+                          className="block border-none bg-none p-0 text-[14px] underline cursor-pointer text-[#1a1a1a] font-sans"
+                          onClick={() => removeItem(item.cartId)}
+                        >
+                          Remove
+                        </button>
                       </div>
-                    ))}
+
+                      {/* Price */}
+                      <div className="font-sans text-[14px] text-[#1e3a5f] whitespace-nowrap pt-1">
+                        {item.qty > 1
+                          ? formatPrice(parsePrice(item.price) * item.qty, item.price)
+                          : item.price}
+                      </div>
+                    </div>
+
+                    {idx < items.length - 1 && (
+                      <hr className="border-none border-t border-[#d8d6d2] m-0" />
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* RIGHT — Order Summary */}
+            {items.length > 0 && (
+              <aside
+                ref={summaryRef}
+                className="w-full lg:w-[380px] lg:min-w-[300px] flex-shrink-0 mt-8 lg:mt-0 "
+              >
+                <div className="bg-[#e9e7e3] p-6 font-sans">
+                  <div className="text-[13px] tracking-[2px] mb-4">
+                    ORDER NOTE
                   </div>
 
-                  <hr className="border-none border-t border-[#d8d6d2] mb-3" />
+                  <textarea
+                    className="w-full min-h-[30px] box-border p-3 border border-[#999] font-sans text-[14px] resize-y mb-6 bg-white"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    placeholder=""
+                  />
 
-                  {/* Totals */}
-                  <div className="flex justify-between text-[14px] mb-2">
-                    <span>Subtotal</span>
-                    <span>{formatRs(subtotal)}</span>
-                  </div>
-                  <div className="flex justify-between text-[14px] mb-2">
-                    <span>Shipping</span>
-                    <span className="text-[#555]">Calculated at checkout</span>
-                  </div>
-                  <div className="flex justify-between text-[14px] mb-2">
-                    <span>Taxes</span>
-                    <span className="text-[#555]">Calculated at checkout</span>
+                  {/* Invoice breakdown */}
+                  <div className="border-t border-[#d8d6d2] pt-4 mb-4">
+                    <div className="text-[13px] tracking-[2px] mb-3">
+                      INVOICE
+                    </div>
+
+                    {/* Line items */}
+                    <div className="space-y-2 mb-4">
+                      {items.map((item) => (
+                        <div
+                          key={item.cartId}
+                          className="flex justify-between text-[13px] text-[#1a1a1a]"
+                        >
+                          <span className="flex-1 min-w-0 truncate pr-2">
+                            {item.qty} × {item.name}
+                          </span>
+                          <span className="whitespace-nowrap">
+                            {item.qty > 1
+                              ? formatPrice(parsePrice(item.price) * item.qty, item.price)
+                              : item.price}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <hr className="border-none border-t border-[#d8d6d2] mb-3" />
+
+                    {/* Totals */}
+                    <div className="flex justify-between text-[14px] mb-2">
+                      <span>Subtotal</span>
+                      <span>{formatPrice(subtotal, items[0]?.price)}</span>
+                    </div>
+                    <div className="flex justify-between text-[14px] mb-2">
+                      <span>Shipping</span>
+                      <span className="text-[#555]">
+                        Calculated at checkout
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-[14px] mb-2">
+                      <span>Taxes</span>
+                      <span className="text-[#555]">
+                        Calculated at checkout
+                      </span>
+                    </div>
+
+                    <hr className="border-none border-t border-[#d8d6d2] my-3" />
+
+                    <div className="flex justify-between text-[16px] font-bold">
+                      <span>Total</span>
+                      <span>{formatPrice(subtotal, items[0]?.price)}</span>
+                    </div>
                   </div>
 
-                  <hr className="border-none border-t border-[#d8d6d2] my-3" />
+                  <button
+                    className="w-full py-4 bg-[#1a1a1a] text-white border-none rounded-full text-[14px] tracking-[2px] cursor-pointer font-sans font-bold"
+                    onClick={handleCheckout}
+                  >
+                    CHECK OUT
+                  </button>
 
-                  <div className="flex justify-between text-[16px] font-bold">
-                    <span>Total</span>
-                    <span>{formatRs(subtotal)}</span>
-                  </div>
+                  <p className="text-center text-[12px] text-[#555] mt-3 mb-0">
+                    Shipping, taxes, and discount codes calculated at checkout.
+                  </p>
+
+                  <button
+                    className="block w-full mt-1 border-none bg-none p-0 text-[13px] underline cursor-pointer text-[#f00] font-sans"
+                    onClick={clearCart}
+                  >
+                    Clear cart
+                  </button>
                 </div>
-
-                <button
-                  className="w-full py-4 bg-[#1a1a1a] text-white border-none rounded-full text-[14px] tracking-[2px] cursor-pointer font-sans font-bold"
-                  onClick={handleCheckout}
-                >
-                  CHECK OUT
-                </button>
-
-                <p className="text-center text-[12px] text-[#555] mt-4 mb-0">
-                  Shipping, taxes, and discount codes calculated at checkout.
-                </p>
-
-                <button
-                  className="block w-full mt-4 border-none bg-none p-0 text-[13px] underline cursor-pointer text-[#555] font-sans"
-                  onClick={clearCart}
-                >
-                  Clear cart
-                </button>
-              </div>
-            </aside>
-          )}
+              </aside>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      <ProductGridSection
+        heading="Popular Picks"
+        products={[...toquesProducts, ...linenEdit, ...allNew]}
+        viewAllHref="/products"
+        hasViewAllBtn={true}
+        columns={4}
+        itemsToShow={4}
+      />
+    </>
   );
 }
