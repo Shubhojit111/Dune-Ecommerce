@@ -10,6 +10,7 @@ import {
   Search,
   ShoppingBag,
   User,
+  UserPlus,
   Menu,
   X,
   ChevronDownIcon,
