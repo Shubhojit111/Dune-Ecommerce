@@ -24,6 +24,7 @@ import gsap from "gsap";
 import Assets from "@/assets/Assets";
 import Image from "next/image";
 import SubTextBtn from "./buttons/SubTextBtn";
+import SearchModal from "./SearchModal";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -33,6 +34,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const [activeMenu, setActiveMenu] = useState(null);
   const dropdownRef = useRef(null);
@@ -183,7 +185,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed w-full top-0 z-[100] transition-colors duration-300 ${navbarBg}`}
+      className={`fixed w-full top-0 z-[999999] transition-colors duration-300 ${navbarBg}`}
     >
       {/* Row 1  Announcement Bar */}
       <div
@@ -236,9 +238,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Row 3  Main Navbar */}
+      {/* Row 3  Main Navbar (hidden when search modal is open) */}
       <div
-        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${isOtherPage ? "border-b border-stone-200" : null} ${mainNavbarPadding}`}
+        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${isOtherPage ? "border-b border-stone-200" : null} ${mainNavbarPadding} ${searchOpen ? "hidden" : ""}`}
       >
         {/* Left */}
         <div className="flex items-center gap-4">
@@ -295,6 +297,7 @@ export default function Navbar() {
           </Link>
           <button
             aria-label="Search"
+            onClick={() => setSearchOpen(true)}
             className="hover:opacity-70 transition p-1"
           >
             <Icon icon="lucide:search" className="h-6 w-6" />
@@ -322,6 +325,10 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+        
+      
+      {/* Search Modal */}
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* GLOBAL DROPDOWN */}
       <div

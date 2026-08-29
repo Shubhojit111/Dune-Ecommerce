@@ -138,6 +138,36 @@ export const allNew = [
   },
 ];
 
+export const socksProducts = [
+  {
+    id: "back-country-sub-zero-socks-grey",
+    name: "Back Country Sub - Zero Socks Grey",
+    brand: "MUTTONHEAD",
+    price: "Rs. 2,800.00",
+    image:
+      "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=400&q=80",
+    handle: "back-country-sub-zero-socks-grey",
+  },
+  {
+    id: "back-country-sub-zero-socks-arctic-white",
+    name: "Back Country Sub - Zero Socks Arctic White",
+    brand: "MUTTONHEAD",
+    price: "Rs. 2,800.00",
+    image:
+      "https://images.unsplash.com/photo-1582966772680-860e372bb558?w=400&q=80",
+    handle: "back-country-sub-zero-socks-arctic-white",
+  },
+  {
+    id: "back-country-sub-zero-socks-red",
+    name: "Back Country Sub - Zero Socks Red",
+    brand: "MUTTONHEAD",
+    price: "Rs. 2,800.00",
+    image:
+      "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?w=400&q=80",
+    handle: "back-country-sub-zero-socks-red",
+  },
+];
+
 export const toquesProducts = [
   {
     id: "chunky-toque-fawn",
@@ -193,34 +223,6 @@ export const toquesProducts = [
     image: Assets.Tooque4,
     secondImage: Assets.BigScreenImage,
     handle: "chunky-toque-maroon",
-  },
-  {
-    id: "chunky-toque-black",
-    name: "Chunky Toque - Black",
-    brand: "MUTTONHEAD",
-    price: "Rs. 3,700.00",
-    image: Assets.Tooque3,
-    secondImage: Assets.BigScreenImage,
-    handle: "chunky-toque-black",
-    colors: [
-      { swatch: "#1A1A1A" },
-      { swatch: "#C4A37B" },
-      { swatch: "#5C2A35" },
-    ],
-  },
-  {
-    id: "chunky-toque-black",
-    name: "Chunky Toque - Black",
-    brand: "MUTTONHEAD",
-    price: "Rs. 3,700.00",
-    image: Assets.Tooque3,
-    secondImage: Assets.BigScreenImage,
-    handle: "chunky-toque-black",
-    colors: [
-      { swatch: "#1A1A1A" },
-      { swatch: "#C4A37B" },
-      { swatch: "#5C2A35" },
-    ],
   },
 ];
 
