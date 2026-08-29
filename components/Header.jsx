@@ -326,7 +326,7 @@ export default function Header() {
             <ShoppingBag size={22} strokeWidth={1.5} />
           </Link>
           <Link
-            href="/account"
+            href="/login"
             aria-label="Account"
             className="hidden sm:block hover:opacity-70 transition p-1"
           >
@@ -562,7 +562,7 @@ export default function Header() {
                 className="opacity-0 border-b border-ink/60"
               >
                 <Link
-                  href="/account"
+                  href="/login"
                   onClick={() => setMobileOpen(false)}
                   className="w-full flex items-center gap-3 py-5"
                 >

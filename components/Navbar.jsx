@@ -284,8 +284,33 @@ export default function Navbar() {
 
         {/* Right */}
         <div className="flex items-center gap-4 sm:gap-5 lg:gap-6">
+          {/* Login icon */}
           <Link
-            href="/account"
+            href="/login"
+            aria-label="Log in"
+            className="hidden sm:block hover:opacity-70 transition p-1"
+          >
+            <Icon
+              icon="lucide:log-in"
+              strokeWidth={1}
+              className="h-6 w-6"
+            />
+          </Link>
+          {/* Register icon */}
+          <Link
+            href="/register"
+            aria-label="Register"
+            className="hidden sm:block hover:opacity-70 transition p-1"
+          >
+            <Icon
+              icon="lucide:user-plus"
+              strokeWidth={1}
+              className="h-6 w-6"
+            />
+          </Link>
+          {/* Profile icon */}
+          <Link
+            href="/login"
             aria-label="Account"
             className="hidden sm:block hover:opacity-70 transition p-1"
           >
@@ -558,7 +583,7 @@ export default function Navbar() {
                 className="opacity-0 border-b border-ink/60"
               >
                 <Link
-                  href="/account"
+                  href="/login"
                   onClick={() => setMobileOpen(false)}
                   className="w-full flex items-center gap-2.5 py-4"
                 >
@@ -569,6 +594,27 @@ export default function Navbar() {
                   />
                   <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
                     Log in
+                  </span>
+                </Link>
+              </div>
+
+              {/* Register Item */}
+              <div
+                ref={(el) => (mobileMenuItemsRef.current[navItems.length + 1] = el)}
+                className="opacity-0 border-b border-ink/60"
+              >
+                <Link
+                  href="/register"
+                  onClick={() => setMobileOpen(false)}
+                  className="w-full flex items-center gap-2.5 py-4"
+                >
+                  <UserPlus
+                    size={22}
+                    strokeWidth={1.2}
+                    className="text-ink/80 flex-shrink-0"
+                  />
+                  <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
+                    Register
                   </span>
                 </Link>
               </div>
