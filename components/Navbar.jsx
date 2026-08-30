@@ -286,7 +286,7 @@ export default function Navbar() {
         {/* Right */}
         <div className="flex items-center gap-4 sm:gap-5 lg:gap-6">
           {/* Login icon */}
-          /*
+          {/*
           <Link
             href="/login"
             aria-label="Log in"
@@ -298,9 +298,9 @@ export default function Navbar() {
               className="h-6 w-6"
             />
           </Link>
-          */
+          */}
           {/* Register icon */}
-          /*
+          {/*
           <Link
             href="/register"
             aria-label="Register"
@@ -312,7 +312,7 @@ export default function Navbar() {
               className="h-6 w-6"
             />
           </Link>
-          */
+          */}
           {/* Profile icon */}
           <Link
             href="/login"
