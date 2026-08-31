@@ -183,7 +183,7 @@ export default function SearchModal({ isOpen, onClose }) {
       {/* Search Container Positioned Right After Navbar with Highest Z-Index */}
       <div className="relative bg-[#EDECE9] z-[999999] w-full max-h-[calc(100vh-120px)] flex flex-col shadow-2xl overflow-hidden">
         {/* Top Search Bar Section - no extra padding, sits flush at top */}
-        <div className="w-full shadow-md z-[999999] py-4 sm:py-4 flex-shrink-0">
+        <div className="w-full shadow-md z-[999999] px-3 py-4 sm:py-4 flex-shrink-0">
           <div className="max-w-[950px] border mx-auto flex items-center gap-3 sm:gap-5">
             {/* White Search Input Box with Border & Search Lens Icon on Right */}
             <div className="flex-1 bg-white border border-[#C5C0B7] shadow-sm flex items-center py-1.5 overflow-hidden transition-all focus-within:border-stone-600">
@@ -222,8 +222,8 @@ export default function SearchModal({ isOpen, onClose }) {
         {/* Bottom Search Results Modal Section - only visible when typing */}
         {hasQuery && (
           <div className="w-full h-screen px-0 sm:px-8 lg:px-14 py-0 flex flex-col justify-center items-center pb-12 bg-black/10 backdrop-blur-md z-[999999] overflow-y-auto ">
-            <div className="flex flex-col w-full items-center shadow-2xl max-w-[950px]">
-              <div className="w-full bg-[#F7F7F7] border border-[#E2DDD5] p-4 sm:p-10 text-[#1E1B17] z-[999999]">
+            <div className="flex flex-col w-full h-full items-center shadow-2xl max-w-[950px]">
+              <div className="w-full bg-[#F7F7F7] border border-[#E2DDD5] p-4 sm:p-10 text-[#1E1B17] z-[999999] ">
                 {matchingProducts.length === 0 &&
                 suggestions.length === 0 &&
                 collections.length === 0 ? (
@@ -233,7 +233,7 @@ export default function SearchModal({ isOpen, onClose }) {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex flex-col md:flex-row w-full items-start gap-8 md:gap-20">
+                  <div className="flex flex-col md:flex-row w-full h-full  items-start gap-8 md:gap-20 mt-0 sm:pt-0">
                     {/* Left Column: SUGGESTIONS & COLLECTIONS */}
                     <div className="w-full md:w-[30%] flex flex-col gap-8">
                       {/* Suggestions Section */}
@@ -316,7 +316,7 @@ export default function SearchModal({ isOpen, onClose }) {
                                 className="group flex items-center gap-4 py-1"
                               >
                                 {/* Product Square Thumbnail */}
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#E5E2DA] flex-shrink-0 relative overflow-hidden border border-[#DCD7CD]">
+                                <div className="w-32 h-28 sm:w-20 sm:h-20 bg-[#E5E2DA] flex-shrink-0 relative overflow-hidden border border-[#DCD7CD]">
                                   {product.image ? (
                                     <Image
                                       src={product.image}
