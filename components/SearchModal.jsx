@@ -221,9 +221,9 @@ export default function SearchModal({ isOpen, onClose }) {
 
         {/* Bottom Search Results Modal Section - only visible when typing */}
         {hasQuery && (
-          <div className="w-full px-4 sm:px-8 lg:px-14 py-0 flex flex-col justify-center items-center pb-12 bg-black/10 backdrop-blur-md z-[999999]  min-h-0 overflow-y-auto ">
+          <div className="w-full h-screen px-0 sm:px-8 lg:px-14 py-0 flex flex-col justify-center items-center pb-12 bg-black/10 backdrop-blur-md z-[999999] overflow-y-auto ">
             <div className="flex flex-col w-full items-center shadow-2xl max-w-[950px]">
-              <div className="w-full bg-[#F7F7F7] border border-[#E2DDD5]  p-6 sm:p-10 text-[#1E1B17] z-[999999]">
+              <div className="w-full bg-[#F7F7F7] border border-[#E2DDD5] p-4 sm:p-10 text-[#1E1B17] z-[999999]">
                 {matchingProducts.length === 0 &&
                 suggestions.length === 0 &&
                 collections.length === 0 ? (
@@ -233,9 +233,9 @@ export default function SearchModal({ isOpen, onClose }) {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex w-full items-start gap-8 md:gap-20">
+                  <div className="flex flex-col md:flex-row w-full items-start gap-8 md:gap-20">
                     {/* Left Column: SUGGESTIONS & COLLECTIONS */}
-                    <div className="w-[30%] flex flex-col gap-8">
+                    <div className="w-full md:w-[30%] flex flex-col gap-8">
                       {/* Suggestions Section */}
                       {suggestions.length > 0 && (
                         <div>
@@ -300,7 +300,7 @@ export default function SearchModal({ isOpen, onClose }) {
                     </div>
 
                     {/* Right Column: PRODUCTS */}
-                    <div className="w-[70%] flex flex-col gap-6">
+                    <div className="w-full md:w-[70%] flex flex-col gap-6">
                       {matchingProducts.length > 0 ? (
                         <>
                           <h3 className="text-[12px] uppercase font-serif tracking-[0.2em] text-[#8C765C] font-dune border-b border-[#DCD7CD] pb-1.5 ">

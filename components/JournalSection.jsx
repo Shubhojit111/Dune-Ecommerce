@@ -33,7 +33,7 @@ const CARDS = [
 
 export default function JournalSection() {
   return (
-    <section className="w-full bg-white pb-10 sm:py-20 md:py-24">
+    <section className="w-full bg-white border-t border-ink/60 my-8 sm:my-0 py-8 sm:py-20 md:py-24">
       <div className="px-4 sm:px-8 lg:px-14 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
           {CARDS.map((card) => (

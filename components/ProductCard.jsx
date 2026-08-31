@@ -48,7 +48,7 @@ export default function ProductCard({ product }) {
           />
 
           {/* quick view — slides up from bottom on hover */}
-          <div className="absolute bottom-0 left-0 z-50 p-2 w-full overflow-hidden">
+          <div className="hidden sm:block absolute bottom-0 left-0 z-50 p-2 w-full overflow-hidden">
             <button
               onClick={(e) => {
                 e.preventDefault();

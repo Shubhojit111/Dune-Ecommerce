@@ -22,6 +22,24 @@ export default function CartPage() {
     useCart();
 
   const [note, setNote] = useState("");
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState("");
+
+  // Mock coupon codes
+  const VALID_COUPONS = {
+    DUNE10: { type: "percent", value: 10, label: "10% off" },
+    DUNE20: { type: "percent", value: 20, label: "20% off" },
+    SAVE500: { type: "fixed", value: 500, label: "Rs. 500 off" },
+  };
+
+  const discount = appliedCoupon
+    ? appliedCoupon.type === "percent"
+      ? Math.round((subtotal * appliedCoupon.value) / 100)
+      : appliedCoupon.value
+    : 0;
+
+  const total = subtotal - discount;
 
   const cartRef = useRef(null);
   const summaryRef = useRef(null);
@@ -49,6 +67,27 @@ export default function CartPage() {
 
   const handleCheckout = () => {
     router.push("/checkout");
+  };
+
+  const handleApplyCoupon = () => {
+    const code = couponCode.trim().toUpperCase();
+    if (!code) {
+      setCouponError("Enter a coupon code");
+      return;
+    }
+    if (VALID_COUPONS[code]) {
+      setAppliedCoupon(VALID_COUPONS[code]);
+      setCouponError("");
+      setCouponCode("");
+    } else {
+      setCouponError("Invalid coupon code");
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponError("");
+    setCouponCode("");
   };
 
   if (!hydrated) {
@@ -84,10 +123,10 @@ export default function CartPage() {
         )}
 
         {/* Cart Content */}
-        <div className="w-full px-4 sm:px-8 lg:px-14 pb-20">
-          <div className="max-w-[1600px] mx-auto w-full flex flex-wrap gap-12 items-start">
+        <div className="w-full px-4 sm:px-8 lg:px-14 pb-20 ">
+          <div className="max-w-[1600px] mx-auto w-full flex flex-col lg:flex-row flex-wrap gap-12 items-start">
             {/* LEFT — Cart Items */}
-            <div ref={cartRef} className="flex-1 min-w-[320px] basis-[600px] ">
+            <div ref={cartRef} className="flex-1 min-w-[320px] w-full">
               {items.length === 0 ? (
                 <div className="text-center py-12">
                   <p className="font-sans text-[15px] text-[#555]">
@@ -104,11 +143,11 @@ export default function CartPage() {
               ) : (
                 items.map((item, idx) => (
                   <div key={item.cartId}>
-                    <div className="flex gap-6 py-6 items-start">
+                    <div className="flex gap-3 sm:gap-6 py-6 items-start">
                       {/* Product Image — clickable */}
                       <Link
                         href={`/products/${item.id}`}
-                        className="relative w-[150px] h-[170px] flex-shrink-0 overflow-hidden bg-[#e5e3e0] block"
+                        className="relative w-[120px] h-[120px] sm:w-[150px] sm:h-[170px] flex-shrink-0 overflow-hidden bg-[#e5e3e0] block"
                       >
                         <Image
                           src={item.image}
@@ -119,20 +158,20 @@ export default function CartPage() {
                       </Link>
 
                       {/* Product Details */}
-                      <div className="flex-1 font-sans">
+                      <div className="flex-1 min-w-0 font-sans">
                         <Link
                           href={`/products/${item.id}`}
-                          className="text-[15px] text-[#1e3a5f] mb-3 leading-[1.4] hover:underline block"
+                          className="text-[14px] sm:text-[15px] text-[#1e3a5f] mb-3 leading-[1.4] hover:underline block break-words"
                         >
                           {item.name}
                         </Link>
 
-                        <div className="text-[14px] mb-3">
+                        <div className="text-[13px] sm:text-[14px] mb-3">
                           <strong>Size:</strong> {item.size}
                         </div>
 
                         {item.color && item.color !== "default" && (
-                          <div className="text-[14px] mb-3">
+                          <div className="text-[13px] sm:text-[14px] mb-3">
                             <strong>Color:</strong> {item.color}
                           </div>
                         )}
@@ -162,7 +201,7 @@ export default function CartPage() {
 
                         {/* Remove */}
                         <button
-                          className="block border-none bg-none p-0 text-[14px] underline cursor-pointer text-[#1a1a1a] font-sans"
+                          className="block border-none bg-none p-0 text-[13px] sm:text-[14px] underline cursor-pointer text-[#1a1a1a] font-sans"
                           onClick={() => removeItem(item.cartId)}
                         >
                           Remove
@@ -170,7 +209,7 @@ export default function CartPage() {
                       </div>
 
                       {/* Price */}
-                      <div className="font-sans text-[14px] text-[#1e3a5f] whitespace-nowrap pt-1">
+                      <div className="font-sans text-[14px] sm:text-[14px] text-[#1e3a5f] whitespace-nowrap pt-1">
                         {item.qty > 1
                           ? formatPrice(parsePrice(item.price) * item.qty, item.price)
                           : item.price}
@@ -214,12 +253,12 @@ export default function CartPage() {
                       {items.map((item) => (
                         <div
                           key={item.cartId}
-                          className="flex justify-between text-[13px] text-[#1a1a1a]"
+                          className="flex justify-between gap-2 text-[13px] text-[#1a1a1a]"
                         >
-                          <span className="flex-1 min-w-0 truncate pr-2">
+                          <span className="flex-1 min-w-0 break-words pr-2">
                             {item.qty} × {item.name}
                           </span>
-                          <span className="whitespace-nowrap">
+                          <span className="whitespace-nowrap flex-shrink-0">
                             {item.qty > 1
                               ? formatPrice(parsePrice(item.price) * item.qty, item.price)
                               : item.price}
@@ -230,20 +269,76 @@ export default function CartPage() {
 
                     <hr className="border-none border-t border-[#d8d6d2] mb-3" />
 
+                    {/* Coupon / Discount Code */}
+                    <div className="mb-4">
+                      {appliedCoupon ? (
+                        <div className="flex items-center justify-between gap-2 bg-white p-3 border border-[#d8d6d2]">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="text-[13px] font-medium text-[#1a1a1a] truncate">
+                              {couponCode || "Coupon"}: {appliedCoupon.label}
+                            </span>
+                          </div>
+                          <button
+                            onClick={handleRemoveCoupon}
+                            className="text-[12px] text-red-600 underline flex-shrink-0"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={couponCode}
+                              onChange={(e) => {
+                                setCouponCode(e.target.value);
+                                setCouponError("");
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") handleApplyCoupon();
+                              }}
+                              placeholder="Coupon code"
+                              className="flex-1 min-w-0 px-3 py-2 text-[13px] border border-[#999] bg-white outline-none focus:border-[#1a1a1a]"
+                            />
+                            <button
+                              onClick={handleApplyCoupon}
+                              className="px-4 py-2 bg-[#1a1a1a] text-white text-[12px] uppercase tracking-wide font-medium flex-shrink-0"
+                            >
+                              Apply
+                            </button>
+                          </div>
+                          {couponError && (
+                            <p className="text-[12px] text-red-600 mt-1.5">
+                              {couponError}
+                            </p>
+                          )}
+                        </>
+                      )}
+                    </div>
+
                     {/* Totals */}
                     <div className="flex justify-between text-[14px] mb-2">
                       <span>Subtotal</span>
                       <span>{formatPrice(subtotal, items[0]?.price)}</span>
                     </div>
-                    <div className="flex justify-between text-[14px] mb-2">
+                    {appliedCoupon && (
+                      <div className="flex justify-between text-[14px] mb-2">
+                        <span>Discount</span>
+                        <span className="text-green-700">
+                          -{formatPrice(discount, items[0]?.price)}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-[14px] mb-2 gap-2">
                       <span>Shipping</span>
-                      <span className="text-[#555]">
+                      <span className="text-[#555] text-right">
                         Calculated at checkout
                       </span>
                     </div>
-                    <div className="flex justify-between text-[14px] mb-2">
+                    <div className="flex justify-between text-[14px] mb-2 gap-2">
                       <span>Taxes</span>
-                      <span className="text-[#555]">
+                      <span className="text-[#555] text-right">
                         Calculated at checkout
                       </span>
                     </div>
@@ -252,7 +347,7 @@ export default function CartPage() {
 
                     <div className="flex justify-between text-[16px] font-bold">
                       <span>Total</span>
-                      <span>{formatPrice(subtotal, items[0]?.price)}</span>
+                      <span>{formatPrice(total, items[0]?.price)}</span>
                     </div>
                   </div>
 
