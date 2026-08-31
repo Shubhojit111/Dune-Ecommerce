@@ -161,7 +161,7 @@ export default function CollectionPage() {
       {/* Breadcrumbs + Heading */}
       <div className="w-full px-4 sm:px-8 lg:px-14 pt-[140px] sm:pt-36 md:pt-52 pb-8 md:pb-12">
         {/* Breadcrumbs */}
-        <nav className="flex items-center justify-center gap-1.5 text-[12px] text-ink/50 mb-6">
+        <nav className="flex items-center justify-center gap-1.5 text-[12px] text-ink mb-2 sm:mb-6">
           <Link href="/" className="hover:text-ink transition-colors">
             Home
           </Link>
@@ -173,8 +173,7 @@ export default function CollectionPage() {
             Collections
           </Link>
           <span>/</span>
-          <span className="text-ink font-medium">{categoryLabel}</span>
-        </nav>
+          </nav>
 
         {/* Header button with category name */}
         <div className="flex justify-center">
@@ -263,7 +262,7 @@ export default function CollectionPage() {
           </div>
 
           {/* Product count */}
-          <p className="text-[12px]  text-ink/60 font-medium">
+          <p className="hidden sm:flex text-[12px]  text-ink/60 font-medium">
             {filteredProducts.length}{" "}
             {filteredProducts.length === 1 ? "Product" : "Products"}
           </p>

@@ -44,7 +44,7 @@ export default function QuickViewModal({ isOpen, onClose, children }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[1000000] flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
     >
@@ -58,7 +58,7 @@ export default function QuickViewModal({ isOpen, onClose, children }) {
 
       {/* Panel */}
       <div
-        className={`relative w-full h-[80vh] w-[70vw] bg-white shadow-2xl transition-all duration-300 ease-out flex flex-col ${
+        className={`relative w-full h-[80vh] w-[80vw] bg-white shadow-2xl transition-all duration-300 ease-out flex flex-col ${
           isVisible
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-[0.97] translate-y-2"
