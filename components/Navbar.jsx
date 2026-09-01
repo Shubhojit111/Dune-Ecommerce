@@ -18,7 +18,6 @@ import {
   Facebook,
   Link2,
   ChevronDown,
-  Pin,
 } from "lucide-react";
 import HeaderBtn from "./buttons/HeaderBtn";
 import gsap from "gsap";
@@ -26,6 +25,73 @@ import Assets from "@/assets/Assets";
 import Image from "next/image";
 import SubTextBtn from "./buttons/SubTextBtn";
 import SearchModal from "./SearchModal";
+
+// Mobile submenu data — mirrors the desktop dropdown content
+const SHOP_SUBMENU = [
+  {
+    title: "Apparel",
+    links: ["Sweatshirts", "T-Shirts", "Shirts", "Jeans", "Hats"],
+  },
+  {
+    title: "Outerwear",
+    links: ["Jackets", "Vests", "Rain gear"],
+  },
+  {
+    title: "Accessories",
+    links: ["Socks", "Hats"],
+  },
+];
+
+const BRAND_SUBMENU = [
+  "Muttonhead",
+  "Naked and Famous",
+  "Juniper Ridge",
+  "Bather",
+  "Beside",
+];
+
+// Mobile submenu accordion — expandable group like the desktop dropdown
+function MobileSubAccordion({ group }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="">
+      <button
+        onClick={() => setOpen((s) => !s)}
+        className="w-full flex items-center justify-between py-1.5"
+      >
+        <span className="text-[14.5px] text-ink/90">{group.title}</span>
+        <span className="w-7 h-7 rounded-full border border-ink/40 flex items-center justify-center text-ink/70 flex-shrink-0">
+          <ChevronDown
+            size={14}
+            strokeWidth={1.5}
+            className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+          />
+        </span>
+      </button>
+      <div
+        className={`grid transition-all duration-300 ease-in-out ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <ul className="flex flex-col border-l pl-4 border-ink">
+            {group.links.map((link) => (
+              <li key={link}>
+                <Link
+                  href="/collections/all"
+                  onClick={() => setMobileOpen(false)}
+                  className="block py-2 text-[14px] text-ink/70 hover:text-ink transition-colors"
+                >
+                  {link}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -56,12 +122,26 @@ export default function Navbar() {
   }, []);
 
   // Lock body scroll while the mobile drawer is open
+  // (position:fixed technique — overflow:hidden alone doesn't stop iOS momentum scroll)
   useEffect(() => {
     if (!mobileOpen) return;
-    const prev = document.body.style.overflow;
+    const scrollY = window.scrollY;
+    const prev = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+    };
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prev.overflow;
+      document.body.style.position = prev.position;
+      document.body.style.top = prev.top;
+      document.body.style.width = prev.width;
+      window.scrollTo(0, scrollY);
     };
   }, [mobileOpen]);
 
@@ -531,7 +611,7 @@ export default function Navbar() {
             className="relative w-[85%] max-w-[380px] bg-white h-full shadow-2xl flex flex-col z-10  px-6 sm:px-8 pt-8 pb-8"
           >
             {/* Close Button - Top Right */}
-            <div className="flex justify-end mb-6">
+            <div className="flex justify-end mb-2">
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-1 text-ink hover:opacity-70 transition"
@@ -545,7 +625,7 @@ export default function Navbar() {
             <div className="w-full border-t border-ink/60" />
 
             {/* Nav Menu */}
-            <nav className="flex flex-col">
+            <nav className="flex flex-col overflow-y-auto">
               {navItems.map((item, i) => {
                 const isOpen = mobileDropdown === item.label;
                 return (
@@ -555,28 +635,104 @@ export default function Navbar() {
                     className="opacity-0 border-b border-ink/60"
                   >
                     {item.hasDropdown ? (
-                      <button
-                        onClick={() =>
-                          setMobileDropdown(isOpen ? null : item.label)
-                        }
-                        className={`w-full flex items-center justify-between py-4 ${
-                          item.hasAccent ? "relative pl-5" : ""
-                        }`}
-                      >
-                        {item.hasAccent && (
-                          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-ink/50" />
-                        )}
-                        <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
-                          {item.label}
-                        </span>
-                        <ChevronDown
-                          className={`text-ink/70 flex-shrink-0 ml-2 transition-transform duration-300 ${
-                            isOpen ? "rotate-180" : ""
+                      <>
+                        {/* Parent row — toggles the submenu accordion */}
+                        <button
+                          onClick={() =>
+                            setMobileDropdown(isOpen ? null : item.label)
+                          }
+                          className={`w-full flex items-center justify-between py-4 ${
+                            item.hasAccent ? "relative pl-5" : ""
                           }`}
-                          size={18}
-                          strokeWidth={1.4}
-                        />
-                      </button>
+                        >
+                          {item.hasAccent && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-ink/50" />
+                          )}
+                          <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
+                            {item.label}
+                          </span>
+                          <ChevronDown
+                            className={`text-ink/70 flex-shrink-0 ml-2 transition-transform duration-300 ${
+                              isOpen ? "rotate-180" : ""
+                            }`}
+                            size={18}
+                            strokeWidth={1.4}
+                          />
+                        </button>
+
+                        {/* Submenu — animated expand/collapse */}
+                        <div
+                          className={`grid transition-all duration-300 ease-in-out ${
+                            isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                          }`}
+                        >
+                          <div className="overflow-hidden">
+                            <div className="pb-4">
+
+                              {item.label === "Shop" && (
+                                <div className="flex flex-col">
+                                  {SHOP_SUBMENU.map((group) => (
+                                    <MobileSubAccordion
+                                      key={group.title}
+                                      group={group}
+                                    />
+                                  ))}
+                                  {/* Promo — mirrors desktop dropdown */}
+                                  <div className="px-1 pt-5">
+                                    <div className="w-full h-[300px] overflow-hidden mb-3 bg-sand">
+                                      <Image
+                                        src={Assets.HeroImage1}
+                                        alt="Promo"
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                    <p className="text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-1.5">
+                                      25% OFF ALL FLANNEL
+                                    </p>
+                                    <p className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px] text-ink/80">
+                                      Shop flannel shirts collection. Softest
+                                      organic cotton and new patterns.
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+
+                              {item.label === "Shop by Brand" && (
+                                <div className="flex flex-col">
+                                  {BRAND_SUBMENU.map((brand) => (
+                                    <Link
+                                      key={brand}
+                                      href="/collections/brands"
+                                      onClick={() => setMobileOpen(false)}
+                                      className="py-1.5 text-[14px] text-ink/80 hover:text-ink transition-colors"
+                                    >
+                                      {brand}
+                                    </Link>
+                                  ))}
+                                  {/* Promo — mirrors desktop dropdown */}
+                                  <div className="px-1 pt-5">
+                                    <div className="w-full h-[270px] overflow-hidden mb-3 bg-sand">
+                                      <Image
+                                        src={Assets.BigScreenImage}
+                                        alt="Brand promo"
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                    <HeaderBtn
+                                      text="BOGO"
+                                      className="!text-[36px] !text-bold"
+                                    />
+                                    <SubTextBtn
+                                      text="buy one beanie and get second one free!* Promotion available only till 25/12/26"
+                                      className="!text-black !text-[11px] !leading-snug"
+                                    />
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </>
                     ) : (
                       <Link
                         href={item.href}
@@ -655,19 +811,31 @@ export default function Navbar() {
                 </p>
               </div>
 
-              {/* Social Buttons */}
+              {/* Social Buttons — same icons as the desktop top bar */}
               <div
                 ref={(el) => (mobileExtraRef.current[1] = el)}
                 className="opacity-0 grid grid-cols-3 gap-0"
               >
                 <div className="flex items-center justify-center py-3 border border-ink/80">
-                  <Pin size={22} strokeWidth={1.5} color="black" />
+                  <Icon
+                    icon="fa6-brands:instagram"
+                    className="h-5 w-5"
+                    aria-label="Instagram"
+                  />
                 </div>
                 <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
-                  <Pin size={22} strokeWidth={1.5} color="black" />
+                  <Icon
+                    icon="fa6-brands:facebook"
+                    className="h-5 w-5"
+                    aria-label="Facebook"
+                  />
                 </div>
                 <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
-                  <Pin size={22} strokeWidth={1.5} color="black" />
+                  <Icon
+                    icon="fa6-brands:pinterest"
+                    className="h-5 w-5"
+                    aria-label="Pinterest"
+                  />
                 </div>
               </div>
             </div>
