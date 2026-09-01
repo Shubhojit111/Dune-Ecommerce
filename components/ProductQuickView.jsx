@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,6 +23,7 @@ import {
 import HeaderBtn from "./buttons/HeaderBtn";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 import HeadTagBtn from "./buttons/HeadTagBtn";
+import AddToCart from "./buttons/AddToCart";
 import { Icon } from "@iconify/react";
 import ExploreBtn from "./buttons/ExploreBtn";
 
@@ -152,7 +153,7 @@ const BENEFITS = [
 
 export default function ProductQuickView({ product }) {
   const router = useRouter();
-  const { addItem, error: cartError } = useCart();
+  const { error: cartError } = useCart();
 
   // Derive product-specific values from the passed product prop (with fallbacks)
   const productId = product?.id || product?.handle || "unknown-product";
@@ -463,23 +464,18 @@ export default function ProductQuickView({ product }) {
                   {cartError}
                 </p>
               )}
-              <button
-                onClick={() =>
-                  addItem({
-                    id: productId,
-                    name: productName,
-                    size: selectedSize,
-                    color:
-                      productColors[selectedColor]?.name ||
-                      `Color ${selectedColor + 1}`,
-                    price: productPrice,
-                    image: productImage,
-                  })
-                }
-                className="leading-none py-[18px] w-full border border-ink rounded-full text-[13px] uppercase tracking-[0.25em] font-bold text-ink hover:bg-ink hover:text-cream transition-all duration-300"
-              >
-                Add to cart
-              </button>
+              <AddToCart
+                product={{
+                  id: productId,
+                  name: productName,
+                  size: selectedSize,
+                  color:
+                    productColors[selectedColor]?.name ||
+                    `Color ${selectedColor + 1}`,
+                  price: productPrice,
+                  image: productImage,
+                }}
+              />
               <button
                 onClick={() => {
                   addItem({

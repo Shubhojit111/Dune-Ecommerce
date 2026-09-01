@@ -23,6 +23,7 @@ import {
 import HeaderBtn from "./buttons/HeaderBtn";
 import HeaderBtnSmall from "./buttons/HeaderBtnSmall";
 import HeadTagBtn from "./buttons/HeadTagBtn";
+import AddToCart from "./buttons/AddToCart";
 import { Icon } from "@iconify/react";
 
 import gsap from "gsap";
@@ -488,21 +489,16 @@ export default function ProductDetailsPage({ product }) {
               {cartError && (
                 <p className="text-[12px] text-red-600 text-center mb-1">{cartError}</p>
               )}
-              <button
-                onClick={() =>
-                  addItem({
-                    id: productId,
-                    name: productName,
-                    size: selectedSize,
-                    color: productColors[selectedColor]?.name || `Color ${selectedColor + 1}`,
-                    price: productPrice,
-                    image: productImage,
-                  })
-                }
-                className="leading-none py-[18px] w-full border border-ink rounded-full text-[13px] uppercase tracking-[0.25em] font-bold text-ink hover:bg-ink hover:text-cream transition-all duration-300"
-              >
-                Add to cart
-              </button>
+              <AddToCart
+                product={{
+                  id: productId,
+                  name: productName,
+                  size: selectedSize,
+                  color: productColors[selectedColor]?.name || `Color ${selectedColor + 1}`,
+                  price: productPrice,
+                  image: productImage,
+                }}
+              />
               <button
                 onClick={() => {
                   addItem({
