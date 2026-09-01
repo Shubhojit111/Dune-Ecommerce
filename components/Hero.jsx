@@ -180,7 +180,7 @@ export default function Hero() {
               {slide.heading && (
                 <h1
                   data-hero-heading
-                  className="mt-3 sm:mt-3 mb-5 sm:mb-4 font-dune text-[44px] sm:text-5xl md:text-[75px] tracking-tight uppercase leading-tight font-normal text-white drop-shadow-sm"
+                  className="mt-1.5 sm:mt-3 mb-3 sm:mb-4 font-dune text-[44px] sm:text-5xl md:text-[75px] tracking-tight uppercase leading-tight font-normal text-white drop-shadow-sm"
                 >
                   {slide.heading}
                 </h1>
