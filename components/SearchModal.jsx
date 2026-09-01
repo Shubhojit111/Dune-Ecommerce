@@ -175,13 +175,13 @@ export default function SearchModal({ isOpen, onClose }) {
       {/* Backdrop blur & dark overlay extending below the navbar */}
       <div
         onClick={onClose}
-        className={`fixed inset-0 top-0  z-[-1] transition-opacity duration-300 ${
+        className={`fixed inset-0 top-0 bg-[#EDECE9]/40 z-[-1] transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       />
 
       {/* Search Container Positioned Right After Navbar with Highest Z-Index */}
-      <div className="relative bg-[#EDECE9]/30 z-[999999] w-full h-screen flex flex-col overflow-hidden">
+      <div className="relative bg-[#EDECE9]/40 z-[999999] w-full h-screen flex flex-col overflow-hidden">
         {/* Top Search Bar Section - no extra padding, sits flush at top */}
         <div className="w-full bg-[#EDECE9] shadow-md z-[999999] px-3 py-4 sm:py-4 flex-shrink-0">
           <div className="max-w-[950px] border mx-auto flex items-center gap-3 sm:gap-5">

@@ -506,14 +506,14 @@ export default function Navbar() {
 
       {/* MOBILE DRAWER */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[10000] flex justify-end lg:hidden">
+        <div className="fixed inset-0 z-99 flex justify-end lg:hidden">
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
             onClick={() => setMobileOpen(false)}
           />
           <div
             ref={mobileDrawerRef}
-            className="relative w-[85%] max-w-[380px] bg-white h-full shadow-2xl flex flex-col z-10 overflow-y-auto px-6 sm:px-8 pt-8 pb-8"
+            className="relative w-[85%] max-w-[380px] bg-white h-full shadow-2xl flex flex-col z-10  px-6 sm:px-8 pt-8 pb-8"
           >
             {/* Close Button - Top Right */}
             <div className="flex justify-end mb-6">
