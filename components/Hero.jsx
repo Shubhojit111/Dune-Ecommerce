@@ -149,7 +149,7 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative">
-      <div className="relative h-screen min-h-[680px] w-full overflow-hidden bg-white">
+      <div className="relative h-[650px] md:h-screen md:min-h-[680px] w-full overflow-hidden bg-white">
         {SLIDES.map((slide, index) => (
           <div
             key={slide.id}
