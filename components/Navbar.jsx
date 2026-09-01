@@ -55,6 +55,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   useEffect(() => {
     if (!dropdownRef.current) return;
 
@@ -185,9 +195,10 @@ export default function Navbar() {
   const mainNavbarPadding = scrolled ? "py-4 sm:py-6" : "py-4 sm:py-8";
 
   return (
-    <header
-      className={`fixed w-full top-0 z-[999999] transition-colors duration-300 ${navbarBg}`}
-    >
+    <>
+      <header
+        className={`fixed w-full top-0 z-[999999] transition-colors duration-300 ${navbarBg}`}
+      >
       {/* Row 1  Announcement Bar */}
       <div
         className={`text-[11px] font-medium tracking-[0.1em] py-2.5 px-4 sm:px-8 lg:px-14 text-center select-none transition-colors duration-300 bg-[#785C43] 
@@ -504,11 +515,15 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* MOBILE DRAWER */}
+      </header>
+
+      {/* MOBILE DRAWER — rendered outside <header> because backdrop-blur on the
+          header makes it the containing block for fixed children, which
+          clips the drawer to the header's height once scrolled */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-99 flex justify-end lg:hidden">
+        <div className="fixed inset-0 z-[1000000] flex justify-end lg:hidden">
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-[#EDECE9]/40 backdrop-blur-sm transition-opacity"
             onClick={() => setMobileOpen(false)}
           />
           <div
@@ -659,6 +674,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
