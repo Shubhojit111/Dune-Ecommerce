@@ -26,6 +26,9 @@ import Image from "next/image";
 import SubTextBtn from "./buttons/SubTextBtn";
 import SearchModal from "./SearchModal";
 
+// URL slug helper — "Shop by Brand" -> "shop-by-brand"
+const toSlug = (s) => s.toLowerCase().trim().replace(/\s+/g, "-");
+
 // Mobile submenu data — mirrors the desktop dropdown content
 const SHOP_SUBMENU = [
   {
@@ -51,13 +54,16 @@ const BRAND_SUBMENU = [
 ];
 
 // Mobile submenu accordion — expandable group like the desktop dropdown
-function MobileSubAccordion({ group }) {
+function MobileSubAccordion({ group, parentLabel }) {
   const [open, setOpen] = useState(false);
+  const panelId = `mobile-sub-${toSlug(parentLabel)}-${toSlug(group.title)}`;
   return (
     <div className="">
       <button
         onClick={() => setOpen((s) => !s)}
-        className="w-full flex items-center justify-between py-1.5"
+        aria-expanded={open}
+        aria-controls={panelId}
+        className="w-full flex items-center justify-between py-1.5 focus-visible:outline focus-visible:outline-ink"
       >
         <span className="text-[14.5px] text-ink/90">{group.title}</span>
         <span className="w-7 h-7 rounded-full border border-ink/40 flex items-center justify-center text-ink/70 flex-shrink-0">
@@ -69,6 +75,7 @@ function MobileSubAccordion({ group }) {
         </span>
       </button>
       <div
+        id={panelId}
         className={`grid transition-all duration-300 ease-in-out ${
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
@@ -78,9 +85,9 @@ function MobileSubAccordion({ group }) {
             {group.links.map((link) => (
               <li key={link}>
                 <Link
-                  href="/collections/all"
+                  href={`/collections/${toSlug(link)}`}
                   onClick={() => setMobileOpen(false)}
-                  className="block py-2 text-[14px] text-ink/70 hover:text-ink transition-colors"
+                  className="block py-2 text-[14px] text-ink/70 hover:text-ink transition-colors focus-visible:outline focus-visible:outline-ink"
                 >
                   {link}
                 </Link>
@@ -102,6 +109,9 @@ export default function Navbar() {
   const [mobileDropdown, setMobileDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  // Main navbar row stays hidden until the search modal exit transition ends,
+  // otherwise it reappears mid-fade and pushes the modal down (UI glitch)
+  const [searchHidden, setSearchHidden] = useState(false);
 
   const [activeMenu, setActiveMenu] = useState(null);
   const dropdownRef = useRef(null);
@@ -243,6 +253,37 @@ export default function Navbar() {
     }
   }, [mobileOpen]);
 
+  // Hide the main navbar row while search modal is open (re-shown after its exit transition)
+  useEffect(() => {
+    if (searchOpen) setSearchHidden(true);
+  }, [searchOpen]);
+
+  // Close the desktop dropdown with Escape and when focus leaves it
+  useEffect(() => {
+    if (!activeMenu) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setActiveMenu(null);
+    };
+    const handleFocusIn = (e) => {
+      if (!dropdownRef.current?.contains(e.target)) {
+        const onTrigger = navItems.some(
+          (item) =>
+            item.hasDropdown &&
+            document.activeElement?.textContent?.trim() === item.label,
+        );
+        if (!onTrigger) setActiveMenu(null);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    document.addEventListener("focusin", handleFocusIn);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("focusin", handleFocusIn);
+    };
+  }, [activeMenu]);
+
   const navItems = [
     { label: "Shop", href: "/collections/all", hasDropdown: true },
     { label: "New Arrivals", href: "/collections/new" },
@@ -279,105 +320,116 @@ export default function Navbar() {
       <header
         className={`fixed w-full top-0 z-[999999] transition-colors duration-300 ${navbarBg}`}
       >
-      {/* Row 1  Announcement Bar */}
-      <div
-        className={`text-[11px] font-medium tracking-[0.1em] py-2.5 px-4 sm:px-8 lg:px-14 text-center select-none transition-colors duration-300 bg-[#785C43] 
+        {/* Row 1  Announcement Bar */}
+        <div
+          className={`text-[11px] font-medium tracking-[0.1em] py-2.5 px-4 sm:px-8 lg:px-14 text-center select-none transition-colors duration-300 bg-[#785C43] 
           ${scrolled ? "hidden sm:block" : ""}
           `}
-      >
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 text-[10px] text-white">
-          <span className="uppercase font-semibold">HASSLE-FREE RETURNS</span>
-          <span className="opacity-90 tracking-[0.08em]">
-            30-day postage paid returns
-          </span>
-        </div>
-      </div>
-
-      {/* Row 2  Address / Socials / Currency (lg+) */}
-      <div
-        className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 ${isOtherPage ? "border-b-[#1E1B17]/15" : "border-b-white"} ${addressRowState} ${addressRowBg}`}
-      >
-        <div className="flex items-center font-medium">
-          <span className="text-[13px] leading-none">
-            337 Roncesvalles Ave, Torronto
-          </span>
-        </div>
-        <div className="flex items-center gap-16">
-          <div className="flex items-center gap-2.5">
-            <button
-              aria-label="Instagram"
-              className="hover:opacity-75 transition"
-            >
-              <Icon icon="fa6-brands:instagram" className="h-5 w-5" />
-            </button>
-            <button
-              aria-label="Facebook"
-              className="hover:opacity-75 transition"
-            >
-              <Icon icon="fa6-brands:facebook" className="h-5 w-5" />
-            </button>
-            <button
-              aria-label="Pinterest"
-              className="hover:opacity-75 transition"
-            >
-              <Icon icon="fa6-brands:pinterest" className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="flex items-center gap-1 cursor-pointer hover:opacity-75 transition font-medium tracking-wide">
-            <span className="text-[15px] leading-none">India (INR)</span>
-            <ChevronDownIcon className="opacity-80 h-5 w-5" />
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 text-[10px] text-white">
+            <span className="uppercase font-semibold">HASSLE-FREE RETURNS</span>
+            <span className="opacity-90 tracking-[0.08em]">
+              30-day postage paid returns
+            </span>
           </div>
         </div>
-      </div>
 
-      {/* Row 3  Main Navbar (hidden when search modal is open) */}
-      <div
-        className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${isOtherPage ? "border-b border-stone-200" : null} ${mainNavbarPadding} ${searchOpen ? "hidden" : ""}`}
-      >
-        {/* Left */}
-        <div className="flex items-center gap-4">
-          <HeaderBtn
-            href="/"
-            text={"DUNE"}
-            className="!text-[28px] sm:!text-[34px] cursor-pointer !mt-0 !mb-0"
-          />
+        {/* Row 2  Address / Socials / Currency (lg+) */}
+        <div
+          className={`hidden lg:flex items-center justify-between mx-4 sm:mx-8 lg:mx-14 overflow-hidden text-[12px] transition-all duration-300 ${isOtherPage ? "border-b-[#1E1B17]/15" : "border-b-white"} ${addressRowState} ${addressRowBg}`}
+        >
+          <div className="flex items-center font-medium">
+            <span className="text-[13px] leading-none">
+              337 Roncesvalles Ave, Torronto
+            </span>
+          </div>
+          <div className="flex items-center gap-16">
+            <div className="flex items-center gap-2.5">
+              <button
+                aria-label="Instagram"
+                className="hover:opacity-75 transition"
+              >
+                <Icon icon="fa6-brands:instagram" className="h-5 w-5" />
+              </button>
+              <button
+                aria-label="Facebook"
+                className="hover:opacity-75 transition"
+              >
+                <Icon icon="fa6-brands:facebook" className="h-5 w-5" />
+              </button>
+              <button
+                aria-label="Pinterest"
+                className="hover:opacity-75 transition"
+              >
+                <Icon icon="fa6-brands:pinterest" className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="flex items-center gap-1 cursor-pointer hover:opacity-75 transition font-medium tracking-wide">
+              <span className="text-[15px] leading-none">India (INR)</span>
+              <ChevronDownIcon className="opacity-80 h-5 w-5" />
+            </div>
+          </div>
         </div>
 
-        {/* Center */}
-        <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              onMouseEnter={() => {
-                if (!item.hasDropdown) return;
-                clearTimeout(closeTimeout.current);
-                setActiveMenu(item.label);
-              }}
-              onMouseLeave={() => {
-                if (!item.hasDropdown) return;
-                closeTimeout.current = setTimeout(() => {
-                  setActiveMenu(null);
-                }, 180);
-              }}
-              className="text-xs lg:text-[22px] font-dune tracking-[0.015em] flex items-center gap-1 font-normal hover:opacity-70 transition-opacity duration-200"
-            >
-              {item.label}
-              {item.hasDropdown && (
-                <ChevronDownIcon
-                  width={12}
-                  height={12}
-                  className="opacity-80"
-                />
-              )}
-            </Link>
-          ))}
-        </nav>
+        {/* Row 3  Main Navbar (hidden while the search modal is open/exiting) */}
+        <div
+          className={`flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 ${isOtherPage ? "border-b border-stone-200" : null} ${mainNavbarPadding} ${searchHidden ? "hidden" : ""}`}
+        >
+          {/* Left */}
+          <div className="flex items-center gap-4">
+            <HeaderBtn
+              href="/"
+              text={"DUNE"}
+              className="!text-[28px] sm:!text-[34px] cursor-pointer !mt-0 !mb-0"
+            />
+          </div>
 
-        {/* Right */}
-        <div className="flex items-center gap-4 sm:gap-5 lg:gap-6">
-          {/* Login icon */}
-          {/*
+          {/* Center */}
+          <nav
+            className="hidden lg:flex items-center gap-8 xl:gap-10"
+            aria-label="Main"
+          >
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onMouseEnter={() => {
+                  if (!item.hasDropdown) return;
+                  clearTimeout(closeTimeout.current);
+                  setActiveMenu(item.label);
+                }}
+                onMouseLeave={() => {
+                  if (!item.hasDropdown) return;
+                  closeTimeout.current = setTimeout(() => {
+                    setActiveMenu(null);
+                  }, 180);
+                }}
+                onFocus={() => {
+                  if (!item.hasDropdown) return;
+                  setActiveMenu(item.label);
+                }}
+                aria-expanded={
+                  item.hasDropdown ? activeMenu === item.label : undefined
+                }
+                aria-haspopup={item.hasDropdown ? "true" : undefined}
+                className="text-xs lg:text-[22px] font-dune tracking-[0.015em] flex items-center gap-1 font-normal hover:opacity-70 transition-opacity duration-200 focus-visible:outline focus-visible:outline-ink"
+              >
+                {item.label}
+                {item.hasDropdown && (
+                  <ChevronDownIcon
+                    width={12}
+                    height={12}
+                    className="opacity-80"
+                  />
+                )}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right */}
+          <div className="flex items-center gap-4 sm:gap-5 lg:gap-6">
+            {/* Login icon */}
+            {/*
           <Link
             href="/login"
             aria-label="Log in"
@@ -390,8 +442,8 @@ export default function Navbar() {
             />
           </Link>
           */}
-          {/* Register icon */}
-          {/*
+            {/* Register icon */}
+            {/*
           <Link
             href="/register"
             aria-label="Register"
@@ -404,202 +456,218 @@ export default function Navbar() {
             />
           </Link>
           */}
-          {/* Profile icon */}
-          <Link
-            href="/login"
-            aria-label="Account"
-            className="hidden sm:block hover:opacity-70 transition p-1"
-          >
-            <Icon
-              icon="lucide:user-round"
-              strokeWidth={1}
-              className="h-6 w-6"
-            />
-          </Link>
-          <button
-            aria-label="Search"
-            onClick={() => setSearchOpen(true)}
-            className="hover:opacity-70 transition p-1"
-          >
-            <Icon icon="lucide:search" className="h-6 w-6" />
-          </button>
-
-          <Link
-            href="/cart"
-            aria-label="Cart"
-            className="relative hover:opacity-70 transition p-1"
-          >
-            <Icon icon="lucide:shopping-cart" className="h-6 w-6" />
-            {itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-ink text-white text-[10px] font-bold flex items-center justify-center leading-none">
-                {itemCount}
-              </span>
-            )}
-          </Link>
-
-          <button
-            className="lg:hidden p-1 hover:opacity-70 transition"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
-            <Icon icon="lucide:menu" className="h-6 w-6" />
-          </button>
-        </div>
-      </div>
-        
-      
-      {/* Search Modal */}
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-
-      {/* GLOBAL DROPDOWN */}
-      <div
-        ref={dropdownRef}
-        className={`absolute left-0 top-full w-full bg-white text-black shadow-xl px-11 pt-5 pb-8 z-[9998] will-change-transform ${
-          activeMenu ? "pointer-events-auto" : "pointer-events-none hidden"
-        }`}
-        onMouseEnter={() => clearTimeout(closeTimeout.current)}
-        onMouseLeave={() => {
-          closeTimeout.current = setTimeout(() => {
-            setActiveMenu(null);
-          }, 180);
-        }}
-      >
-        {/* SHOP */}
-        {activeMenu === "Shop" && (
-          <div className="flex justify-between gap-16">
-            {/* LEFT: 3 IMAGE CARDS */}
-            <div className="flex gap-8">
-              {[
-                {
-                  title: "APPAREL",
-                  img: Assets.HeroImage1,
-                  links: ["Sweatshirts", "T-Shirts", "Shirts", "Jeans", "Hats"],
-                },
-                {
-                  title: "OUTERWEAR",
-                  img: Assets.HeroImage2,
-                  links: ["Jackets", "Vests", "Rain gear"],
-                },
-                {
-                  title: "ACCESSORIES",
-                  img: Assets.HeroImage3,
-                  links: ["Socks", "Hats"],
-                },
-              ].map((item, i) => (
-                <div
-                  key={item.title}
-                  ref={(el) => (shopItemsRef.current[i] = el)}
-                  className="opacity-0 translate-y-10 w-[210px]"
-                >
-                  {/* IMAGE */}
-                  <div className="w-full h-[320px] overflow-hidden mb-6">
-                    <Image
-                      src={item.img}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  {/* Brand */}
-                  <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-medium mb-3.5">
-                    {item.title}
-                  </p>
-
-                  {/* LINKS */}
-                  <ul className="flex flex-col gap-[10.5px] text-black/80">
-                    {item.links.map((link) => (
-                      <li
-                        key={link}
-                        className="text-[#1c1c1c] text-[11px] font-normal tracking-[0.8px] flex flex-col"
-                      >
-                        {link}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            {/* RIGHT: PROMO IMAGE */}
-            <div
-              ref={(el) => (shopItemsRef.current[3] = el)}
-              className="opacity-0 translate-y-10 w-[460px]"
+            {/* Profile icon */}
+            <Link
+              href="/login"
+              aria-label="Account"
+              className="hidden sm:block hover:opacity-70 transition p-1"
             >
-              <div className="w-full h-[480px] overflow-hidden mb-2">
-                <Image
-                  src={Assets.BigScreenImage}
-                  alt="Promo"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <Icon
+                icon="lucide:user-round"
+                strokeWidth={1}
+                className="h-6 w-6"
+              />
+            </Link>
+            <button
+              aria-label="Search"
+              onClick={() => setSearchOpen(true)}
+              className="hover:opacity-70 transition p-1"
+            >
+              <Icon icon="lucide:search" className="h-6 w-6" />
+            </button>
 
-              <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-1">
-                25% OFF ALL FLANNEL
-              </p>
-              <p className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px]">
-                Shop flannel shirts collection. Softest organic cotton and new
-                patterns.
-              </p>
-            </div>
+            <Link
+              href="/cart"
+              aria-label="Cart"
+              className="relative hover:opacity-70 transition p-1"
+            >
+              <Icon icon="lucide:shopping-cart" className="h-6 w-6" />
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-ink text-white text-[10px] font-bold flex items-center justify-center leading-none">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
+
+            <button
+              className="lg:hidden p-1 hover:opacity-70 transition"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+            >
+              <Icon icon="lucide:menu" className="h-6 w-6" />
+            </button>
           </div>
-        )}
+        </div>
 
-        {/* BRAND */}
-        {activeMenu === "Shop by Brand" && (
-          <div className="flex justify-between gap-16">
-            <div className="w-full flex items-center justify-start">
-              <div className="mx-auto h-full">
+        {/* Search Modal */}
+        <SearchModal
+          isOpen={searchOpen}
+          onClose={() => setSearchOpen(false)}
+          onClosed={() => setSearchHidden(false)}
+        />
+
+        {/* GLOBAL DROPDOWN */}
+        <div
+          ref={dropdownRef}
+          role="menu"
+          aria-label="Shop submenu"
+          className={`absolute left-0 top-full w-full bg-white text-black shadow-xl px-11 pt-5 pb-8 z-[9998] will-change-transform ${
+            activeMenu ? "pointer-events-auto" : "pointer-events-none hidden"
+          }`}
+          onMouseEnter={() => clearTimeout(closeTimeout.current)}
+          onMouseLeave={() => {
+            closeTimeout.current = setTimeout(() => {
+              setActiveMenu(null);
+            }, 180);
+          }}
+        >
+          {/* SHOP */}
+          {activeMenu === "Shop" && (
+            <div className="flex justify-between gap-16">
+              {/* LEFT: 3 IMAGE CARDS */}
+              <div className="flex gap-8">
                 {[
                   {
-                    title: "MUTTONHEAD",
+                    title: "APPAREL",
+                    img: Assets.HeroImage1,
+                    links: [
+                      "Sweatshirts",
+                      "T-Shirts",
+                      "Shirts",
+                      "Jeans",
+                      "Hats",
+                    ],
                   },
                   {
-                    title: "NAKED AND FAMOUS",
+                    title: "OUTERWEAR",
+                    img: Assets.HeroImage2,
+                    links: ["Jackets", "Vests", "Rain gear"],
                   },
                   {
-                    title: "JUNIPER RUDGE",
-                  },
-                  {
-                    title: "BATHER",
-                  },
-                  {
-                    title: "BESIDE",
+                    title: "ACCESSORIES",
+                    img: Assets.HeroImage3,
+                    links: ["Socks", "Hats"],
                   },
                 ].map((item, i) => (
                   <div
                     key={item.title}
-                    className="flex flex-col items-start justify-start mb-[10.5px]"
+                    ref={(el) => (shopItemsRef.current[i] = el)}
+                    className="opacity-0 translate-y-10 w-[210px]"
                   >
-                    <p className="text-[12px] text-left uppercase tracking-[0.21em] text-[#121212] font-medium">
+                    {/* IMAGE */}
+                    <div className="w-full h-[320px] overflow-hidden mb-6">
+                      <Image
+                        src={item.img}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Brand */}
+                    <Link
+                      href={`/collections/${toSlug(item.title)}`}
+                      className="mt-1 block text-[12px] uppercase tracking-[0.3em] text-[#121212] font-medium mb-3.5 hover:opacity-70 transition-opacity focus-visible:outline focus-visible:outline-ink"
+                    >
                       {item.title}
-                    </p>
+                    </Link>
+
+                    {/* LINKS */}
+                    <ul className="flex flex-col gap-[10.5px] text-black/80">
+                      {item.links.map((link) => (
+                        <li key={link}>
+                          <Link
+                            href={`/collections/${toSlug(link)}`}
+                            className="text-[#1c1c1c] text-[11px] font-normal tracking-[0.8px] flex flex-col"
+                          >
+                            {link}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
+
+              {/* RIGHT: PROMO IMAGE */}
+              <div
+                ref={(el) => (shopItemsRef.current[3] = el)}
+                className="opacity-0 translate-y-10 w-[460px]"
+              >
+                <div className="w-full h-[480px] overflow-hidden mb-2">
+                  <Image
+                    src={Assets.BigScreenImage}
+                    alt="Promo"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-1">
+                  25% OFF ALL FLANNEL
+                </p>
+                <p className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px]">
+                  Shop flannel shirts collection. Softest organic cotton and new
+                  patterns.
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <div className="h-[270px] w-[470px] ">
-                <Image
-                  src={Assets.BigScreenImage}
-                  alt="Brand1"
-                  className="w-full h-full object-cover"
+          )}
+
+          {/* BRAND */}
+          {activeMenu === "Shop by Brand" && (
+            <div className="flex justify-between gap-16">
+              <div className="w-full flex items-center justify-start">
+                <div className="mx-auto h-full">
+                  {[
+                    {
+                      title: "MUTTONHEAD",
+                    },
+                    {
+                      title: "NAKED AND FAMOUS",
+                    },
+                    {
+                      title: "JUNIPER RUDGE",
+                    },
+                    {
+                      title: "BATHER",
+                    },
+                    {
+                      title: "BESIDE",
+                    },
+                  ].map((item, i) => (
+                    <div
+                      key={item.title}
+                      className="flex flex-col items-start justify-start mb-[10.5px]"
+                    >
+                      <Link
+                        href={`/collections/${toSlug(item.title)}`}
+                        className="text-[12px] text-left uppercase tracking-[0.21em] text-[#121212] font-medium hover:opacity-60 transition-opacity focus-visible:outline focus-visible:outline-ink"
+                      >
+                        {item.title}
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <div className="h-[270px] w-[470px] ">
+                  <Image
+                    src={Assets.BigScreenImage}
+                    alt="Brand1"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <HeaderBtn text="BOGO" className="!text-[36px] !text-bold" />
+                <SubTextBtn
+                  text="Shop All Brands for your fashion from us"
+                  className="!text-black"
                 />
               </div>
-              <HeaderBtn text="BOGO" className="!text-[36px] !text-bold" />
-              <SubTextBtn
-                text="Shop All Brands for your fashion from us"
-                className="!text-black"
-              />
             </div>
-          </div>
-        )}
-      </div>
-
+          )}
+        </div>
       </header>
 
-      {/* MOBILE DRAWER — rendered outside <header> because backdrop-blur on the
-          header makes it the containing block for fixed children, which
-          clips the drawer to the header's height once scrolled */}
+      {/* MOBILE DRAWER */}
       {mobileOpen && (
         <div className="fixed inset-0 z-[1000000] flex justify-end lg:hidden">
           <div
@@ -608,10 +676,10 @@ export default function Navbar() {
           />
           <div
             ref={mobileDrawerRef}
-            className="relative w-[85%] max-w-[380px] bg-white h-full shadow-2xl flex flex-col z-10  px-6 sm:px-8 pt-8 pb-8"
+            className="relative w-[85%] max-w-[380px] bg-white h-full shadow-2xl flex flex-col z-10"
           >
-            {/* Close Button - Top Right */}
-            <div className="flex justify-end mb-2">
+            {/* Pinned drawer header — close button stays fixed at top right */}
+            <div className="flex justify-end px-6 sm:px-8 pt-8 pb-4 flex-shrink-0">
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-1 text-ink hover:opacity-70 transition"
@@ -621,26 +689,123 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Top Divider */}
-            <div className="w-full border-t border-ink/60" />
+            {/* Top Divider — pinned with the header */}
+            <div className="w-full border-t border-ink/60 flex-shrink-0" />
 
-            {/* Nav Menu */}
-            <nav className="flex flex-col overflow-y-auto">
-              {navItems.map((item, i) => {
-                const isOpen = mobileDropdown === item.label;
-                return (
-                  <div
-                    key={item.label}
-                    ref={(el) => (mobileMenuItemsRef.current[i] = el)}
-                    className="opacity-0 border-b border-ink/60"
-                  >
-                    {item.hasDropdown ? (
-                      <>
-                        {/* Parent row — toggles the submenu accordion */}
-                        <button
-                          onClick={() =>
-                            setMobileDropdown(isOpen ? null : item.label)
-                          }
+            {/* Scrollable content — menu + bottom section scroll together */}
+            <div className="flex-1 overflow-y-auto px-6 sm:px-8 pt-0 pb-6">
+              {/* Nav Menu */}
+              <nav className="flex flex-col">
+                {navItems.map((item, i) => {
+                  const isOpen = mobileDropdown === item.label;
+                  return (
+                    <div
+                      key={item.label}
+                      ref={(el) => (mobileMenuItemsRef.current[i] = el)}
+                      className="opacity-0 border-b border-ink/60"
+                    >
+                      {item.hasDropdown ? (
+                        <>
+                          {/* Parent row — toggles the submenu accordion */}
+                          <button
+                            onClick={() =>
+                              setMobileDropdown(isOpen ? null : item.label)
+                            }
+                            aria-expanded={isOpen}
+                            className={`w-full flex items-center justify-between py-4 focus-visible:outline focus-visible:outline-ink `}
+                          >
+                            <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
+                              {item.label}
+                            </span>
+
+                            <div className="border-l border-ink/60">
+                              <ChevronDown
+                                className={`text-ink/70 flex-shrink-0 ml-2 transition-transform duration-300 ${
+                                  isOpen ? "rotate-180" : ""
+                                }`}
+                                size={18}
+                                strokeWidth={1.4}
+                              />
+                            </div>
+                          </button>
+
+                          {/* Submenu — animated expand/collapse */}
+                          <div
+                            className={`grid transition-all duration-300 ease-in-out ${
+                              isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                            }`}
+                          >
+                            <div className="overflow-hidden">
+                              <div className="pb-4">
+                                {item.label === "Shop" && (
+                                  <div className="flex flex-col">
+                                    {SHOP_SUBMENU.map((group) => (
+                                      <MobileSubAccordion
+                                        key={group.title}
+                                        group={group}
+                                        parentLabel={item.label}
+                                      />
+                                    ))}
+                                    {/* Promo — mirrors desktop dropdown */}
+                                    <div className="px-1 pt-5">
+                                      <div className="w-full h-[300px] overflow-hidden mb-3 bg-sand">
+                                        <Image
+                                          src={Assets.HeroImage1}
+                                          alt="Promo"
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                      <p className="text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-1.5">
+                                        25% OFF ALL FLANNEL
+                                      </p>
+                                      <p className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px] text-ink/80">
+                                        Shop flannel shirts collection. Softest
+                                        organic cotton and new patterns.
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
+
+                                {item.label === "Shop by Brand" && (
+                                  <div className="flex flex-col">
+                                    {BRAND_SUBMENU.map((brand) => (
+                                      <Link
+                                        key={brand}
+                                        href="/collections/brands"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="py-1.5 text-[14px] text-ink/80 hover:text-ink transition-colors"
+                                      >
+                                        {brand}
+                                      </Link>
+                                    ))}
+                                    {/* Promo — mirrors desktop dropdown */}
+                                    <div className="px-1 pt-5">
+                                      <div className="w-full h-[270px] overflow-hidden mb-3 bg-sand">
+                                        <Image
+                                          src={Assets.BigScreenImage}
+                                          alt="Brand promo"
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                      <HeaderBtn
+                                        text="BOGO"
+                                        className="!text-[36px] !text-bold"
+                                      />
+                                      <SubTextBtn
+                                        text="buy one beanie and get second one free!* Promotion available only till 25/12/26"
+                                        className="!text-black !text-[11px] !leading-snug"
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setMobileOpen(false)}
                           className={`w-full flex items-center justify-between py-4 ${
                             item.hasAccent ? "relative pl-5" : ""
                           }`}
@@ -651,191 +816,100 @@ export default function Navbar() {
                           <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
                             {item.label}
                           </span>
-                          <ChevronDown
-                            className={`text-ink/70 flex-shrink-0 ml-2 transition-transform duration-300 ${
-                              isOpen ? "rotate-180" : ""
-                            }`}
-                            size={18}
-                            strokeWidth={1.4}
-                          />
-                        </button>
+                        </Link>
+                      )}
+                    </div>
+                  );
+                })}
 
-                        {/* Submenu — animated expand/collapse */}
-                        <div
-                          className={`grid transition-all duration-300 ease-in-out ${
-                            isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                          }`}
-                        >
-                          <div className="overflow-hidden">
-                            <div className="pb-4">
+                {/* Login Item */}
+                <div
+                  ref={(el) =>
+                    (mobileMenuItemsRef.current[navItems.length] = el)
+                  }
+                  className="opacity-0 border-b border-ink/60"
+                >
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="w-full flex items-center gap-2.5 py-4"
+                  >
+                    <User
+                      size={22}
+                      strokeWidth={1.2}
+                      className="text-ink/80 flex-shrink-0"
+                    />
+                    <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
+                      Log in
+                    </span>
+                  </Link>
+                </div>
 
-                              {item.label === "Shop" && (
-                                <div className="flex flex-col">
-                                  {SHOP_SUBMENU.map((group) => (
-                                    <MobileSubAccordion
-                                      key={group.title}
-                                      group={group}
-                                    />
-                                  ))}
-                                  {/* Promo — mirrors desktop dropdown */}
-                                  <div className="px-1 pt-5">
-                                    <div className="w-full h-[300px] overflow-hidden mb-3 bg-sand">
-                                      <Image
-                                        src={Assets.HeroImage1}
-                                        alt="Promo"
-                                        className="w-full h-full object-cover"
-                                      />
-                                    </div>
-                                    <p className="text-[12px] uppercase tracking-[0.3em] text-[#121212] font-bold mb-1.5">
-                                      25% OFF ALL FLANNEL
-                                    </p>
-                                    <p className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.8px] text-ink/80">
-                                      Shop flannel shirts collection. Softest
-                                      organic cotton and new patterns.
-                                    </p>
-                                  </div>
-                                </div>
-                              )}
+                {/* Register Item */}
+                <div
+                  ref={(el) =>
+                    (mobileMenuItemsRef.current[navItems.length + 1] = el)
+                  }
+                  className="opacity-0 border-b border-ink/60"
+                >
+                  <Link
+                    href="/register"
+                    onClick={() => setMobileOpen(false)}
+                    className="w-full flex items-center gap-2.5 py-4"
+                  >
+                    <UserPlus
+                      size={22}
+                      strokeWidth={1.2}
+                      className="text-ink/80 flex-shrink-0"
+                    />
+                    <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
+                      Register
+                    </span>
+                  </Link>
+                </div>
+              </nav>
 
-                              {item.label === "Shop by Brand" && (
-                                <div className="flex flex-col">
-                                  {BRAND_SUBMENU.map((brand) => (
-                                    <Link
-                                      key={brand}
-                                      href="/collections/brands"
-                                      onClick={() => setMobileOpen(false)}
-                                      className="py-1.5 text-[14px] text-ink/80 hover:text-ink transition-colors"
-                                    >
-                                      {brand}
-                                    </Link>
-                                  ))}
-                                  {/* Promo — mirrors desktop dropdown */}
-                                  <div className="px-1 pt-5">
-                                    <div className="w-full h-[270px] overflow-hidden mb-3 bg-sand">
-                                      <Image
-                                        src={Assets.BigScreenImage}
-                                        alt="Brand promo"
-                                        className="w-full h-full object-cover"
-                                      />
-                                    </div>
-                                    <HeaderBtn
-                                      text="BOGO"
-                                      className="!text-[36px] !text-bold"
-                                    />
-                                    <SubTextBtn
-                                      text="buy one beanie and get second one free!* Promotion available only till 25/12/26"
-                                      className="!text-black !text-[11px] !leading-snug"
-                                    />
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        onClick={() => setMobileOpen(false)}
-                        className={`w-full flex items-center justify-between py-4 ${
-                          item.hasAccent ? "relative pl-5" : ""
-                        }`}
-                      >
-                        {item.hasAccent && (
-                          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-ink/50" />
-                        )}
-                        <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
-                          {item.label}
-                        </span>
-                      </Link>
-                    )}
+              {/* Bottom Section */}
+              <div className="mt-8 flex flex-col gap-6">
+                {/* Address */}
+                <div
+                  ref={(el) => (mobileExtraRef.current[0] = el)}
+                  className="opacity-0"
+                >
+                  <p className="!text-[14px] sm:!text-[17px] leading-tight text-stone-600 font-medium">
+                    337 Roncesvalles
+                  </p>
+                  <p className="!text-[14px] sm:!text-[17px] leading-tight text-stone-600 font-medium mt-1">
+                    Ave, Toronto
+                  </p>
+                </div>
+
+                {/* Social Buttons — same icons as the desktop top bar */}
+                <div
+                  ref={(el) => (mobileExtraRef.current[1] = el)}
+                  className="opacity-0 grid grid-cols-3 gap-0"
+                >
+                  <div className="flex items-center justify-center py-3 border border-ink/80">
+                    <Icon
+                      icon="fa6-brands:instagram"
+                      className="h-5 w-5"
+                      aria-label="Instagram"
+                    />
                   </div>
-                );
-              })}
-
-              {/* Login Item */}
-              <div
-                ref={(el) => (mobileMenuItemsRef.current[navItems.length] = el)}
-                className="opacity-0 border-b border-ink/60"
-              >
-                <Link
-                  href="/login"
-                  onClick={() => setMobileOpen(false)}
-                  className="w-full flex items-center gap-2.5 py-4"
-                >
-                  <User
-                    size={22}
-                    strokeWidth={1.2}
-                    className="text-ink/80 flex-shrink-0"
-                  />
-                  <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
-                    Log in
-                  </span>
-                </Link>
-              </div>
-
-              {/* Register Item */}
-              <div
-                ref={(el) => (mobileMenuItemsRef.current[navItems.length + 1] = el)}
-                className="opacity-0 border-b border-ink/60"
-              >
-                <Link
-                  href="/register"
-                  onClick={() => setMobileOpen(false)}
-                  className="w-full flex items-center gap-2.5 py-4"
-                >
-                  <UserPlus
-                    size={22}
-                    strokeWidth={1.2}
-                    className="text-ink/80 flex-shrink-0"
-                  />
-                  <span className="font-dune !text-[17px] sm:!text-[20px] tracking-wide text-ink font-normal">
-                    Register
-                  </span>
-                </Link>
-              </div>
-            </nav>
-
-            {/* Bottom Section */}
-            <div className="mt-8 flex flex-col gap-6">
-              {/* Address */}
-              <div
-                ref={(el) => (mobileExtraRef.current[0] = el)}
-                className="opacity-0"
-              >
-                <p className="!text-[14px] sm:!text-[17px] leading-tight text-stone-600 font-medium">
-                  337 Roncesvalles
-                </p>
-                <p className="!text-[14px] sm:!text-[17px] leading-tight text-stone-600 font-medium mt-1">
-                  Ave, Toronto
-                </p>
-              </div>
-
-              {/* Social Buttons — same icons as the desktop top bar */}
-              <div
-                ref={(el) => (mobileExtraRef.current[1] = el)}
-                className="opacity-0 grid grid-cols-3 gap-0"
-              >
-                <div className="flex items-center justify-center py-3 border border-ink/80">
-                  <Icon
-                    icon="fa6-brands:instagram"
-                    className="h-5 w-5"
-                    aria-label="Instagram"
-                  />
-                </div>
-                <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
-                  <Icon
-                    icon="fa6-brands:facebook"
-                    className="h-5 w-5"
-                    aria-label="Facebook"
-                  />
-                </div>
-                <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
-                  <Icon
-                    icon="fa6-brands:pinterest"
-                    className="h-5 w-5"
-                    aria-label="Pinterest"
-                  />
+                  <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
+                    <Icon
+                      icon="fa6-brands:facebook"
+                      className="h-5 w-5"
+                      aria-label="Facebook"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center py-3 border border-ink/80 border-l-0">
+                    <Icon
+                      icon="fa6-brands:pinterest"
+                      className="h-5 w-5"
+                      aria-label="Pinterest"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

@@ -63,7 +63,7 @@ const GET_COLLECTIONS = (q) => {
   return ["New Arrivals", "All Products"];
 };
 
-export default function SearchModal({ isOpen, onClose }) {
+export default function SearchModal({ isOpen, onClose, onClosed }) {
   const [query, setQuery] = useState("");
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -83,10 +83,11 @@ export default function SearchModal({ isOpen, onClose }) {
       const timeout = setTimeout(() => {
         setShouldRender(false);
         setQuery("");
+        onClosed?.(); // notify parent after exit transition finishes
       }, 300);
       return () => clearTimeout(timeout);
     }
-  }, [isOpen]);
+  }, [isOpen, onClosed]);
 
   // Rotating placeholder texts
   useEffect(() => {
