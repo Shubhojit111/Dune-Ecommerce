@@ -102,7 +102,7 @@ export default function CartPage() {
     <>
       <div className="min-h-screen bg-white flex flex-col font-serif text-[#1a1a1a]">
         {/* Header */}
-        <div className="w-full px-4 sm:px-8 lg:px-14 pt-[140px] sm:pt-36 md:pt-52 pb-8 md:pb-16 text-center">
+        <div className="w-full px-4 sm:px-8 lg:px-14 pt-[160px] sm:pt-36 md:pt-52 pb-8 md:pb-16 text-center">
           <div className="flex justify-center">
             <HeaderBtn text="Cart" />
           </div>

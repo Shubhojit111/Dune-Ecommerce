@@ -3,6 +3,10 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Literal class strings so Tailwind's JIT can statically detect them
 const COLS_MAP = {
@@ -23,7 +27,44 @@ export default function ProductGridSection({
   itemsToShow,
 }) {
   const scrollRef = useRef(null);
+  const sectionRef = useRef(null);
+  const cardsRef = useRef([]);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Mobile-only entrance: cards slide in from the right (staggered) when
+  // the section scrolls into view
+  useEffect(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(max-width: 767px)", () => {
+      const cards = cardsRef.current.filter(Boolean);
+      if (!cards.length || !sectionRef.current) return;
+
+      const tween = gsap.fromTo(
+        cards,
+        { autoAlpha: 0, x: 80 },
+        {
+          autoAlpha: 1,
+          x: 0,
+          duration: 1,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 65%",
+            once: true,
+          },
+        },
+      );
+
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+      };
+    });
+
+    return () => mm.revert();
+  }, [products]);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -60,7 +101,10 @@ export default function ProductGridSection({
     itemsToShow == null ? products : products.slice(0, Number(itemsToShow));
 
   return (
-    <section className="w-full px-4 sm:px-8 lg:px-14 py-12 md:py-24 bg-white">
+    <section
+      ref={sectionRef}
+      className="w-full px-4 sm:px-8 lg:px-14 py-12 md:py-24 bg-white"
+    >
       <div className="w-full mx-auto">
         {/* Heading + View All */}
         <div
@@ -84,15 +128,20 @@ export default function ProductGridSection({
         {/* Mobile: horizontal scroll carousel / Desktop: grid */}
         <div
           ref={scrollRef}
-          className={`flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 md:grid md:overflow-x-visible md:gap-6 md:pb-0 ${colsClass} [&::-webkit-scrollbar]:hidden`}
+          className={`flex items-start justify-start overflow-x-auto snap-x snap-mandatory gap-4 pb-4 md:grid md:overflow-x-visible md:gap-6 md:pb-0 ${colsClass} [&::-webkit-scrollbar]:hidden`}
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {visibleProducts.map((product) => (
+          {visibleProducts.map((product, i) => (
             <div
               key={product.id}
               className="w-[40vw] sm:w-[45vw] md:w-auto flex-shrink-0 snap-start md:flex-shrink"
             >
-              <ProductCard product={product} />
+              {/* Inner wrapper gets animated — transforming the snap-aligned
+                  element itself makes the scroller re-snap mid-animation,
+                  which made the first card sweep past the padding */}
+              <div ref={(el) => (cardsRef.current[i] = el)}>
+                <ProductCard product={product} />
+              </div>
             </div>
           ))}
         </div>
@@ -109,7 +158,10 @@ export default function ProductGridSection({
           <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-stone-700 rounded-full transition-all duration-300"
-              style={{ width: `${Math.max(20, Math.min(100, 33 + scrollProgress * 0.5))}%`, marginLeft: `${scrollProgress * 0.5}%` }}
+              style={{
+                width: `${Math.max(20, Math.min(100, 33 + scrollProgress * 0.5))}%`,
+                marginLeft: `${scrollProgress * 0.5}%`,
+              }}
             />
           </div>
           <button
