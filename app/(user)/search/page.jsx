@@ -101,8 +101,7 @@ function Accordion({ title, children, defaultOpen = true }) {
   );
 }
 
-export default function SearchPage() {
-
+function SearchPageContent() {
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get("q") || "";
 
@@ -497,6 +496,14 @@ export default function SearchPage() {
 
         {/* <SavingsSection /> */}
       </div>
+    </Suspense>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <SearchPageContent />
     </Suspense>
   );
 }
